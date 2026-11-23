@@ -1,0 +1,9 @@
+# Copy to ignored .dev.vars. Supply real values locally; never commit that file.
+AUTH_BASE_URL=http://127.0.0.1:4321
+BETTER_AUTH_SECRET=
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+RESEND_API_KEY=
+EMAIL_FROM=

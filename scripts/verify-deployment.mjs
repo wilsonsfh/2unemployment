@@ -7,10 +7,10 @@ const digest=bytes=>createHash('sha256').update(bytes).digest('hex');
 
 export async function verifyDeployment(baseUrl,{feed,assets=[],fetcher=fetch}) {
  const version=digest(JSON.stringify(feed));
- const get=async(path,revision=version)=>{
+ const get=async(path,revision=version,expectedStatus=200)=>{
   const url=new URL(path,baseUrl);url.searchParams.set('verification',revision);
   const response=await fetcher(url,{headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(10000)});
-  if(!response.ok)throw Error(`${url.pathname}: HTTP ${response.status}`);
+  if(response.status!==expectedStatus)throw Error(`${url.pathname}: HTTP ${response.status}, expected ${expectedStatus}`);
   return response;
  };
  const meta=await (await get('/api/catalog')).json();
@@ -29,6 +29,11 @@ export async function verifyDeployment(baseUrl,{feed,assets=[],fetcher=fetch}) {
   const bytes=Buffer.from(await (await get(asset.path,expected)).arrayBuffer());
   if(digest(bytes)!==expected)throw Error(`Deployed asset does not match: ${asset.path}`);
  }
+ const privateApi=await get('/api/applications',version,401);
+ const account=await get('/api/account');
+ const tracker=await get('/applications');
+ for(const response of [privateApi,account,tracker])if(!/no-store/.test(response.headers.get('Cache-Control')||''))throw Error('Private routes must be uncached');
+ if((await account.json()).user!==null)throw Error('Signed-out account response must not expose a user');
  return {version,generatedAt:meta.generatedAt,jobId:sample?.id??null,assets:assets.length};
 }
 

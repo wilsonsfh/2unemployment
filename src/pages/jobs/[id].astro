@@ -45,7 +45,7 @@ const schema=job?{'@context':'https://schema.org','@type':'WebPage',name:title,u
    <p>Source checked {checked(job.checkedAt)}. First discovered {checked(job.firstSeen)}.</p>
    {recheck&&<p>This record needs rechecking against its original employer source.</p>}
    <p><a href={job.sourceUrl} rel="noopener noreferrer">View discovery source ↗</a></p>
-   <div class="detail-actions"><a class="primary" href={job.applyUrl} rel="noopener noreferrer">{job.status==='closed'?'View archived source':employer?'View employer posting ↗':'View source listing ↗'}</a><a class="secondary" href="/">Back to the job board</a></div>
+   <div class="detail-actions"><a class="primary" href={job.applyUrl} rel="noopener noreferrer">{job.status==='closed'?'View archived source':employer?'View employer posting ↗':'View source listing ↗'}</a><a class="secondary" href={`/applications?job=${encodeURIComponent(job.id)}`}>Track application</a><a class="secondary" href="/">Back to the job board</a></div>
   </article>:<><h1>{Astro.response.status===503?'The catalog is temporarily unavailable.':'Role not found.'}</h1><p><a href="/">Return to the job board →</a></p></>}
  </main>
  {schema&&<script type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g,'\\u003c')} />}

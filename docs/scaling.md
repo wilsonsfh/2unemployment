@@ -230,3 +230,7 @@ Retrieved from the official documentation on 2026-11-23:
 - [D1 import/export](https://developers.cloudflare.com/d1/best-practices/import-export-data/) — SQL import transaction handling and virtual-table export limitations.
 - [Workers static asset billing](https://developers.cloudflare.com/workers/static-assets/billing-and-limitations/) — dynamic Worker invocation differs from static-only serving.
 - [Workers cache behavior](https://developers.cloudflare.com/workers/reference/how-the-cache-works/) — Cache API locality and invalidation limits.
+
+## Updated account requirement — 23 November 2026
+
+The owner explicitly requested identity and application tracking, then chose to standardize on the existing D1 database. The original account deferral in this decision is therefore historical. Better Auth now supplies sessions and Google/GitHub/email-OTP integration; the tracker stores owner-scoped private applications in the same database. This avoids a separate platform migration at the current scale. The public catalog remains independently cached and exported; full database backups are now private. The operational tradeoff is that D1 file imports can briefly affect both sign-in/tracking and public browsing. Split identity storage or revisit managed PostgreSQL/auth when that coupling or account requirements justify the cost. [Implementation and provider setup](accounts-and-applications.md) distinguishes code readiness from configured live providers.

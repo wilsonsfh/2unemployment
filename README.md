@@ -31,7 +31,7 @@ npm run preview
 
 `npm run ingest` refreshes employer data into `public/data/jobs.json`; `npm run catalog:local` imports it into local D1. `npm run deploy` builds/checks, publishes the remote catalog transactionally, then deploys. It requires Cloudflare access with Workers deployment and D1 Edit permissions. The daily GitHub refresh follows the same publication order; its stored token's D1/Worker permissions are verified by the release run.
 
-Read [pipeline/API details](docs/pipeline.md), [logo updates through the daily deployment](docs/branding.md), [Telegram watcher](docs/telegram-alerts.md), and [motion research](docs/motion-research.md). The internship watcher remains independent. No paid jobs API, account service, or model calls run in the app. Browser-local saves retain their existing keys; private application history is not published. Employer-advertised pay and company-level estimated compensation remain distinct. H2 Games' original details remain visibly incomplete.
+Read [pipeline/API details](docs/pipeline.md), [logo updates through the daily deployment](docs/branding.md), [Telegram watcher](docs/telegram-alerts.md), and [motion research](docs/motion-research.md). The internship watcher remains independent. Public ingestion uses no paid jobs API or model calls. Identity uses Better Auth; email sign-in uses Resend once configured. Browser-local saves retain their existing keys; private application history is not published. Employer-advertised pay and company-level estimated compensation remain distinct. H2 Games' original details remain visibly incomplete.
 
 Source snapshots remain recovery artifacts in `public/data/jobs.json`. Curated discoveries and salary references live in `data/`. Project-scoped Levels.fyi configuration is in `.codex/`; no global configuration is changed. Optional REST benchmark: `LEVELS_API_KEY` in the shell environment, then `node scripts/levels-benchmark.mjs`. Never put API keys in frontend variables or source.
 
@@ -42,3 +42,9 @@ Source snapshots remain recovery artifacts in `public/data/jobs.json`. Curated d
 Use [the public correction form](https://github.com/wilsonsfh/2unemployment/issues/new?template=correction.md) for listing, permission or removal requests. It requires GitHub and is public; include only public evidence. The [data-use page](https://2unemployment.wilsonsoon.workers.dev/guides/licensing-and-data-use#corrections-permissions-and-removal-requests) explains scope and limits. This route does not settle source permissions or the pending root code licence.
 
 After a build/deployment, `node scripts/verify-deployment.mjs --url <site-url>` checks the catalog, recovery snapshot, a role, both logo files and every built guide HTML file.
+
+## Accounts and application tracking
+
+[Applications](https://2unemployment.wilsonsoon.workers.dev/applications) supports account-based tracking for board roles and manually added job URLs, with stage, application date and private notes. Google/GitHub OAuth and Resend email OTP are implemented; each method requires its deployment credentials before it becomes available. See [account setup, data handling and verification](docs/accounts-and-applications.md). Existing bookmarks stay browser-local until explicitly imported into an account.
+
+The owner chose one D1 database. Identity/application migrations live beside the catalog migrations, and all private queries use the server-authenticated user ID. Public snapshot generation remains catalog-only. Full database exports/backups now contain private data and must not be published.

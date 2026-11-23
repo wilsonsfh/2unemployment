@@ -4,8 +4,9 @@ Updated: 2026-11-23. Read [handover.md](handover.md) and [progress.md](progress.
 
 ## Current priority: identity and private application tracking
 
-- [ ] Choose sign-in flow and architecture, then implement real accounts with private, cross-device application saving/tracking. The owner has explicitly requested this; the earlier deferral no longer applies. Keep account/application data out of public catalog APIs and recovery snapshots.
-- [ ] Support the owner’s product direction: surface high-paying early-career tech roles and evidence-backed agent-workflow requirements, using Sierra as a concrete example. Preserve graduate/review gates and advertised-pay provenance.
+- [x] Implement identity/tracker with Google, GitHub and Resend OTP support, owner-scoped private APIs, external job URLs, statuses/date/notes and explicit bookmark import. Owner chose the existing single D1 database. Local tests/build/dry run and synthetic-session browser checks passed.
+- [ ] Activate real sign-in providers: securely configure Resend key/verified sender and Google/GitHub OAuth credentials, then verify actual delivery, callback sign-in, sign-out and cross-device account use. No provider is currently configured; credentials must not be pasted in chat.
+- [x] Add discovery shortcuts for agent-title graduate roles and highest-known pay; verified Sierra new-grad S$200k–240k advertised range appears. Keep other Sierra roles in review and distinguish the multi-agent audience from actual role requirements. Continue targeted employer coverage.
 
 ## Data quality and operations
 
@@ -44,7 +45,7 @@ Decision and migration plan: [docs/scaling.md](docs/scaling.md). Evidence: [prog
 - [x] **Release gate:** source committed/pushed, GitHub token D1/Worker permissions exercised successfully, both release workflows passed, live HTML/API/counts and browser flows verified. Final run: [45117422965](https://github.com/wilsonsfh/2unemployment/actions/runs/45117422965). Previous static version/source and rollback procedure recorded; wiki walkthrough updated. Future timed schedule remains a separate open observation.
 - [x] Measure complete local query/read/import costs at 1k/10k synthetic jobs with the actual importer and API query functions. [Reproduction and limits](docs/catalog-benchmark.md). Counts, FTS and write/history amplification matter; local counters are not remote billing.
 - [ ] Validate representative complete-request costs in an approved isolated remote catalog before making production capacity claims. Investigate COUNT/FTS work, history budget and import amplification; design cursor pagination if browsing beyond 10025 matches becomes necessary.
-- [ ] Revisit Supabase if accounts, cross-device applications or substantial PostgreSQL features become near-term requirements. Do not introduce auth/tracking as a migration side effect.
+- [x] Reassess accounts architecture following the explicit request: owner chose one D1 database with Better Auth and owner-scoped applications. Revisit separate identity storage or PostgreSQL if operational coupling/feature needs justify it; full database backups now contain private data.
 
 ## Separate categories
 
