@@ -1,6 +1,6 @@
-# Proposed stack for scaling 2unemployment
+# Scaling architecture and migration decision
 
-Captured from the user's supplied recommendation on 2026-11-23. This is planning context; the implemented stack is still React/Vite + JSON + Workers Static Assets. No database or rendering-framework migration was performed in this handover pass.
+Reviewed on 2026-11-23 against the existing application and current official documentation. This records the architecture decision and rollout checks; [progress.md](../progress.md) records what has actually been implemented and deployed. The original recommendation was captured in the preceding handover session.
 
 ## Recommendation
 
@@ -52,7 +52,7 @@ The database rationale is incremental updates, richer records, history, filterin
 
 ## Rendering and SEO are a separate decision
 
-Current React/Vite behavior:
+React/Vite baseline before this migration:
 
 ```text
 Request page
@@ -105,41 +105,126 @@ This is a targeted rendering change, not a reason to replace the entire React in
 - [Astro Cloudflare adapter](https://docs.astro.build/en/guides/integrations-guide/cloudflare/)
 - [Next.js Server and Client Components](https://nextjs.org/docs/app/getting-started/server-and-client-components)
 
-## Queued discussion: MPA versus the current SPA
+## MPA versus the current SPA: completed analysis
 
-The user supplied an Astro community discussion and asked a **later session** to analyse the tech-stack and system-design tradeoffs of moving toward a multi-page application (MPA). No MPA decision, migration or new analysis was performed in this documentation pass.
+The community discussion was a useful hypothesis, not a framework requirement. No original discussion URL was supplied, so individual comments cannot be independently dated or attributed. The following conclusions use the actual code and current official documentation.
 
-### Supplied discussion — claims to evaluate later
+### Decision
 
-The pasted discussion contains comments labelled roughly three years old through a few months old; no original post URL was supplied. Treat these as community opinions and historical experience, not current authoritative documentation:
+Use **Astro for public document routes and one cohesive React workspace for the existing interactive application**. Add D1 and a bounded API as a separate catalog change. Keep normal browser document navigation initially; do not add a client router or an animation library as part of this migration.
 
-- Supporters describe Astro as an HTML/server-first approach that ships client JavaScript where needed through islands, while allowing React and other framework components.
-- Several commenters like it for content sites, portfolios, galleries and large static sites, and mention static output deployable to GitHub Pages or Cloudflare hosting.
-- Some claim Astro handles complex business applications easily. Others say a heavily interactive, shared-state interface such as Figma is more practical in a client framework.
-- One useful distinction in the discussion is **content-oriented navigation versus dense client-side interaction**, rather than simply small sites versus large sites.
-- Comments about auth limitations, framework maturity, deployment adapters, learning curve, “zero JavaScript,” library/resource counts and perfect Lighthouse scores need current verification and context. Do not carry them forward as guarantees or benchmark results for this project.
-- Astro can host React components; this alone does not determine the architecture or how much JavaScript the resulting application ships. Keep this as a question for the later analysis.
-- “MPA” in the discussion means **Multi-Page Application**. The joke expansion has no technical meaning.
+This is a fit decision, not an urgent performance repair. The current 44-record catalog is only about 45 KiB gzip. Its demonstrated public-content gap is that job details exist only in JavaScript dialogs, with no useful per-job HTML URL. A small build-time generator could solve that gap with less immediate infrastructure. Astro is the preferred maintained rendering boundary because the queued direction also includes database-driven pages that can change without rebuilding the site. D1 is justified by that catalog/API direction and incremental updates, rather than today's storage size.
 
-### Required later analysis
+Three independent choices remain explicit:
 
-Compare these concrete choices against 2unemployment's actual flows:
+- **Rendering:** generate useful job HTML at build time or request time. Both can be crawlable.
+- **Navigation:** use full document loads or a client router. Neither determines whether initial HTML exists.
+- **Storage:** use the generated JSON snapshot or D1. Either can feed Astro, Next.js or a custom React renderer.
 
-1. Keep the current React/Vite SPA and add suitable pre-rendering/server rendering where needed.
-2. Use an Astro-led MPA for public routes, retaining a cohesive React search workspace/island.
-3. Use Next.js for server-rendered routes and the interactive React application.
+### Decision matrix
 
-Analyse and document:
+| Criterion for this application | React/Vite plus added rendering | Astro with React workspace | Next.js App Router |
+|---|---|---|---|
+| Useful initial job HTML | Achievable with a build generator or custom SSR; current code has neither | Native document templates; prerender or on-demand route | Server-rendered routes and metadata support |
+| Keep current search, comparison and saves | Lowest UI change; already share one React tree | Keep one React tree; adapt entry point and data access | Reuse React UI but adopt new routing/server-client boundaries |
+| JavaScript on a reading-only job page | Can be zero with a separate generated template | Can be zero without client directives | Server Components keep server code off the client; router and any Client Components still add payload |
+| Search/detail navigation and state | Need a URL/state strategy; current buttons have no shareable route | Normal links; persist URL filters and browser-local saves explicitly | Client transitions and shared layouts available; still need explicit durable state |
+| Current Cloudflare deployment | Static output is simplest; custom SSR adds ownership | Official Cloudflare adapter and workerd local dev | OpenNext Cloudflare adapter adds build/runtime compatibility surface |
+| Future account-heavy application | Possible; more server integration choices | Possible with endpoints and React; auth is a separate integration | Strong fit for a larger cohesive React application |
+| Migration size and operations | Smallest for snapshot prerendering; larger for a maintained custom SSR stack | Moderate, focused public-route migration | Largest conventions change for the present public catalog |
+| Recommendation | Good fallback if the scope stays daily snapshots | **Preferred for the requested catalog direction** | Revisit if authenticated application workflows become the main product |
 
-- Public job-detail pages, search/filter URLs, pagination, navigation and browser back/forward behavior.
-- What HTML is returned before JavaScript, crawlability, canonical URLs, metadata and truthful job structured data.
-- JavaScript payload, hydration, page transitions, perceived speed and mobile performance, measured on this application rather than inferred from framework branding.
-- Shared state across search, filters, results, comparison, saved roles and future account/application controls; state persistence across full-page navigation.
-- Which interactions stay together in React, which routes can be mostly HTML, and the cost of splitting connected controls into islands.
-- Static build-time pages versus on-demand rendering, data freshness, caching/invalidation, database/API calls and deployment frequency.
-- D1/Worker API boundaries, incremental ingestion/history, access control if private account features arrive, hosting cost and operational complexity.
-- Migration effort, route/record-ID compatibility, accessibility, tests, rollback and maintaining the current working ingestion/Telegram systems.
+No payload, Lighthouse or Core Web Vitals improvement is assumed from this table. Measure production output and browser behavior after implementation. Search will still load React because it remains a substantial interactive workspace.
 
-The later session should produce a concise decision matrix, an explicit recommendation with reasons, a route/component/data-flow sketch and a bounded migration plan. It should distinguish page rendering, browser navigation and database/storage choices rather than treating “Astro,” “MPA” and “D1” as one inseparable decision.
+### What the discussion gets right, and where it overreaches
 
-Start with current official Astro/React/Next.js/Cloudflare documentation and the existing code. The supplied community discussion is input to the evaluation, not a mandate to choose Astro or replace the whole SPA.
+Astro's documentation confirms HTML-first output and explicit `client:*` hydration directives. An Astro component without a client directive does not bring a client runtime simply because React is available elsewhere. However, a large `client:only` React application still downloads and renders that application in the browser. Keeping that workspace is acceptable only alongside genuinely rendered public job pages; it does not make the workspace itself server-rendered.
+
+The useful distinction is content-oriented reading versus connected interaction. Search, cohort/pay/provenance filters, queue selection, sorting, saved-role selection and comparison affect the same result set. Splitting each into an isolated island would require extra state coordination without a demonstrated benefit. Conversely, reading one job and following its original application link needs no shared React state.
+
+Claims that Astro cannot support auth are too broad: the current adapter documents sessions and server features. Auth still needs an identity/access-control design, just as it does in the alternatives. Claims about perfect Lighthouse scores, universal ease for complex applications, or always shipping zero JavaScript are not evidence for this app. A static Astro export can use static hosting; an on-demand D1-backed route needs a runtime. Next.js also returns useful initial HTML and can retain React state in shared layouts during client navigation. It is not inherently worse for SEO.
+
+### Route, component and state boundaries
+
+| Surface | Rendering and behavior | State/data boundary |
+|---|---|---|
+| `/` | Astro document hosting the existing React workspace; a plain link to public job pages | Search/filter/sort/queue/page state belongs in query parameters; server data through API |
+| `/jobs/<stable-id>` | On-demand Astro HTML: title, company, Singapore location, eligibility note, requirements, description, provenance and original source link | Read one catalog row by stable ID; no complete feed or React app needed |
+| `/api/catalog` | Public catalog version, source health, counts, cohorts and salary benchmarks | Used to describe the same imported public catalog |
+| `/api/jobs` | Public bounded filtered/paginated JSON summaries | Only public catalog fields, allowlisted filters and ordering; full descriptions load separately |
+| `/api/jobs/<stable-id>` | Public one-record JSON, genuine 404 for unknown IDs | Used for details and selected saved/compared roles without downloading every description |
+| Salary/source/saved views | Keep existing React views together in the first rollout | Do not invent new public routes or index arbitrary workspace states during the migration |
+
+A role title should be a real anchor to its public URL. A modal may remain a workspace convenience, with a separate accessible permalink, but it cannot be the only way to read a role. Full document navigation naturally supports open-in-new-tab and browser history.
+
+The existing `2unemployment-saved` localStorage key and its `gradsg-saved` fallback must survive unchanged. Saved IDs are browser-local preferences, not an account or an application history service. Read browser storage after hydration when rendering React on the server; server and first client markup must agree. Comparison selection can remain ephemeral within the workspace, or use sessionStorage if restoring it across document navigation is included and tested. Do not rely on back-forward cache to guarantee state restoration.
+
+For filters and pagination, initialise from the URL, synchronise changes with browser history, and handle `popstate`. Changing a filter resets pagination. Use replace-history for incremental typing and navigable history entries for deliberate page/filter changes, so Back does not require stepping through every keystroke. Keep the return-to-search URL when following a detail link. Query combinations need a defined canonical/noindex policy; thousands of arbitrary filter URLs are not thousands of unique editorial pages.
+
+Detail HTML needs a self-canonical URL, title and description derived from the record, and escaped employer content. Unknown IDs must not silently fall through to the SPA shell with HTTP 200. Closed records retain their stable URLs and clearly show closure; do not imply they remain open. Do not use a first-seen timestamp as an employer's publication date. Until required employer fields exist, truthful `WebPage` structured data is preferable to incomplete or invented `JobPosting` rich-result data. Company-level salary estimates never become `baseSalary` in job structured data.
+
+### Data and request flow
+
+```text
+Existing deterministic source adapters + previous snapshot
+  → existing merge/lifecycle/salary rules
+  → validated public snapshot
+  → catalog importer: stable-ID upserts + source status + published revision
+  → D1
+      ├─ Astro /jobs/<id> → indexed row read → useful HTML
+      └─ Worker /api/jobs → bounded query → React workspace
+
+Static logo/CSS/hashed JS → Cloudflare Static Assets
+Browser-local saved IDs → React only
+Independent internship Telegram watcher → unchanged
+```
+
+Keep catalog query functions server-side and share them between HTML routes and API handlers. A page running in the same Worker can call the catalog layer directly through the D1 binding; it need not make an HTTP request to its own API. Source credentials and future private account data have no place in these public responses.
+
+The importer must preserve stable IDs, first-seen values, original links, source check timestamps, advertised-versus-estimated pay and successful-absence closure rules. Importing a snapshot is not another source verification. A source failure cannot refresh a job's successful checked date. Retain the existing deterministic ingestion tests and Telegram watcher separately.
+
+The first schema uses queryable job columns, a cohort relation, an FTS5 index, catalog metadata and changed-payload history. Full and summary JSON preserve the existing public record contract and salary/source provenance; employer/company labels and salary context are deliberately denormalised at this scale. Source health is in catalog metadata, not a separate source entity table. Separate company/source/salary tables are deferred until independent editing or relational queries justify them. This is an explicit simpler schema choice, not a claim that the full normalisation proposal has been implemented. Retain raw employer HTML or images outside D1 if archiving is later requested.
+
+History is bounded to the previous 20 changed payloads per job, each at most 90 days old. Unchanged imports do not create history rows. The latest job row and lifecycle fields remain, including IDs absent from an imported snapshot; only ingestion rules can establish closure. The existing Git snapshot also provides a recovery record. D1 documents that normal SQL export does not support virtual tables such as FTS5, so backup/recovery must use retained source snapshots and migrations to rebuild FTS, or a verified D1 Time Travel procedure rather than assuming a naive full `d1 export` will work. Do not delete old snapshots or retire their recovery value during the first rollout.
+
+### Query cost, freshness and caching
+
+The implemented API contract is deliberately bounded: `limit` defaults to 25 and is at most 50; `offset` is 0–10,000. Queues are `graduate`, `review`, `closed` or `all`; ordering is `recommended`, `company`, `newest` or `salary`, always with an ID tie-break. Optional filters include `cohort=20xx`, `salary=known|employer|unknown` and an employer-source boolean. `ids` takes at most 50 stable IDs and bypasses the queue gate so saved review/closed roles remain visible, while still applying other explicit filters. The client chunks larger saved lists and sorts the combined matching summaries before browser pagination.
+
+`q` is at most 100 characters. It now matches Unicode word-token prefixes across company, title and tags, with all tokens required. This differs from the previous literal substring search: `grad` can match `graduate`, but a middle-of-word fragment is not a substring search, and punctuation such as `C++` is tokenised. Arbitrary query text never becomes raw FTS syntax. This behavior needs a clear user-facing hint if confusion appears.
+
+A fixed page size with a hard upper limit bounds response bytes, not database work. Each supported filter/sort needs a deterministic ID tie-break and measured query plan. Index the normal status/eligibility/order path and record lookups; use `EXPLAIN QUERY PLAN` locally and D1 `meta.rows_read` remotely. Deep offset pagination still examines skipped rows; use a cursor when that becomes material. A leading-wildcard substring search cannot be described as index-efficient merely because another filter uses an index. At this scale a bounded scan can be acceptable, provided the limit is explicit and measured. Consider full-text search only when observed load or catalog size warrants it.
+
+Build-time pages remain the simplest daily-snapshot deployment: data changes require a rebuild. On-demand pages let an ingestion/import publish catalog changes without rebuilding static assets, but dynamic requests invoke a Worker and can read D1. This introduces runtime cost and failure modes that Static Assets-only hosting did not have.
+
+Start with a short, explicit public cache lifetime or revalidation. A content revision/ETag identifies an imported catalog version; it is not by itself a global purge mechanism. If edge caching is introduced, include normalised query parameters and revision in cache keys, publish the revision only when a complete import succeeds, and test how the current revision is discovered. Serve immutable hashed assets with long caching. Do not cache errors or any future authenticated responses as public data.
+
+Cloudflare's Cache API is data-center-local. Deleting a cache entry in one request does not invalidate all locations. A bounded TTL provides a simple documented freshness window; global immediate invalidation requires a separate verified strategy. Caching headers on Worker responses must be checked against the actual Cloudflare deployment behavior rather than assumed to enable all edge caching automatically.
+
+### Bounded migration and verification gates
+
+1. **Rendering boundary.** Add Astro and the Cloudflare adapter while keeping one React workspace. Add stable job links and real HTML detail/404 routes. Verify raw HTTP HTML with JavaScript disabled, original source links, canonical metadata, keyboard navigation and output payloads.
+2. **Catalog boundary.** Define supported filters/order/pagination first; add versioned schema migrations and an importer using stable IDs. Import the current snapshot locally and compare counts, record contents, first-seen/check timestamps and pay provenance. Test repeat imports and failed publication behavior. Verify query plans and measure D1 rows read before claiming scale efficiency.
+3. **API and workspace.** Add bounded list/detail endpoints, then move result fetching and page controls to the API. Restore filter/page state through URLs and Back/Forward. Verify saved roles and three-role comparison still work across pages without fetching the entire growing catalog. Keep accessible errors/loading states within the existing UI conventions.
+4. **Publication.** Provision/bind the database only as needed for deployment, seed it, and extend the existing daily job workflow to import validated output. A database write failing must not publish a new catalog revision or falsely mark the deployment healthy. Deploy only after `npm test`, `npm run build` and `npm run check`; verify actual live HTML/API routes and deployed counts. This gate is distinct from passing a dry run.
+5. **Retirement.** Retain the last known-good snapshot and previous Worker version until the new runtime and refresh workflow are verified. Rollback means restoring both compatible Worker code and a catalog revision/schema the code understands. Do not remove the existing snapshot/SPA path or alter the Telegram watcher merely to finish the framework migration.
+
+The current Cloudflare adapter documentation uses `import { env } from 'cloudflare:workers'` for resource bindings and `Astro.locals.cfContext` for execution context. Generate binding types from Wrangler. Disable Astro sessions when unused to avoid provisioning a session KV namespace, and use passthrough image handling for the existing static logo rather than adding image infrastructure.
+
+The rollout status belongs in [progress.md](../progress.md) and [todo.md](../todo.md); this plan does not certify that every gate has passed.
+
+### Current references reviewed for this decision
+
+Retrieved from the official documentation on 2026-11-23:
+
+- [Astro islands](https://docs.astro.build/en/concepts/islands/) — explicit client hydration; independent islands can share state, but sharing is an architectural choice.
+- [Astro on-demand rendering](https://docs.astro.build/en/guides/on-demand-rendering/) — static by default; an adapter and per-route opt-out or server output enable request-time HTML.
+- [Astro Cloudflare adapter](https://docs.astro.build/en/guides/integrations-guide/cloudflare/) — current binding imports, workerd development/preview, optional sessions and image handling.
+- [Astro navigation and view transitions](https://docs.astro.build/en/guides/view-transitions/) — document navigation is the default; `ClientRouter` is an additional choice with script/state implications.
+- [React hydration](https://react.dev/reference/react-dom/client/hydrateRoot) — server and initial client output must match.
+- [Next.js Server and Client Components](https://nextjs.org/docs/app/getting-started/server-and-client-components) and [navigation](https://nextjs.org/docs/app/getting-started/linking-and-navigating) — initial HTML, server/client boundaries and client transitions can coexist.
+- [OpenNext on Cloudflare](https://opennext.js.org/cloudflare) — current Workers adapter/runtime compatibility must be checked for the selected Next.js version.
+- [D1 indexes](https://developers.cloudflare.com/d1/best-practices/use-indexes/) — composite index ordering, query-plan checks and rows-read accounting.
+- [D1 import/export](https://developers.cloudflare.com/d1/best-practices/import-export-data/) — SQL import transaction handling and virtual-table export limitations.
+- [Workers static asset billing](https://developers.cloudflare.com/workers/static-assets/billing-and-limitations/) — dynamic Worker invocation differs from static-only serving.
+- [Workers cache behavior](https://developers.cloudflare.com/workers/reference/how-the-cache-works/) — Cache API locality and invalidation limits.
