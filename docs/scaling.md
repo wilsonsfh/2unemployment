@@ -50,7 +50,7 @@ Store structured job content and provenance in the database. Keep bulky raw HTML
 
 D1 is the default recommendation for this public Cloudflare catalog. Supabase is preferable if its broader account/auth/PostgreSQL platform solves a near-term product need and a roughly $25/month baseline is acceptable. Firestore's realtime/client strengths are useful, but are not the current product bottleneck.
 
-The database rationale is incremental updates, richer records, history, filtering and pagination—not current storage pressure. The latest measured snapshot is **44 records, 263,503 bytes (~257 KiB), 46,239 bytes gzip (~45 KiB)**. The supplied text's **20 records / 46.5 KB / 8.4 KB compressed** describes an older snapshot and is superseded; see [progress.md](../progress.md).
+The database rationale is incremental updates, richer records, history, filtering and pagination—not current storage pressure. The earlier release snapshot measured **44 records, 263,503 bytes (~257 KiB), about 45 KiB gzip**. After the approved source-use removals, the current snapshot measures **247,455 bytes (~242 KiB), 44,373 bytes gzip (~43 KiB)**; see [licensing and data use](licensing-and-data-use.md). The supplied text's **20 records / 46.5 KB / 8.4 KB compressed** describes an older snapshot and is superseded; see [progress.md](../progress.md).
 
 ## Rendering and SEO are a separate decision
 

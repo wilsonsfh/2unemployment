@@ -8,11 +8,11 @@ Singapore full-time new-graduate SWE catalog. Repo: https://github.com/wilsonsfh
 
 **Astro + React + D1 is released and verified live.** The MPA/SPA analysis and migration plan are in [docs/scaling.md](docs/scaling.md). Public documents use Astro; the connected interactive workspace remains React. No accounts or private application tracking were added. WebPage structured data avoids fabricating employer publication dates for JobPosting.
 
-Release source: `e8959a0`; compressed-ETag fix: `211b710`. Latest generated snapshot: `ccd51a7`, `2026-11-23T05:23:17.489Z` (13:23 SGT). Successful final release: [Actions 45117422965](https://github.com/wilsonsfh/2unemployment/actions/runs/45117422965). Worker version: `2c1fe4f3-fe88-43e7-83ff-df0c77ec99e0`. The stored GitHub token's D1 import and Worker deployment permissions were exercised successfully; no further permission setup is pending.
+Current release source: `857cc4a`; conservative source policy: `bef4fc3`; generated snapshot: `225f789`, `2026-11-23T06:04:22.264Z` (14:04 SGT). Successful manual release: [Actions 45121661778](https://github.com/wilsonsfh/2unemployment/actions/runs/45121661778). Worker version: `976e500f-f48e-4dee-bf74-0aeb1958767f`. The stored CI token imported D1, deployed and passed catalog/recovery/logo verification. This remains a manual release; timed execution is unproven.
 
-Catalog: **30 graduate roles + 14 review candidates**, 43 original employer descriptions, one incomplete H2 Games source. Latest refresh retained these counts; review candidates were not promoted. Ten employer feeds and six Apple/ByteDance page checks remain unchanged. Descriptions retain up to 18,000 characters. Saved roles retain `2unemployment-saved` and legacy `gradsg-saved`; comparison is ephemeral within the workspace.
+Catalog: **30 graduate roles + 14 review candidates**, 42 original employer descriptions and 28 graduate roles with employer sources. All 14 exact review requisitions were reassessed; none supports promotion. H2's employer identity is resolved, but its exact vacancy is still indexed/incomplete; its unsupported workplace is now Not specified. Apple retains its stable factual listing link with copied role text withheld. Ten employer feeds and five ByteDance page checks remain configured; automated Apple page requests are blocked. Levels.fyi numeric estimates are removed; all three employer-advertised salaries remain. Saved keys and source-check/firstSeen invariants are preserved.
 
-The remote APAC D1 database `2unemployment-catalog` is bound in `wrangler.jsonc`. Real HTML, API, browser and CI checks are recorded in [progress.md](progress.md). The documentation follow-up below is separate from the deployed runtime; check `git status` before starting new work.
+The remote APAC D1 database `2unemployment-catalog` is bound in `wrangler.jsonc`. Real HTML, API, browser and CI checks are recorded in [progress.md](progress.md). Current runtime and follow-up state are recorded below; check `git status` before starting new work.
 
 ## Design rationale and logo follow-up
 
@@ -20,7 +20,13 @@ Added the reader-facing wiki guide `~/Projects/Personal_LLM_Wiki/wiki/guides/2un
 
 The user selected **deploy logo file changes through the existing daily job**. That behavior is already provided by `.github/workflows/refresh-jobs.yml`: checkout includes committed `public/brand/` changes, Astro copies them to `dist/client`, and Wrangler deploys the assets at the existing 07:23 SGT scheduled release. No separate cron or runtime change was needed. [docs/branding.md](docs/branding.md) documents the two independent logo assets, commit/push requirement, manual trigger, release gates and cache caveats; README links it.
 
-Local `npm test`, `npm run build`, and `npm run check` passed. Both built logo files match their source bytes. Full wiki lint passed with 0 ISSUES (703 pages, 2052 raw files; 240 advisory info); GitHub reports the daily workflow active. This follow-up changes documentation only; no new remote D1 import, deployment, workflow run, commit or push was performed. The prior release identifiers above remain current. Check both repositories' Git status because the wiki can auto-commit independently.
+The initial documentation was committed/pushed in `bffdd68`; the wiki's existing auto-commits were not rewritten. The current task batch additionally added [build-your-own-board guidance](docs/build-your-own-board.md), [licensing/data-use audit](docs/licensing-and-data-use.md), [complete local query/import measurements](docs/catalog-benchmark.md), [eligibility review](docs/eligibility-review.md), the project-local matching skill, and [learnings.md](learnings.md) for resume/interview reflection.
+
+The owner explicitly approved conservative Apple/Levels changes. `scripts/source-policy.mjs` sanitizes after merge/pay attachment; the importer rejects restricted old snapshots and deletes restricted history during publication. Live API checks confirm empty Apple text/requirements, zero estimates, three advertised salaries; read-only remote D1 history audit returned zero restricted rows. Older Git history/caches are not recalled. Other-source permissions remain unresolved; do not describe the whole data set as legally cleared.
+
+Subtasks used GPT-6.1 Sol high for source review, benchmark and adoption guide; GPT-6 Luna medium for read-only audits and an independent matching-skill case check; GPT-6.1 Sol medium for the Telegram diagnostic. No Opus/Sonnet/Haiku routing or app model calls were available/added.
+
+Telegram audit: only the successful manual baseline existed, current table digest was unchanged (524 URLs), and no send had been attempted. New manual-only `test_notification` input defaults false and leaves alert state untouched. **Do not dispatch a real test without the owner's explicit answer to the pending send question.** Code licence choice is also pending: ISC is declared in package metadata, but no root LICENSE has been selected/added. The owner asked for the explanation first. Scheduled daily release next due 2026-11-24 07:23 SGT; hourly Telegram remains minute 17 with execution/delivery still unproven at audit. Wiki pages are updated with source evidence; final lint passed (706 pages, 2055 raw files, 0 ISSUES; 240 advisory info). Wiki push status is recorded in progress.
 
 ## Key files
 
@@ -28,7 +34,7 @@ Local `npm test`, `npm run build`, and `npm run check` passed. Both built logo f
 - `src/main.tsx`, `src/lib/workspace.mjs`: cohesive React workspace and shareable URL state. Query typing replaces history; filters/pages push it.
 - `src/pages/api/`, `src/lib/catalog.mjs`: summary pagination, full details, public metadata. Defaults 25/max50 rows, offset0–10000. Search is ANDed word prefixes, not the old arbitrary substring match.
 - `migrations/0001_catalog.sql`, `scripts/catalog-import.mjs`: schema, indexed projections/cohorts/FTS, changed-row upserts, stale-publication rejection, history at most 20 prior payloads/job for 90 days. Import does not close/delete missing jobs; ingestion owns lifecycle. Raw HTML/images stay outside SQL.
-- `scripts/ingest.mjs`, `scripts/lib.mjs`, `scripts/details.mjs`: unchanged employer discovery, conservative gates and enrichment.
+- `scripts/ingest.mjs`, `scripts/lib.mjs`, `scripts/details.mjs`: deterministic employer discovery/gates/enrichment with the final source-use restriction pass in `scripts/source-policy.mjs`.
 - `public/data/jobs.json`: retained generated recovery snapshot; `data/sources.json`, `data/employer-pages.json`, `data/curated.json`, `data/salaries.json`: original source/estimate inputs.
 - [docs/pipeline.md](docs/pipeline.md): implemented flow, publication commands, failure behavior and API limits.
 - [docs/motion-research.md](docs/motion-research.md): completed Apple-style web/native research. CSS first; Motion/AutoAnimate are conditional options. No animation dependency or project skill installed.
@@ -49,22 +55,22 @@ npm run preview
 
 After fresh ingestion, run `catalog:local` again to refresh local D1. `npm run catalog:publish` applies remote migrations and imports the validated snapshot. `npm run deploy` builds/checks, publishes D1, then deploys the Worker. Build/dev generate ignored Worker types; `.astro/`, `.wrangler/`, `dist/`, and browser evidence in `output/` are ignored.
 
-36 tests pass locally and in the successful final CI run. Build and deployment dry run pass. Production-preview and live browser tests cover filters, history, pagination, saved persistence, 54 saved IDs over multiple chunks including review/closed queues, cross-page comparison, full details, keyboard search, mobile navigation, and JavaScript-disabled job/list/pagination routes. Remote default-list query used its index and read 25 rows for 25 IDs; this is not a 10,000-job load test.
+51 tests pass locally and in release run 45121661778. Build and deployment dry run pass. Production-preview and live browser tests cover filters, history, pagination, saved persistence, 54 saved IDs over multiple chunks including review/closed queues, cross-page comparison, full details, keyboard search, mobile navigation, and JavaScript-disabled job/list/pagination routes. Remote default-list query used its index and read 25 rows for 25 IDs; this is not a 10,000-job load test.
 
 Dynamic responses allow shared reuse for 60 seconds with revalidation; errors are uncached. ETags do not eliminate D1 reads or provide global purge. Root metadata/results are revision-checked; open workspaces refresh metadata on new versions. D1 file imports can briefly make the database unavailable, and roll back on failure. FTS virtual tables restrict full SQL export: retain snapshot+migrations or use verified Time Travel recovery.
 
 ## Automation
 
-1. `.github/workflows/refresh-jobs.yml`: daily 07:23 SGT/manual. Install → ingest → tests → build → persist snapshot → migrate/import D1 → dry-run → deploy. It does not run on every push. The GitHub token's D1 import and Worker permissions are verified by the successful release runs. Future scheduled execution still needs observing; manual workflow success does not prove a timed run.
+1. `.github/workflows/refresh-jobs.yml`: daily 07:23 SGT/manual. Install → ingest → tests → build → persist snapshot → migrate/import D1 → dry-run → deploy → verify catalog/list/public recovery revision, one role and both logo assets. It does not run on every push. The GitHub token's D1 import and Worker permissions are verified by the successful release runs. Future scheduled execution still needs observing; manual workflow success does not prove a timed run.
 2. `.github/workflows/telegram-alerts.yml`: hourly minute 17/manual, independently watches meaningful internship-repository changes. Silent baseline/deduplication and its `telegram-alert-state` branch are unchanged. First real Telegram delivery and future scheduled execution remain unproven.
 
 Four secret names were previously configured: `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`. Never print values. Local OAuth alone does not validate CI credentials; this release exercised the actual stored GitHub token successfully.
 
 ## Working boundaries and next work
 
-- Release gate passed. Next work is H2 original-source resolution and eligibility review, or representative larger-catalog query/read measurements; do not start every queued track at once.
+- Release gate passed. Next priorities are code licence selection, remaining source permissions/correction contact, observing actual scheduled runs, and approved remote cost measurements. H2 exact-source resolution stays open; the 14-candidate review and local 1k/10k benchmark are complete.
 - Preserve conservative eligibility, source labels, check dates on failures, IDs and firstSeen. Do not invent pay, sponsorship, workplace or eligibility. Indexed leads are not employer-verified.
-- Use deterministic public employer sources; no paid jobs API or LLM extraction is needed. H2 employer-source resolution and review-candidate assessment remain open.
+- Use deterministic public employer sources; no paid jobs API or LLM extraction is needed. H2 employer-source resolution remains open; all 14 reviewed candidates stay review.
 - Solutions engineering and internships stay separate future categories; the Telegram watcher remains independent.
 - Keep changes surgical and commits small under the user's identity; no AI co-author attribution, secrets or private application history. `CLAUDE.md` is canonical; no duplicate AGENTS.md needed.
 - Give regular progress updates. Cap an issue at two fix/check attempts unless correctness/deployment blocks require resolution.

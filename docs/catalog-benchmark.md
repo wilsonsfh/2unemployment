@@ -20,6 +20,8 @@ The report contains per-statement SQL, bind values, query plans and counters; lo
 
 Recorded run: Node **22.23.4**, Miniflare **5.20261119.0-beta**, macOS arm64; started `2026-11-23T05:59:25.293Z`. Seed snapshot generation time: `2026-11-23T05:57:54.777Z`; seed file SHA-256: `b0a70d1fada45c5ac397c0f06fea627ef38d4782010489d88733155dd2ecd5ad`.
 
+The recorded seed is the sanitized snapshot in [commit bef4fc3](https://github.com/wilsonsfh/2unemployment/blob/bef4fc3/public/data/jobs.json), generated `2026-11-23T05:57:54.777Z`. Later source refreshes change the seed hash; the command defaults to the current checkout. The report preserves the measured hashes and tool versions rather than implying every later refresh reproduces identical bytes or timings.
+
 ## What is represented
 
 The seed is the sanitized public 44-job snapshot, with restricted Apple text and Levels.fyi estimates removed, repeated cyclically to retain its varied description and requirement lengths. IDs, companies, titles, source labels/links, lifecycle, cohorts and salary projections are synthetic. Descriptions remain public seed content after source-policy sanitization. Synthetic pay projections do not use Levels.fyi content. These fixtures must never be published as real openings.

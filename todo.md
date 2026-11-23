@@ -5,10 +5,21 @@ Updated: 2026-11-23. Read [handover.md](handover.md) and [progress.md](progress.
 ## Data quality and operations
 
 - [ ] **Resolve H2 Games' original posting** — [issue #4](https://github.com/wilsonsfh/2unemployment/issues/4). Find an accessible employer-controlled posting/application URL, fill actual requirements and work arrangement, preserve the existing ID. If unavailable, retain the incomplete label.
-- [ ] Review the 14 eligibility-review candidates against their original requirements. Promote only explicitly supported graduate/entry-level fits; do not inflate the main count.
+- [x] Review the 14 eligibility-review candidates against their original requirements. [All 14 exact requisitions were assessed](docs/eligibility-review.md); none supports graduate promotion. Keep all 14 in review. H2's unsupported workplace was corrected; its exact original posting remains unresolved.
 - [ ] Continue targeted Singapore employer coverage. Prioritise relevant roles/companies from the user's original examples and permitted public employer sources; do not spend time reanalysing whole reference repositories without a concrete gap.
 - [ ] Observe an actual scheduled daily refresh and check the resulting deployed snapshot.
-- [ ] Observe the first real internship Telegram notification. Preserve the silent baseline/deduplication behavior; record delivery evidence without exposing credentials.
+- [ ] Observe the first real internship Telegram notification. Silent baseline and unchanged content explained no message. Manual-only test is implemented and off by default; awaiting the owner’s explicit send choice. API acceptance would not itself prove receipt or a real job-change alert.
+
+## Reusable project and open-source adoption
+
+- [x] Add the project-local [evidence-based role matching skill](.codex/skills/evidence-based-role-matching/SKILL.md) and a knowledge-base concept on cosine similarity, exact identity, eligibility and evidence. Independent case evaluation retained ambiguity rather than falsely merging similar jobs.
+- [x] Write [Build your own board](docs/build-your-own-board.md): agent/GitHub setup, local D1, public APIs, tech/general/solutions-engineering taxonomy, isolated deployment, secrets, schedules and upstream contribution, with explanations followed by snippets and checks.
+- [x] Add [licensing and data-use guidance](docs/licensing-and-data-use.md), including code/data/branding distinctions, source terms and robots findings, Singapore legal context and unresolved permissions.
+- [x] Complete and verify the approved conservative source changes: stop Apple page fetching; withhold copied Apple role text and Levels.fyi numeric benchmarks from current public data; preserve factual links and employer-advertised pay. Published and verified in manual run 45121661778; retained-history audit returned zero restricted entries.
+- [ ] Resolve the code licence file before promoting broad reuse. `package.json` declares ISC; no root licence grant file has been selected/added yet.
+- [ ] Establish applicable permissions for other employer/API sources and document a correction/takedown contact. Public access and attribution alone do not establish republication rights.
+- [x] Add [learnings.md](learnings.md) for resume/interview reflection, including legal judgment, matching evidence, architecture, measured costs and automation boundaries.
+- [ ] Consider a reusable fork/template or guided configuration only after the documented fork path has been tried end-to-end. The present app is not yet a configurable all-occupation product.
 
 ## Scaling architecture — released
 
@@ -23,7 +34,8 @@ Decision and migration plan: [docs/scaling.md](docs/scaling.md). Evidence: [prog
 - [x] Retain search, filters, results, local saving and comparison in one React workspace; add URL state and pagination.
 - [x] Verify production preview with/without JavaScript, routes, source links, pagination, saved-ID chunks, keyboard/mobile interaction, SQL rollback and indexed query plans. Provision/seed isolated remote catalog.
 - [x] **Release gate:** source committed/pushed, GitHub token D1/Worker permissions exercised successfully, both release workflows passed, live HTML/API/counts and browser flows verified. Final run: [45117422965](https://github.com/wilsonsfh/2unemployment/actions/runs/45117422965). Previous static version/source and rollback procedure recorded; wiki walkthrough updated. Future timed schedule remains a separate open observation.
-- [ ] Measure representative query/read costs at larger catalog sizes before claiming free-tier scale. API offset currently caps at 10000; design cursor pagination if browsing beyond 10025 matches becomes necessary. FTS is word-prefix search; test actual query needs before extending it.
+- [x] Measure complete local query/read/import costs at 1k/10k synthetic jobs with the actual importer and API query functions. [Reproduction and limits](docs/catalog-benchmark.md). Counts, FTS and write/history amplification matter; local counters are not remote billing.
+- [ ] Validate representative complete-request costs in an approved isolated remote catalog before making production capacity claims. Investigate COUNT/FTS work, history budget and import amplification; design cursor pagination if browsing beyond 10025 matches becomes necessary.
 - [ ] Revisit Supabase if accounts, cross-device applications or substantial PostgreSQL features become near-term requirements. Do not introduce auth/tracking as a migration side effect.
 
 ## Separate categories
