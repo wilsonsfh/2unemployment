@@ -35,22 +35,23 @@
     "category": "swe",
     "employment": "full-time",
     "eligibility": "explicit",
-    "eligibilityNote": "Entry-level posting asks for less than 3 years of experience; Java and Python. Public index, not a fresh employer check.",
+    "eligibilityNote": "Early-career wording in the listing title. Role text is omitted pending reuse permission; follow the Apple link to check requirements and availability.",
     "cohort": [],
     "tags": [
-      "Java",
-      "Python"
+      "Software"
     ],
     "workplace": "Not specified",
     "status": "listed",
-    "sourceName": "Public listing \u00b7 search-indexed",
+    "sourceName": "Apple listing link \u00b7 text omitted",
     "sourceType": "indexed",
-    "sourceUrl": "https://alion.io/job/apple-software-engineer-apple-online-store-early-careers",
-    "applyUrl": "https://alion.io/job/apple-software-engineer-apple-online-store-early-careers",
+    "sourceUrl": "https://jobs.apple.com/en-sg/details/200654019-3278/software-engineer-apple-online-store-early-careers?team=SFTWR",
+    "applyUrl": "https://jobs.apple.com/en-sg/details/200654019-3278/software-engineer-apple-online-store-early-careers?team=SFTWR",
     "checkedAt": "2026-11-23T03:00:00.000Z",
     "firstSeen": "2026-11-23T03:00:00.000Z",
-    "description": "Apple Online Store / IS&T. Bachelor\u2019s degree in Computer Science or equivalent. The indexed listing specifies less than three years of work experience. Verify the current posting before applying.",
-    "workRights": "Not confirmed. Check the employer posting."
+    "description": "",
+    "workRights": "Not confirmed. Check the employer posting.",
+    "requirements": [],
+    "detailStatus": "unavailable"
   },
   {
     "id": "bytedance-7668651000437180677",

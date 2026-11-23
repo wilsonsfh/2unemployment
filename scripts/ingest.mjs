@@ -1,6 +1,7 @@
 import {readFile,writeFile,mkdir,rename} from 'node:fs/promises';
 import {normalize,mergeFeed,classify,canonical} from './lib.mjs';
 import {parseEmployerPage,experienceNote,workRightsNote} from './details.mjs';
+import {restrictPublicJob} from './source-policy.mjs';
 const sources=JSON.parse(await readFile('data/sources.json','utf8'));
 const seeds=JSON.parse(await readFile('data/curated.json','utf8'));
 const salaries=JSON.parse(await readFile('data/salaries.json','utf8'));
@@ -45,6 +46,8 @@ if(results.every(r=>r.error))throw new Error('All employer feeds failed; refusin
 // Discovered leads get a second-stage fetch of their configured original employer page.
 const pageResults=[];
 for(const source of pages){
+  // Apple role-page access is paused pending permission, including stale configurations.
+  if(source.company==='Apple'||new URL(source.url).hostname==='jobs.apple.com')continue;
   const old=previous.find(j=>j.id===source.id)||seeds.find(j=>j.id===source.id);
   try{
     const response=await fetch(source.url,{headers:{'User-Agent':'2unemployment/0.1 (+Singapore graduate job index)'},signal:AbortSignal.timeout(20000)});
@@ -63,8 +66,11 @@ for(const source of pages){
     console.error(`employer page ${source.id}: ${error.message}`);
   }
 }
-const jobs=mergeFeed(previous,seeds,results,now);
+let jobs=mergeFeed(previous,seeds,results,now);
 for(const job of jobs) if(job.eligibility==='explicit' && salaries[job.company]&&job.salary?.kind!=='advertised') job.salary=salaries[job.company];
+// Failed feeds and successful merges can retain cached restricted content/pay.
+// Keep the paused Apple record's last actual check, rather than an older seed date.
+jobs=jobs.map(job=>restrictPublicJob(job.id==='apple-online-store-early'?(previous.find(old=>old.id===job.id)||job):job));
 const statuses=results.map(({source,jobs,error})=>({id:source.id,name:source.name,kind:'Employer API',status:error?'unavailable':'healthy',url:source.url,checkedAt:error?undefined:now,count:jobs.length,note:error?`${error}; previous listings retained with their old check time.`:'Singapore software roles. Graduate and review queues are separate.'}));
 statuses.push({id:'curated',name:'Curated discoveries',kind:'Manual / search index',status:'manual',url:'https://github.com/SimplifyJobs/New-Grad-Positions',note:'Manually researched leads, each with its own source and check date. Not automatically revalidated.'});
 statuses.push(...pageResults);

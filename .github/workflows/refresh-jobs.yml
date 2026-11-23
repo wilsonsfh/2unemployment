@@ -42,6 +42,7 @@ jobs:
             npx wrangler d1 execute 2unemployment-catalog --remote --file .wrangler/catalog-import.sql --yes
             npm run check
             npx wrangler deploy
+            node scripts/verify-deployment.mjs --url https://2unemployment.wilsonsoon.workers.dev
           else
             echo 'Snapshot updated; deployment skipped because Cloudflare CI secrets are not configured.'
           fi

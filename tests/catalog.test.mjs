@@ -148,3 +148,38 @@ test('import validates before publication and SQL file can roll back failed upda
   assert.deepEqual(await getCatalogMeta(db), original);
   assert.deepEqual(await getJob(db, snapshot.jobs[0].id), snapshot.jobs[0]);
 });
+
+test('publication rejects cached Apple text and Levels estimates rather than silently changing its snapshot',()=>{
+ const apple=snapshot.jobs.find(j=>j.id==='apple-online-store-early');
+ assert.throws(()=>buildCatalogImport({...snapshot,jobs:[{...apple,description:'Restricted legacy Apple text.'}]}),/Restricted source content/);
+ const base=snapshot.jobs[0];
+ for(const salary of [{kind:'estimate',annual:123456,sourceName:'Levels.fyi'},{kind:'estimate',annual:123456,source:'https://www.levels.fyi/companies/example'}]){
+  assert.throws(()=>buildCatalogImport({...snapshot,jobs:[{...base,salary}]}),/Restricted source content/);
+ }
+ assert.doesNotThrow(()=>buildCatalogImport({...snapshot,jobs:[{...base,salary:{kind:'advertised',annual:200000,sourceName:'Employer posting',source:'https://employer.test/job'}}]}));
+});
+
+test('sanitized publication removes restricted history including upsert archives while preserving unrelated and advertised history',async t=>{
+ const db=database();t.after(()=>db.sqlite.close());
+ const apple=snapshot.jobs.find(j=>j.id==='apple-online-store-early');
+ const base=snapshot.jobs.find(j=>j.company==='ByteDance');
+ const advertised=snapshot.jobs.find(j=>j.salary?.kind==='advertised');
+ const legacyApple={...apple,description:'Restricted legacy Apple text.',requirements:['Restricted requirement.']};
+ const legacyLevels={...base,salary:{kind:'estimate',annual:123456,sourceName:'Levels.fyi',source:'https://www.levels.fyi/companies/example'}};
+ // Simulate rows already deployed before the new publication guard existed.
+ for(const job of [legacyApple,legacyLevels])db.sqlite.prepare("UPDATE jobs SET payload_json=?, payload_hash='legacy-restricted' WHERE id=?").run(JSON.stringify(job),job.id);
+ const addHistory=db.sqlite.prepare('INSERT INTO job_history(job_id,payload_json) VALUES (?,?)');
+ addHistory.run(base.id,JSON.stringify(legacyLevels));
+ addHistory.run(base.id,JSON.stringify({...base,title:'Unrelated permitted history'}));
+ addHistory.run(advertised.id,JSON.stringify(advertised));
+ db.publish(snapshot);
+ assert.equal((await getJob(db,apple.id)).description,'');
+ assert.equal((await getJob(db,base.id)).salary,undefined);
+ assert.deepEqual((await getJob(db,advertised.id)).salary,advertised.salary);
+ assert.deepEqual((await getCatalogMeta(db)).salaryBenchmarks,[]);
+ const history=db.sqlite.prepare('SELECT job_id,payload_json FROM job_history').all();
+ assert.equal(history.some(j=>j.job_id===apple.id),false);
+ assert.equal(history.some(j=>j.payload_json.includes('Levels.fyi')),false);
+ assert.equal(history.some(j=>JSON.parse(j.payload_json).title==='Unrelated permitted history'),true);
+ assert.equal(history.some(j=>JSON.parse(j.payload_json).salary?.kind==='advertised'),true);
+});

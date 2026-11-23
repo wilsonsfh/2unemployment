@@ -1,0 +1,45 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {mkdtempSync,mkdirSync,writeFileSync,readFileSync,rmSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {spawnSync} from 'node:child_process';
+
+const snapshot=JSON.parse(readFileSync(new URL('../public/data/jobs.json',import.meta.url),'utf8'));
+const checkedAt='2026-11-22T03:00:00.000Z';
+const estimate={kind:'estimate',annual:123456,source:'https://www.levels.fyi/companies/example',sourceName:'Levels.fyi'};
+
+test('offline ingestion skips Apple and strips cached Levels estimates after successful and failed merges',t=>{
+ const dir=mkdtempSync(join(tmpdir(),'2unemployment-source-policy-'));t.after(()=>rmSync(dir,{recursive:true,force:true}));
+ mkdirSync(join(dir,'data'));mkdirSync(join(dir,'public/data'),{recursive:true});
+ const apple={...snapshot.jobs.find(j=>j.id==='apple-online-store-early'),checkedAt,detailCheckedAt:checkedAt,description:'Restricted Apple text sentinel.',requirements:['Restricted Apple requirement.'],eligibilityNote:'Copied Apple requirement.',sourceType:'employer-page',detailStatus:'verified'};
+ const base={...snapshot.jobs[0],checkedAt,firstSeen:checkedAt};
+ const cached={...base,id:'example-1',company:'Example',managedBy:'example',applyUrl:'https://example.test/job/1',salary:estimate};
+ const failed={...base,id:'failed-1',company:'Failed',managedBy:'failed',applyUrl:'https://failed.test/job/1',salary:estimate};
+ const advertised={...failed,id:'failed-2',applyUrl:'https://failed.test/job/2',salary:{kind:'advertised',annual:200000,source:'https://failed.test/job/2',sourceName:'Employer posting'}};
+ const sources=[{id:'example',name:'Example',adapter:'greenhouse',url:'https://example.test/feed'},{id:'failed',name:'Failed',adapter:'greenhouse',url:'https://failed.test/feed'}];
+ for(const [path,data] of Object.entries({'data/sources.json':sources,'data/curated.json':[{...apple,checkedAt:'2026-11-21T03:00:00.000Z'}],'data/salaries.json':{Example:estimate},'data/employer-pages.json':[{id:apple.id,company:'Apple',url:apple.applyUrl}],'public/data/jobs.json':{generatedAt:checkedAt,jobs:[apple,cached,failed,advertised],sources:[]}}))writeFileSync(join(dir,path),JSON.stringify(data));
+ const requests=join(dir,'requests.jsonl');
+ const preloader=join(dir,'mock-fetch.mjs');
+ writeFileSync(preloader,`import {appendFileSync} from 'node:fs';
+ globalThis.fetch=async url=>{appendFileSync(${JSON.stringify(requests)},JSON.stringify(String(url))+'\\n');
+ if(new URL(url).hostname==='example.test')return new Response(JSON.stringify({jobs:[{id:1,title:'Software Engineer Graduate',location:{name:'Singapore'},absolute_url:'https://example.test/job/1',content:'Build software.'}]}),{status:200});
+ return new Response('Unavailable',{status:503});};`);
+ const run=spawnSync(process.execPath,['--import',preloader,fileURLToPath(new URL('../scripts/ingest.mjs',import.meta.url))],{cwd:dir,encoding:'utf8'});
+ assert.equal(run.status,0,run.stderr);
+ const requested=readFileSync(requests,'utf8').trim().split('\n').map(JSON.parse);
+ assert.equal(requested.some(url=>new URL(url).hostname==='jobs.apple.com'),false,'Apple must not be requested even if stale page config contains it');
+ const feed=JSON.parse(readFileSync(join(dir,'public/data/jobs.json'),'utf8'));
+ assert.notEqual(feed.generatedAt,checkedAt);
+ const cleanApple=feed.jobs.find(j=>j.id===apple.id);
+ assert.equal(cleanApple.description,'');assert.deepEqual(cleanApple.requirements,[]);
+ assert.equal(cleanApple.detailStatus,'unavailable');assert.equal(cleanApple.sourceType,'indexed');
+ assert.equal(cleanApple.checkedAt,apple.checkedAt);assert.equal(cleanApple.detailCheckedAt,apple.detailCheckedAt);assert.equal(cleanApple.firstSeen,apple.firstSeen);
+ assert.match(cleanApple.applyUrl,/^https:\/\/jobs\.apple\.com\//);
+ assert.doesNotMatch(JSON.stringify(cleanApple),/Restricted Apple|Copied Apple/);
+ assert.equal(feed.jobs.find(j=>j.id===cached.id).salary,undefined);
+ const retained=feed.jobs.find(j=>j.id===failed.id);assert.equal(retained.salary,undefined);assert.equal(retained.checkedAt,failed.checkedAt);assert.equal(retained.firstSeen,failed.firstSeen);
+ assert.deepEqual(feed.jobs.find(j=>j.id===advertised.id).salary,advertised.salary);
+ assert.equal(feed.sources.some(s=>s.id===apple.id&&s.status==='healthy'),false);
+});

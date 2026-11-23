@@ -2,6 +2,7 @@ import {createHash} from 'node:crypto';
 import {readFile, writeFile, mkdir} from 'node:fs/promises';
 import {dirname, resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
+import {restrictPublicJob} from './source-policy.mjs';
 
 const sql = value => value === null || value === undefined ? 'NULL' : typeof value === 'number' ? String(value) : `'${String(value).replaceAll("'", "''")}'`;
 const hash = value => createHash('sha256').update(value).digest('hex');
@@ -17,6 +18,7 @@ export function buildCatalogImport(feed) {
   statements.push(`INSERT INTO catalog_meta(id, payload_json) SELECT 0, '{}' WHERE EXISTS (SELECT 1 FROM catalog_meta WHERE julianday(json_extract(payload_json, '$.generatedAt')) > julianday(${sql(feed.generatedAt)}));`);
   for (const job of feed.jobs) {
     if (!job || !/^[A-Za-z0-9_-]{1,160}$/.test(job.id) || ids.has(job.id)) throw new Error('Invalid or duplicate job ID');
+    if (JSON.stringify(restrictPublicJob(job)) !== JSON.stringify(job)) throw new Error(`Restricted source content must be removed before catalog publication: ${job.id}`);
     ids.add(job.id);
     if (!job.company || !job.title || !['listed', 'closed'].includes(job.status) || !['explicit', 'review'].includes(job.eligibility) ||
         !Number.isFinite(Date.parse(job.firstSeen)) || !Array.isArray(job.cohort) || !Array.isArray(job.tags) ||
@@ -51,6 +53,13 @@ WHERE jobs.payload_hash <> excluded.payload_hash;`);
   // Keep the last 20 previous payloads per job, for at most 90 days.
   statements.push("DELETE FROM job_history WHERE changed_at < strftime('%Y-%m-%dT%H:%M:%fZ', 'now', '-90 days');");
   statements.push('DELETE FROM job_history WHERE history_id IN (SELECT history_id FROM (SELECT history_id, row_number() OVER (PARTITION BY job_id ORDER BY history_id DESC) AS position FROM job_history) WHERE position > 20);');
+  // The upsert trigger also archives old public payloads: remove the restricted copies.
+  statements.push(`DELETE FROM job_history WHERE job_id='apple-online-store-early' OR (
+ COALESCE(json_extract(payload_json, '$.salary.kind'), '') <> 'advertised' AND (
+  lower(json_extract(payload_json, '$.salary.sourceName'))='levels.fyi' OR
+  lower(json_extract(payload_json, '$.salary.source')) GLOB '*://levels.fyi/*' OR
+  lower(json_extract(payload_json, '$.salary.source')) GLOB '*://www.levels.fyi/*'
+ ));`);
   return `${statements.join('\n')}\n`;
 }
 
