@@ -17,6 +17,20 @@ test('public JSON uses a representation ETag and revalidates changed content',as
  assert.match(changed.headers.get('Cache-Control'),/s-maxage=60/);
 });
 
+test('compressed response revalidation accepts weak ETags and matching tag lists',async()=>{
+ const url='https://example.com/api/jobs';
+ const data={jobs:[{id:'a'}]};
+ const first=await jsonResponse(data,new Request(url));
+ const tag=first.headers.get('ETag');
+ for(const value of [`W/${tag}`,`"other", W/${tag}`,'*']) {
+  const response=await jsonResponse(data,new Request(url,{headers:{'If-None-Match':value}}));
+  assert.equal(response.status,304);
+  assert.equal(await response.text(),'');
+ }
+ const changed=await jsonResponse({jobs:[{id:'b'}]},new Request(url,{headers:{'If-None-Match':`W/${tag}`}}));
+ assert.equal(changed.status,200);
+});
+
 test('unavailable or invalid responses never enter the public cache',async()=>{
  const response=await jsonResponse({error:'Unavailable'},new Request('https://example.com/api/jobs'),{status:503,cache:false});
  assert.equal(response.status,503);

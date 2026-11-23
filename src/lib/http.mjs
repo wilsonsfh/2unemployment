@@ -5,7 +5,8 @@ export async function jsonResponse(data, request, {status=200, cache=true}={}) {
    const hash=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(body));
    const etag=`"${Array.from(new Uint8Array(hash),b=>b.toString(16).padStart(2,'0')).join('')}"`;
    headers.set('ETag',etag);
-   return new Response(request.headers.get('If-None-Match')===etag?null:body,{status:request.headers.get('If-None-Match')===etag?304:status,headers});
+   const notModified=request.headers.get('If-None-Match')?.split(',').some(tag=>tag.trim()==='*'||tag.trim().replace(/^W\//,'')===etag);
+   return new Response(notModified?null:body,{status:notModified?304:status,headers});
  }
  return new Response(body,{status,headers});
 }
