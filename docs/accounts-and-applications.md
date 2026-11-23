@@ -80,3 +80,7 @@ Verify sign-in with each configured provider, sign-out, signed-out 401, owner is
 This board should help early-career builders find valuable technology roles beyond familiar graduate-program lists. Sierra's stored **Software Engineer, Agent (New Grad 2027)** posting is a concrete example: an employer-advertised **S$200,000–240,000 annual salary** and work on production AI agents and their development lifecycle. Its two other stored agent-engineering roles remain in review; their higher advertised pay does not establish graduate eligibility.
 
 The board provides shortcuts for agent-title graduate roles and the highest known pay. People who build with multi-agent workflows are part of the audience, but the site does not claim that every role requires those skills or that company descriptions establish a specific multi-agent requirement. Read the exact employer evidence, pay basis, location and eligibility before applying. These snapshot facts can change on a future refresh.
+
+## Privacy notice
+
+The public [privacy and account-data notice](privacy.md) explains collection, use, providers, retention, cookies and account-data requests. It is linked from sign-in and the board footer, and serves as the Google OAuth privacy-policy URL.
