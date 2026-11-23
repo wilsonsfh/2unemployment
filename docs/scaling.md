@@ -31,10 +31,12 @@ Hypothetical 10,000-job catalog:
 
 - At 10 KB/job, content alone is roughly 100 MB before indexes, history and overhead.
 - 1,000 list requests returning 25 jobs each return 25,000 records.
-- Suitable indexed queries should keep that comfortably within D1's free daily read allowance.
+- Returned rows alone do not establish allowance usage: the later [complete-request local benchmark](catalog-benchmark.md) measured 8,027 reads for a default 25-row request at 10,000 synthetic jobs, because exact counting also visits matches. Remote billing remains unmeasured.
 - If each request scans all 10,000 jobs, 500 requests can consume five million row reads.
 
 Putting data in a database does not automatically make queries efficient. Design filters/pagination and measure scans before assuming free-tier longevity.
+
+The [1k/10k local measurements](catalog-benchmark.md) now cover actual COUNT/page/metadata batches, FTS, offsets, imports and history. They replace the earlier inference that a 25-row page implies a small complete request. No runtime query optimization or large-scale production capacity claim follows from those measurements alone.
 
 Store structured job content and provenance in the database. Keep bulky raw HTML snapshots and images in object storage if retaining them. Existing static brand assets can remain normal site assets.
 
