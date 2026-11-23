@@ -4,6 +4,12 @@ on:
   schedule:
     - cron: '17 * * * *'
   workflow_dispatch:
+    inputs:
+      test_notification:
+        description: 'Send one labeled Telegram test; leave alert state untouched'
+        type: boolean
+        required: false
+        default: false
 permissions:
   contents: write
 concurrency:
@@ -19,6 +25,7 @@ jobs:
         with:
           node-version: '22'
       - name: Check job table and send changes when Telegram is configured
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.test_notification == true) }}
         run: |
           if [ -n "$TELEGRAM_BOT_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
             node alerts/watch.mjs
@@ -28,5 +35,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      - name: Send one manual Telegram delivery test
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.test_notification == true }}
+        run: node alerts/test-telegram.mjs
+        env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}

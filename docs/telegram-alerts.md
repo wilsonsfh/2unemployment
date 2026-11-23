@@ -10,7 +10,21 @@ This watcher checks the job table in [Singapore-Summer2026-TechInternships](http
 4. Enable Actions with **Read and write permissions** for the built-in `GITHUB_TOKEN`. Repository rules must allow creating and updating `telegram-alert-state`.
 5. Run **Telegram internship alerts → Run workflow** once. Expect `Telegram watcher: baselined.` and a new `telegram-alert-state` branch. This first run sends no message. Later table changes send one summary to the configured chat.
 
-The watcher is implemented and tested locally. It becomes active only after these GitHub and Telegram configuration steps. It does not discover or guess a recipient.
+The watcher does not discover or guess a recipient. The configured secret is used as the exact destination.
+
+## Delivery diagnosis and manual test
+
+On 23 November 2026, the audited [manual run 45110237679](https://github.com/wilsonsfh/2unemployment/actions/runs/45110237679) logged `Telegram watcher: baselined.` at 12:10 SGT. That success recorded 524 job URLs but never called Telegram. Both Telegram secret names were present; this does not validate their values or identify their destination. At the audit, the current source digest matched the stored digest, so another ordinary run would also remain silent. No `schedule` event had been observed in the audited 12:17 and 13:17 SGT windows. Hourly timing remains unproven and GitHub may delay schedules.
+
+To exercise delivery without changing the source or resetting state, publish the manual test code/workflow, then use **Telegram internship alerts → Run workflow → test_notification: true**. The default is `false`. With explicit authorization to send the message, the equivalent CLI command is:
+
+```sh
+gh workflow run telegram-alerts.yml --repo wilsonsfh/2unemployment --ref main -f test_notification=true
+```
+
+This mode calls `alerts/test-telegram.mjs` instead of the watcher. It attempts exactly one `[TEST] 2unemployment Telegram delivery check` message to the existing `TELEGRAM_CHAT_ID`, using the existing bot secret. It performs no source or GitHub state reads/writes and does not consume a pending change. It does not retry automatically; rerunning it sends another test. Scheduled runs and manual runs with the input omitted/false retain ordinary baseline/change detection.
+
+A successful test logs `Telegram acknowledged one test notification; alert state untouched.` This confirms Telegram accepted the API request, not that the user saw a notification or read the message. Check the intended bot/chat and Telegram notification settings separately. A rejected API response or network failure fails the run without printing the bot token. No real test has been sent by the local mock tests.
 
 ## What triggers a message
 
@@ -33,7 +47,7 @@ GitHub schedules are approximate and may be delayed. Scheduled workflows run fro
 ## Verify locally
 
 ```sh
-node --test alerts/watch.test.mjs
+node --test alerts/*.test.mjs
 ```
 
-Tests use simulated source tables and callbacks; they make no network calls and send no Telegram messages. They cover silent initialization, durable deduplication, formatting-only changes, modified roles with unchanged IDs, application URL changes, added/removed jobs in a single-line table, invalid source/state, and retry behavior after delivery failure.
+Tests use simulated source tables, callbacks, and a mocked Telegram request; they make no network calls and send no Telegram messages. They cover silent initialization, durable deduplication, formatting-only changes, modified roles with unchanged IDs, application URL changes, added/removed jobs in a single-line table, invalid source/state, and retry behavior after delivery failure. Delivery-test checks cover the exact configured destination, a single labeled request, HTTP/API/network/JSON failures with sanitized errors, untouched local state, and the manual-only workflow guards/default/mirror.
