@@ -12,12 +12,15 @@ Updated: 2026-11-23. Read [handover.md](handover.md) and [progress.md](progress.
 
 ## Reusable project and open-source adoption
 
+- [x] Publish the full end-to-end setup guide in the website, with discoverable board navigation and linked supporting Markdown guides. Local checks passed; release evidence is tracked in progress/handover.
+- [x] Add a public GitHub correction/data-use request template and a linked removal-process explanation. Intake is public and requires GitHub; private intake and general source suppression remain future work.
+
 - [x] Add the project-local [evidence-based role matching skill](.codex/skills/evidence-based-role-matching/SKILL.md) and a knowledge-base concept on cosine similarity, exact identity, eligibility and evidence. Independent case evaluation retained ambiguity rather than falsely merging similar jobs.
 - [x] Write [Build your own board](docs/build-your-own-board.md): agent/GitHub setup, local D1, public APIs, tech/general/solutions-engineering taxonomy, isolated deployment, secrets, schedules and upstream contribution, with explanations followed by snippets and checks.
 - [x] Add [licensing and data-use guidance](docs/licensing-and-data-use.md), including code/data/branding distinctions, source terms and robots findings, Singapore legal context and unresolved permissions.
 - [x] Complete and verify the approved conservative source changes: stop Apple page fetching; withhold copied Apple role text and Levels.fyi numeric benchmarks from current public data; preserve factual links and employer-advertised pay. Published and verified in manual run 45121661778; retained-history audit returned zero restricted entries.
 - [ ] Resolve the code licence file before promoting broad reuse. `package.json` declares ISC; no root licence grant file has been selected/added yet.
-- [ ] Establish applicable permissions for other employer/API sources and document a correction/takedown contact. Public access and attribution alone do not establish republication rights.
+- [ ] Establish applicable permissions for other employer/API sources. The public correction/takedown route is implemented; permissions remain unresolved. Public access and attribution alone do not establish republication rights.
 - [x] Add [learnings.md](learnings.md) for resume/interview reflection, including legal judgment, matching evidence, architecture, measured costs and automation boundaries.
 - [ ] Consider a reusable fork/template or guided configuration only after the documented fork path has been tried end-to-end. The present app is not yet a configurable all-occupation product.
 

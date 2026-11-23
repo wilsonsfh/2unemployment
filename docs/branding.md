@@ -34,3 +34,7 @@ The verifier deliberately fails if local catalog/logo changes have not reached t
 The logo follows the existing release gate: an ingestion, test, build, or D1 publication failure can prevent deployment; absent Cloudflare secrets cause the deployment step to skip. A scheduled run can be delayed or disabled by GitHub. This is a daily site release, not an independent logo-sync service. It does not fetch replacement artwork, redesign the logo, or update the separate Personal LLM Wiki asset.
 
 Implementation: [daily workflow](../.github/workflows/refresh-jobs.yml), [Astro configuration](../astro.config.mjs), [Worker configuration](../wrangler.jsonc). Astro's [public directory documentation](https://docs.astro.build/en/basics/project-structure/#public) describes unchanged asset copying.
+
+## Guide publication checks
+
+The same build also renders `docs/*.md` into `dist/client/guides/`. The deployment verifier compares every built guide HTML file byte-for-byte with its live `/guides/<slug>/` URL, alongside the two logo assets and catalog checks above. Run `npm run build` first when verifying manually. A mismatch fails verification but does not automatically roll back.

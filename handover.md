@@ -2,6 +2,14 @@
 
 Updated: 2026-11-23. Read this, [progress.md](progress.md), and [todo.md](todo.md) first.
 
+## Website setup guide — current task
+
+The owner clarified that “end to end should be UI displayable” means publishing the setup guide on the website. Implemented `/guides/build-your-own-board` and all nine `docs/*.md` pages with one prerendered Astro route, section indexes, highlighted code, responsive tables and links from the board sidebar/footer. Markdown stays canonical; the Sätteri link plugin rewrites doc/public-asset links for the website and sends repository files to GitHub. The direct Markdown processor dependency is declared. A small external `/guide-index.js` collapses the index on phones under the existing CSP; full content/navigation work without JavaScript or D1.
+
+Next-step work adds a public GitHub correction issue template, a linked data-use/contact/removal-process section, and reconciles stale pre-release wording in that audit. No licence has been selected or permission request sent. No Telegram test was dispatched. Scheduled-run inspection still shows only manual successes.
+
+Local verification: 54 tests, build, dry run and preview deployment verifier passed. Link audit: nine pages, 112 internal links, 74 anchors, all ten setup sections. Desktop/mobile screenshots are in ignored `output/playwright/`; the 390px mobile document has no horizontal overflow. Browser checks exercised mobile index expansion, board-to-guide navigation and a JavaScript-disabled guide/section jump. The verifier now compares all built guide HTML, logos and the guide-index script as well as catalog/API/recovery revisions. Commit/push and live deployment are the next action; this paragraph is not live-deployment evidence yet.
+
 ## Current state
 
 Singapore full-time new-graduate SWE catalog. Repo: https://github.com/wilsonsfh/2unemployment . Live site: https://2unemployment.wilsonsoon.workers.dev/ . Checkout: `~/Projects/2unemployment`.

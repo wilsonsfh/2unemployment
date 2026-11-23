@@ -101,3 +101,12 @@ Counts and sizes change on refresh. The older “20 records, 46.5 KB / 8.4 KB co
 1. Initial skeleton: ten graduate roles; public hosting, comparison UI and salary-source labels.
 2. First coverage increment: eight feeds; ten graduate roles plus ten review candidates. Both manual automation checks passed.
 3. Original-source enrichment: ten feeds and six original pages; thirty graduate roles plus fourteen review candidates. Coverage milestone [#1](https://github.com/wilsonsfh/2unemployment/issues/1) closed; unresolved work is in [todo.md](todo.md).
+
+
+## Website guide and correction route — 23 November 2026
+
+Implemented the owner-confirmed website setup guide at `/guides/build-your-own-board`, with all nine project docs served from their Markdown at `/guides/<slug>`. Added board navigation, section indexes, code highlighting, responsive code/tables, correct internal/source links and a public correction template linked from the data-use guide. Reconciled that guide's obsolete local-only source-policy release statements. Licence and remaining source permissions are unresolved; no rights request, Telegram send or scheduled execution is claimed.
+
+Local results: **54/54 tests passed**, Astro check/build passed, Wrangler deployment dry run passed, production-preview catalog/recovery/role/logo/guide HTML verifier passed. A local HTTP crawl checked nine pages, 112 internal links and 74 anchors; setup has all ten sections. Playwright desktop and 390px mobile inspection passed after fixing mobile article width; final document width equals viewport width. The index starts collapsed on phones, expands on click, and the board footer opens the guide. JavaScript-disabled browser navigation also succeeded. The initial preview check used an unrelated pre-existing server on port 4321; the actual production preview runs on 4322. Old preview asset manifests needed restarting after builds. Neither development-server error was treated as release evidence.
+
+Release status at this record: implemented and locally verified; commit/push/deploy and live checks pending. Next update must record the actual source commit and Worker version.

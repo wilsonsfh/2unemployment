@@ -463,6 +463,8 @@ node scripts/verify-deployment.mjs \
   --url https://my-jobs-board.YOUR-WORKERS-SUBDOMAIN.workers.dev
 ```
 
+Build before running the verifier: it also reads every rendered `dist/client/guides/<slug>/index.html` file and compares it byte-for-byte with the published `/guides/<slug>/` page. A guide mismatch fails verification alongside a stale catalog or logo.
+
 **Check:** it reports the expected catalog version and verified brand assets. It currently checks `public/brand/logo.svg` and `public/brand/logo-original.jpeg`; if your fork renames/removes an asset, update that asset list and its tests to match your actual branding. Otherwise a correctly deployed renamed logo will fail this check. Retain your previous Worker version, migrations and public snapshots for recovery; a Worker rollback alone cannot reverse an incompatible schema change. See [scaling and recovery](scaling.md).
 
 ## 9. Configure credentials and automation deliberately

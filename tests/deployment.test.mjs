@@ -5,8 +5,8 @@ import {verifyDeployment} from '../scripts/verify-deployment.mjs';
 
 const feed={generatedAt:'2026-11-23T05:23:17.489Z',jobs:[{id:'role-1',title:'Graduate developer',status:'listed',eligibility:'explicit'}],sources:[]};
 const version=createHash('sha256').update(JSON.stringify(feed)).digest('hex');
-const assets=[{path:'/brand/logo.svg',bytes:Buffer.from('<svg>brand</svg>')}];
-function responses({stale=false,wrongAsset=false,wrongRole=false,wrongRecovery=false}={}) {
+const assets=[{path:'/brand/logo.svg',bytes:Buffer.from('<svg>brand</svg>')},{path:'/guides/build-your-own-board/',bytes:Buffer.from('<h1>Setup guide</h1>')}];
+function responses({stale=false,wrongAsset=false,wrongRole=false,wrongRecovery=false,wrongGuide=false}={}) {
  return async url=>{
   const path=new URL(url).pathname;
   if(path==='/api/catalog')return Response.json({version:stale?'old':version,generatedAt:feed.generatedAt});
@@ -14,6 +14,7 @@ function responses({stale=false,wrongAsset=false,wrongRole=false,wrongRecovery=f
   if(path==='/data/jobs.json')return Response.json(wrongRecovery?{...feed,generatedAt:'old'}:feed);
   if(path==='/api/jobs/role-1')return Response.json({...feed.jobs[0],title:wrongRole?'Different role':feed.jobs[0].title});
   if(path==='/brand/logo.svg')return new Response(wrongAsset?'old logo':assets[0].bytes);
+  if(path==='/guides/build-your-own-board/')return new Response(wrongGuide?'<h1>Old guide</h1>':assets[1].bytes);
   return new Response('Not found',{status:404});
  };
 }
@@ -22,7 +23,7 @@ test('deployment verification confirms the imported revision, API record and exa
  const result=await verifyDeployment('https://example.com',{feed,assets,fetcher:responses()});
  assert.equal(result.version,version);
  assert.equal(result.jobId,'role-1');
- assert.equal(result.assets,1);
+ assert.equal(result.assets,2);
 });
 
 test('a healthy endpoint serving a different snapshot fails verification',async()=>{
@@ -40,4 +41,8 @@ test('HTTP failures fail verification instead of accepting an error representati
 
 test('a current API cannot hide an old publicly downloadable recovery snapshot',async()=>{
  await assert.rejects(verifyDeployment('https://example.com',{feed,assets,fetcher:responses({wrongRecovery:true})}),/recovery snapshot/i);
+});
+
+test('a current catalog cannot hide stale published guide HTML',async()=>{
+ await assert.rejects(verifyDeployment('https://example.com',{feed,assets,fetcher:responses({wrongGuide:true})}),/asset.*guides/i);
 });

@@ -1,5 +1,5 @@
 import {createHash} from 'node:crypto';
-import {readFile} from 'node:fs/promises';
+import {readFile,readdir} from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
 import {resolve} from 'node:path';
 
@@ -37,11 +37,14 @@ async function main() {
  if(args.length!==2||args[0]!=='--url')throw Error('Usage: node scripts/verify-deployment.mjs --url https://your-site.example');
  const feed=JSON.parse(await readFile('public/data/jobs.json','utf8'));
  const assets=await Promise.all(['logo.svg','logo-original.jpeg'].map(async name=>({path:`/brand/${name}`,bytes:await readFile(`public/brand/${name}`)})));
+ assets.push({path:'/guide-index.js',bytes:await readFile('public/guide-index.js')});
+ const guides=await readdir('dist/client/guides',{withFileTypes:true});
+ assets.push(...await Promise.all(guides.filter(entry=>entry.isDirectory()).map(async entry=>({path:`/guides/${entry.name}/`,bytes:await readFile(`dist/client/guides/${entry.name}/index.html`)}))));
  // A newly deployed Worker can take a short time to become visible everywhere.
  for(let attempt=1;attempt<=3;attempt++) {
   try {
    const result=await verifyDeployment(args[1],{feed,assets});
-   console.log(`Verified deployed catalog ${result.version}, generated ${result.generatedAt}, role ${result.jobId}, ${result.assets} brand assets`);
+   console.log(`Verified deployed catalog ${result.version}, generated ${result.generatedAt}, role ${result.jobId}, ${result.assets} public assets (branding, guide HTML and index script)`);
    return;
   } catch(error) {
    if(attempt===3)throw error;
