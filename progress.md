@@ -2,6 +2,14 @@
 
 Last recorded: 2026-11-23. This file records observations, not promises of future execution.
 
+## Design rationale and logo deployment documentation — 23 November 2026
+
+- Created the Personal LLM Wiki guide `wiki/guides/2unemployment-design-rationale.md` with the supplied logo, stack choices/alternatives, architecture diagram, SQL/API/state details, recovery and implementation tradeoffs. Added immutable evidence, a source page, cross-links, index and log updates in that separate checkout.
+- User selected deployment of changed logo files through the existing daily job. Verified that the existing 07:23 SGT workflow builds all checked-out source/assets; GitHub's workflow API reports `Refresh Singapore graduate jobs` as `active`. No new cron or workflow change is necessary. Added [logo deployment instructions](docs/branding.md) and linked them from README.
+- Local `npm test`, `npm run build`, and `npm run check` passed. Compared `dist/client/brand/logo.svg` and `logo-original.jpeg` against their `public/brand/` inputs: both match byte-for-byte. This proves build inclusion, not a new scheduled deployment.
+- Full Personal LLM Wiki lint passed: 703 pages, 2052 raw files, **0 ISSUES** (240 advisory info). The guide's relative logo path resolves and its Markdown fences are balanced; both repositories passed `git diff --check`.
+- Documentation-only follow-up; no app runtime/schema/logo changes, remote import, deployment, manual workflow run, commit or push performed. Prior live release evidence below is unchanged.
+
 ## Astro/D1 release — verified 23 November 2026
 
 **Released to the public site.** [Final Actions run 45117422965](https://github.com/wilsonsfh/2unemployment/actions/runs/45117422965) succeeded, following the [initial migration release 45117050092](https://github.com/wilsonsfh/2unemployment/actions/runs/45117050092). Source: `e8959a0`; production compressed-ETag fix: `211b710`; latest automated snapshot: `ccd51a7`. Current Worker version: `2c1fe4f3-fe88-43e7-83ff-df0c77ec99e0`.

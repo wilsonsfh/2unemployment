@@ -12,7 +12,15 @@ Release source: `e8959a0`; compressed-ETag fix: `211b710`. Latest generated snap
 
 Catalog: **30 graduate roles + 14 review candidates**, 43 original employer descriptions, one incomplete H2 Games source. Latest refresh retained these counts; review candidates were not promoted. Ten employer feeds and six Apple/ByteDance page checks remain unchanged. Descriptions retain up to 18,000 characters. Saved roles retain `2unemployment-saved` and legacy `gradsg-saved`; comparison is ephemeral within the workspace.
 
-The remote APAC D1 database `2unemployment-catalog` is bound in `wrangler.jsonc`. Real HTML, API, browser and CI checks are recorded in [progress.md](progress.md). No source changes remain intentionally uncommitted after the release-record commit; check `git status` before starting new work.
+The remote APAC D1 database `2unemployment-catalog` is bound in `wrangler.jsonc`. Real HTML, API, browser and CI checks are recorded in [progress.md](progress.md). The documentation follow-up below is separate from the deployed runtime; check `git status` before starting new work.
+
+## Design rationale and logo follow-up
+
+Added the reader-facing wiki guide `~/Projects/Personal_LLM_Wiki/wiki/guides/2unemployment-design-rationale.md`, including the supplied logo, stack alternatives, architecture diagram, rendering/state/SQL/API details, and publication/recovery tradeoffs. Source evidence, project/workflow backlinks, index and append-only wiki log are updated separately in the wiki checkout.
+
+The user selected **deploy logo file changes through the existing daily job**. That behavior is already provided by `.github/workflows/refresh-jobs.yml`: checkout includes committed `public/brand/` changes, Astro copies them to `dist/client`, and Wrangler deploys the assets at the existing 07:23 SGT scheduled release. No separate cron or runtime change was needed. [docs/branding.md](docs/branding.md) documents the two independent logo assets, commit/push requirement, manual trigger, release gates and cache caveats; README links it.
+
+Local `npm test`, `npm run build`, and `npm run check` passed. Both built logo files match their source bytes. Full wiki lint passed with 0 ISSUES (703 pages, 2052 raw files; 240 advisory info); GitHub reports the daily workflow active. This follow-up changes documentation only; no new remote D1 import, deployment, workflow run, commit or push was performed. The prior release identifiers above remain current. Check both repositories' Git status because the wiki can auto-commit independently.
 
 ## Key files
 

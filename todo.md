@@ -14,6 +14,8 @@ Updated: 2026-11-23. Read [handover.md](handover.md) and [progress.md](progress.
 
 Decision and migration plan: [docs/scaling.md](docs/scaling.md). Evidence: [progress.md](progress.md).
 
+- [x] Add a reader-facing design rationale/technical implementation wiki page with the supplied logo, alternatives, architecture/data/state details and recovery tradeoffs. Document changed-logo publication via the existing 07:23 SGT daily release in [docs/branding.md](docs/branding.md); build asset equality and local test/build/dry-run checks passed. No redundant cron needed; future timed execution remains an open observation above.
+
 - [x] Compare current SPA, Astro + React, and Next.js; produce decision matrix and route/state/data-flow sketch before implementation.
 - [x] Write bounded migration plan with stable IDs, source/lifecycle semantics, query limits, history retention and recovery.
 - [x] Add D1 schema/import and bounded summary/detail/meta Worker APIs; preserve private-data boundary.
