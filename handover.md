@@ -43,6 +43,8 @@ The user supplied a recommendation to retain Cloudflare, use **D1 for the catalo
 
 The latest request is **context transfer documentation first**. Scaling implementation and Apple animation research were not started in this documentation pass. Do not infer that a database, Astro, user accounts, pagination or individual public job routes already exist.
 
+Additional queued context: the user pasted an Astro community discussion and wants a **later session** to analyse an MPA versus the current SPA, including stack and system-design tradeoffs. The discussion and analysis brief are captured in `docs/scaling.md`. It is not a settled decision to choose Astro, and the discussion's historical opinions need current verification. Do the architecture comparison before starting a migration.
+
 ## Working preferences and boundaries
 
 - Give progress updates at least every ten minutes; do not disappear into lengthy analysis.

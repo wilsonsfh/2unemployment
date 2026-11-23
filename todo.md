@@ -14,6 +14,7 @@ Updated: 2026-11-23. Read [handover.md](handover.md) and [progress.md](progress.
 
 The supplied recommendation is captured in [docs/scaling.md](docs/scaling.md). This documentation pass does not implement it.
 
+- [ ] **Later-session analysis: MPA versus SPA and framework choice.** Evaluate the current React/Vite SPA, an Astro-led MPA with React interactive sections, and Next.js. Include the supplied Astro community discussion as opinion to assess; compare rendering/SEO, navigation, shared state, payload/hydration, data freshness, caching, costs and migration effort. Produce a decision matrix and system-design sketch before implementation. Detailed brief: [docs/scaling.md](docs/scaling.md#queued-discussion-mpa-versus-the-current-spa). Do not run this analysis in the handover session.
 - [ ] Write a bounded migration plan: D1 catalog, paginated Worker API, Astro-rendered public job pages, existing React search workspace.
 - [ ] Define a minimal relational schema for jobs, companies, sources/provenance and salary records; decide the history-retention policy.
 - [ ] Preserve existing stable IDs, original links, first-seen/check times, salary basis and source-failure/closure rules through migration.

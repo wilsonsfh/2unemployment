@@ -104,3 +104,42 @@ This is a targeted rendering change, not a reason to replace the entire React in
 - [Astro on-demand rendering](https://docs.astro.build/en/guides/on-demand-rendering/)
 - [Astro Cloudflare adapter](https://docs.astro.build/en/guides/integrations-guide/cloudflare/)
 - [Next.js Server and Client Components](https://nextjs.org/docs/app/getting-started/server-and-client-components)
+
+## Queued discussion: MPA versus the current SPA
+
+The user supplied an Astro community discussion and asked a **later session** to analyse the tech-stack and system-design tradeoffs of moving toward a multi-page application (MPA). No MPA decision, migration or new analysis was performed in this documentation pass.
+
+### Supplied discussion — claims to evaluate later
+
+The pasted discussion contains comments labelled roughly three years old through a few months old; no original post URL was supplied. Treat these as community opinions and historical experience, not current authoritative documentation:
+
+- Supporters describe Astro as an HTML/server-first approach that ships client JavaScript where needed through islands, while allowing React and other framework components.
+- Several commenters like it for content sites, portfolios, galleries and large static sites, and mention static output deployable to GitHub Pages or Cloudflare hosting.
+- Some claim Astro handles complex business applications easily. Others say a heavily interactive, shared-state interface such as Figma is more practical in a client framework.
+- One useful distinction in the discussion is **content-oriented navigation versus dense client-side interaction**, rather than simply small sites versus large sites.
+- Comments about auth limitations, framework maturity, deployment adapters, learning curve, “zero JavaScript,” library/resource counts and perfect Lighthouse scores need current verification and context. Do not carry them forward as guarantees or benchmark results for this project.
+- Astro can host React components; this alone does not determine the architecture or how much JavaScript the resulting application ships. Keep this as a question for the later analysis.
+- “MPA” in the discussion means **Multi-Page Application**. The joke expansion has no technical meaning.
+
+### Required later analysis
+
+Compare these concrete choices against 2unemployment's actual flows:
+
+1. Keep the current React/Vite SPA and add suitable pre-rendering/server rendering where needed.
+2. Use an Astro-led MPA for public routes, retaining a cohesive React search workspace/island.
+3. Use Next.js for server-rendered routes and the interactive React application.
+
+Analyse and document:
+
+- Public job-detail pages, search/filter URLs, pagination, navigation and browser back/forward behavior.
+- What HTML is returned before JavaScript, crawlability, canonical URLs, metadata and truthful job structured data.
+- JavaScript payload, hydration, page transitions, perceived speed and mobile performance, measured on this application rather than inferred from framework branding.
+- Shared state across search, filters, results, comparison, saved roles and future account/application controls; state persistence across full-page navigation.
+- Which interactions stay together in React, which routes can be mostly HTML, and the cost of splitting connected controls into islands.
+- Static build-time pages versus on-demand rendering, data freshness, caching/invalidation, database/API calls and deployment frequency.
+- D1/Worker API boundaries, incremental ingestion/history, access control if private account features arrive, hosting cost and operational complexity.
+- Migration effort, route/record-ID compatibility, accessibility, tests, rollback and maintaining the current working ingestion/Telegram systems.
+
+The later session should produce a concise decision matrix, an explicit recommendation with reasons, a route/component/data-flow sketch and a bounded migration plan. It should distinguish page rendering, browser navigation and database/storage choices rather than treating “Astro,” “MPA” and “D1” as one inseparable decision.
+
+Start with current official Astro/React/Next.js/Cloudflare documentation and the existing code. The supplied community discussion is input to the evaluation, not a mandate to choose Astro or replace the whole SPA.
