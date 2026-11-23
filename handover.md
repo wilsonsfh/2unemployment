@@ -6,13 +6,13 @@ Updated: 2026-11-23. Read this, [progress.md](progress.md), and [todo.md](todo.m
 
 Singapore full-time new-graduate SWE catalog. Repo: https://github.com/wilsonsfh/2unemployment . Live site: https://2unemployment.wilsonsoon.workers.dev/ . Checkout: `~/Projects/2unemployment`.
 
-The MPA/SPA analysis and first migration implementation are complete **in the working tree**, not released. [docs/scaling.md](docs/scaling.md) compares React/Vite, Astro + React, and Next.js and recommends Astro public documents plus one cohesive React workspace. D1 is a separate catalog decision, not a response to current storage pressure.
+**Astro + React + D1 is released and verified live.** The MPA/SPA analysis and migration plan are in [docs/scaling.md](docs/scaling.md). Public documents use Astro; the connected interactive workspace remains React. No accounts or private application tracking were added. WebPage structured data avoids fabricating employer publication dates for JobPosting.
 
-Implemented: Astro 7 + Cloudflare adapter, real server-rendered `/jobs/<id>` pages, SSR result pages, a bounded D1 summary API, detail/meta APIs, transactional snapshot import, stable IDs/firstSeen, FTS prefix search, bounded history, React pagination, URL/back-forward state, saved roles and comparison. No accounts or private application tracking were added. WebPage structured data avoids fabricating employer publication dates for JobPosting.
+Release source: `e8959a0`; compressed-ETag fix: `211b710`. Latest generated snapshot: `ccd51a7`, `2026-11-23T05:23:17.489Z` (13:23 SGT). Successful final release: [Actions 45117422965](https://github.com/wilsonsfh/2unemployment/actions/runs/45117422965). Worker version: `2c1fe4f3-fe88-43e7-83ff-df0c77ec99e0`. The stored GitHub token's D1 import and Worker deployment permissions were exercised successfully; no further permission setup is pending.
 
-**Live remains the previous React/Vite static deployment. No source commit/push or site deployment was performed in this session.** A new remote APAC D1 database named `2unemployment-catalog` was created, bound in `wrangler.jsonc`, migrated and seeded with the existing 44-record snapshot. Its ID is configuration, not a secret. Local production preview and remote SQL were verified; the migrated live site and stored GitHub token's D1 scope still need release verification.
+Catalog: **30 graduate roles + 14 review candidates**, 43 original employer descriptions, one incomplete H2 Games source. Latest refresh retained these counts; review candidates were not promoted. Ten employer feeds and six Apple/ByteDance page checks remain unchanged. Descriptions retain up to 18,000 characters. Saved roles retain `2unemployment-saved` and legacy `gradsg-saved`; comparison is ephemeral within the workspace.
 
-Catalog: **30 graduate roles + 14 review candidates**, 43 original employer descriptions, one incomplete H2 Games source. The migration did not re-ingest or promote review candidates. Ten employer feeds and six Apple/ByteDance page checks remain unchanged; descriptions retain up to 18,000 characters. Saved roles use the existing `2unemployment-saved` key and legacy `gradsg-saved` fallback. Comparison selection remains ephemeral in the workspace.
+The remote APAC D1 database `2unemployment-catalog` is bound in `wrangler.jsonc`. Real HTML, API, browser and CI checks are recorded in [progress.md](progress.md). No source changes remain intentionally uncommitted after the release-record commit; check `git status` before starting new work.
 
 ## Key files
 
@@ -41,24 +41,29 @@ npm run preview
 
 After fresh ingestion, run `catalog:local` again to refresh local D1. `npm run catalog:publish` applies remote migrations and imports the validated snapshot. `npm run deploy` builds/checks, publishes D1, then deploys the Worker. Build/dev generate ignored Worker types; `.astro/`, `.wrangler/`, `dist/`, and browser evidence in `output/` are ignored.
 
-35 tests pass. Build and deployment dry run pass. Production-preview browser tests cover filters, history, pagination, saved persistence, 54 saved IDs over multiple chunks including review/closed queues, cross-page comparison, full details, keyboard search, mobile navigation, and JavaScript-disabled job/list/pagination routes. Remote default-list query used its index and read 25 rows for 25 IDs; this is not a 10,000-job load test.
+36 tests pass locally and in the successful final CI run. Build and deployment dry run pass. Production-preview and live browser tests cover filters, history, pagination, saved persistence, 54 saved IDs over multiple chunks including review/closed queues, cross-page comparison, full details, keyboard search, mobile navigation, and JavaScript-disabled job/list/pagination routes. Remote default-list query used its index and read 25 rows for 25 IDs; this is not a 10,000-job load test.
 
 Dynamic responses allow shared reuse for 60 seconds with revalidation; errors are uncached. ETags do not eliminate D1 reads or provide global purge. Root metadata/results are revision-checked; open workspaces refresh metadata on new versions. D1 file imports can briefly make the database unavailable, and roll back on failure. FTS virtual tables restrict full SQL export: retain snapshot+migrations or use verified Time Travel recovery.
 
 ## Automation
 
-1. `.github/workflows/refresh-jobs.yml`: daily 07:23 SGT/manual. Install → ingest → tests → build → persist snapshot → migrate/import D1 → dry-run → deploy. It does not run on every push. **New workflow requires the Cloudflare CI token to have D1 Edit as well as Worker permissions. Existing stored token scope has not been exercised.**
+1. `.github/workflows/refresh-jobs.yml`: daily 07:23 SGT/manual. Install → ingest → tests → build → persist snapshot → migrate/import D1 → dry-run → deploy. It does not run on every push. The GitHub token's D1 import and Worker permissions are verified by the successful release runs. Future scheduled execution still needs observing; manual workflow success does not prove a timed run.
 2. `.github/workflows/telegram-alerts.yml`: hourly minute 17/manual, independently watches meaningful internship-repository changes. Silent baseline/deduplication and its `telegram-alert-state` branch are unchanged. First real Telegram delivery and future scheduled execution remain unproven.
 
-Four secret names were previously configured: `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`. Never print values. Local OAuth access does not validate the stored GitHub token.
+Four secret names were previously configured: `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`. Never print values. Local OAuth alone does not validate CI credentials; this release exercised the actual stored GitHub token successfully.
 
 ## Working boundaries and next work
 
-- Release this reviewed working tree when requested, verify actual Actions/D1/live HTML/API counts, and keep rollback to the previous static release available. See queue for the explicit release gate.
+- Release gate passed. Next work is H2 original-source resolution and eligibility review, or representative larger-catalog query/read measurements; do not start every queued track at once.
 - Preserve conservative eligibility, source labels, check dates on failures, IDs and firstSeen. Do not invent pay, sponsorship, workplace or eligibility. Indexed leads are not employer-verified.
 - Use deterministic public employer sources; no paid jobs API or LLM extraction is needed. H2 employer-source resolution and review-candidate assessment remain open.
 - Solutions engineering and internships stay separate future categories; the Telegram watcher remains independent.
 - Keep changes surgical and commits small under the user's identity; no AI co-author attribution, secrets or private application history. `CLAUDE.md` is canonical; no duplicate AGENTS.md needed.
 - Give regular progress updates. Cap an issue at two fix/check attempts unless correctness/deployment blocks require resolution.
 
-Personal wiki: `~/Projects/Personal_LLM_Wiki/wiki/guides/2unemployment-github-actions.md` and `wiki/projects/2unemployment.md`. Their old static-publication descriptions have **not** been updated for this migration; project docs here describe the new sequence.
+Personal wiki: `~/Projects/Personal_LLM_Wiki/wiki/guides/2unemployment-github-actions.md` and `wiki/projects/2unemployment.md`. Their migration walkthrough, exact YAML-line explanations and runtime evidence are updated for the Astro/D1 publication sequence. Wiki changes are saved locally; they are managed separately from this app repository.
+
+
+## Rollback reference
+
+Previous static Worker version: `3c0651c1-f7a9-4ff4-8462-96c8c9dff1c8`; compatible pre-migration source: `66ed91b`. Emergency site rollback uses `npx wrangler rollback 3c0651c1-f7a9-4ff4-8462-96c8c9dff1c8`. That static version does not consume D1, so retain the new database rather than deleting data. A lasting rollback also requires restoring compatible source/workflow before the next daily refresh re-deploys it. No rollback was executed; version availability and recovery artifacts were checked. Full SQL export is restricted by FTS: retain committed snapshots plus migrations, or use a verified D1 Time Travel procedure.

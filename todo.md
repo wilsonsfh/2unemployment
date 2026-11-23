@@ -10,7 +10,7 @@ Updated: 2026-11-23. Read [handover.md](handover.md) and [progress.md](progress.
 - [ ] Observe an actual scheduled daily refresh and check the resulting deployed snapshot.
 - [ ] Observe the first real internship Telegram notification. Preserve the silent baseline/deduplication behavior; record delivery evidence without exposing credentials.
 
-## Scaling architecture — implementation complete, release pending
+## Scaling architecture — released
 
 Decision and migration plan: [docs/scaling.md](docs/scaling.md). Evidence: [progress.md](progress.md).
 
@@ -20,7 +20,7 @@ Decision and migration plan: [docs/scaling.md](docs/scaling.md). Evidence: [prog
 - [x] Add actual server-rendered `/jobs/<id>` HTML with canonical metadata, original requirements/links and truthful structured data.
 - [x] Retain search, filters, results, local saving and comparison in one React workspace; add URL state and pagination.
 - [x] Verify production preview with/without JavaScript, routes, source links, pagination, saved-ID chunks, keyboard/mobile interaction, SQL rollback and indexed query plans. Provision/seed isolated remote catalog.
-- [ ] **Release gate:** review/commit/push the working tree, ensure `CLOUDFLARE_API_TOKEN` has D1 Edit, execute the updated refresh workflow and verify Actions plus live HTML/API/counts. Only then retire the previous static deployment. Local OAuth and a dry run do not prove CI credentials or live behavior. Confirm rollback procedure and update wiki workflow explanations.
+- [x] **Release gate:** source committed/pushed, GitHub token D1/Worker permissions exercised successfully, both release workflows passed, live HTML/API/counts and browser flows verified. Final run: [45117422965](https://github.com/wilsonsfh/2unemployment/actions/runs/45117422965). Previous static version/source and rollback procedure recorded; wiki walkthrough updated. Future timed schedule remains a separate open observation.
 - [ ] Measure representative query/read costs at larger catalog sizes before claiming free-tier scale. API offset currently caps at 10000; design cursor pagination if browsing beyond 10025 matches becomes necessary. FTS is word-prefix search; test actual query needs before extending it.
 - [ ] Revisit Supabase if accounts, cross-device applications or substantial PostgreSQL features become near-term requirements. Do not introduce auth/tracking as a migration side effect.
 
@@ -36,4 +36,4 @@ Decision and migration plan: [docs/scaling.md](docs/scaling.md). Evidence: [prog
 - [x] Compare licensing, maintenance, reduced-motion behavior and runtime/bundle costs; investigate reusable agent skills.
 - [x] Recommend a small set of sources and one bounded example in [docs/motion-research.md](docs/motion-research.md). CSS first; no dependency or skill selected for installation. If one is later selected, install under `.codex/skills/`.
 
-The working tree contains the first D1/Astro implementation; the existing live site is unchanged until the release gate passes.
+Astro + D1 is live. The canonical handover/progress/queue are updated automatically after substantial work; the next session should begin there.
