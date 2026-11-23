@@ -2,7 +2,7 @@
 
 Singapore full-time new-grad software engineering board. React + TypeScript + Vite, deployed with Cloudflare Workers Static Assets.
 
-Live skeleton: https://gradsg.wilsonsoon.workers.dev/ . Source: https://github.com/wilsonsfh/Un-unemployment-GradSG . Initial snapshot: 10 graduate roles, two review candidates, five healthy employer sources. Daily repository refresh is scheduled through GitHub Actions. Automatic deployment and Telegram delivery await their repository secrets.
+Live skeleton: https://2unemployment.wilsonsoon.workers.dev/ . Source: https://github.com/wilsonsfh/2unemployment . Initial snapshot: 10 graduate roles, two review candidates, five healthy employer sources. Daily repository refresh is scheduled through GitHub Actions. Automatic deployment and Telegram delivery await their repository secrets.
 
 ```sh
 npm ci
