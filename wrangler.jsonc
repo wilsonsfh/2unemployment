@@ -5,7 +5,7 @@
   "compatibility_date": "2026-11-23",
   "compatibility_flags": ["nodejs_compat"],
   "vars": {"AUTH_BASE_URL":"https://2unemployment.wilsonsoon.workers.dev","EMAIL_FROM":""},
-  "secrets": {"required":["BETTER_AUTH_SECRET","GOOGLE_CLIENT_ID","GOOGLE_CLIENT_SECRET","GITHUB_CLIENT_ID","GITHUB_CLIENT_SECRET","RESEND_API_KEY"]},
+  "secrets": {"required":["BETTER_AUTH_SECRET"]},
   "assets": { "binding": "ASSETS", "directory": "./dist/client" },
   "d1_databases": [{"binding":"DB", "database_name":"2unemployment-catalog", "database_id":"4d5ea7e2-920c-4d32-80b8-7896d0af35a1", "migrations_dir":"migrations"}],
   "observability": {"enabled":true}

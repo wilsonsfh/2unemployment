@@ -32,7 +32,7 @@ Shared storage is not a security boundary by itself. All access goes through ser
 
 Set `AUTH_BASE_URL` in `wrangler.jsonc` to the exact deployment origin. For local testing use an ignored `.dev.vars` file with the variables below; configure production values through **Workers → 2unemployment → Settings → Variables and Secrets** or interactive `wrangler secret put` commands. Never paste keys into chat, commit them, expose them in frontend variables or put them into a guide.
 
-Generate a strong random `BETTER_AUTH_SECRET` once and retain it securely across deployments. Rotating it invalidates existing sessions. The secret names are declared in Wrangler configuration so `wrangler types` generates their bindings.
+Generate a strong random `BETTER_AUTH_SECRET` once and retain it securely across deployments. Rotating it invalidates existing sessions. That secret is required in Wrangler configuration, which generates its binding type. Provider credentials are optional at deployment: the server reads them only when present, validates their string values, and enables a provider only when its complete configuration exists. Missing provider credentials must never be replaced with dummy production values.
 
 ### Google
 
