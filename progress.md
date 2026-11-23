@@ -1,3 +1,7 @@
+2026-11-23 local checks: Ingestion completed with 45 records and zero source failures; HRT remains indexed/incomplete and no Singapore salary was assigned. All 68 tests, build and git diff --check passed. The new shortcut and catalog changes are local and uncommitted; production D1 and Worker were not changed.
+
+2026-11-23 job search: Removed public AI agent shortcut locally and added HRT 2027 graduate software role as a search-indexed lead; employer direct fetch returned 403 and Singapore pay is unknown. Squarepoint graduate software/quant listings name Singapore in its employer feed; full-time hours and Singapore compensation need confirmation.
+
 2026-11-23 release: Deployed source b2dcfa2 as Worker 1b160565-faaa-4c6a-bd56-1d90a978e5bd. Clean checkout: 68 tests, build and Wrangler dry run passed. Live deployment verifier matched catalog revision 868ff7d2a1ab67e079bfa04ae56111a61d81865912ad2a703b8c21c524fe04fc and 15 assets; home returned 200. No catalog import. Search Console direct routing remains unverified and excluded; .html still redirects. Authenticated tracker prompt and persistence remain browser-unverified.
 
 Earlier 2026-11-23 handoff: work paused before motion implementation, then resumed at the owner’s request. Current motion changes and checks are recorded below. Previous local UI/guide/logo work passed npm test and npm run build; guide button and logo loading were checked in browser. Local Astro site was already running at http://127.0.0.1:4321.

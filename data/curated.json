@@ -188,5 +188,36 @@
     "firstSeen": "2026-11-23T03:00:00.000Z",
     "description": "2027 graduate title confirmed by public job index. Check right-to-work and current availability.",
     "workRights": "Not confirmed. Check the employer posting."
-  }
+  },
+
+{
+  "id": "hrt-software-engineer-2027",
+  "company": "Hudson River Trading",
+  "title": "Software Engineer (C++ or Python) – 2027 Grads",
+  "location": "Singapore",
+  "category": "swe",
+  "employment": "full-time",
+  "eligibility": "explicit",
+  "eligibilityNote": "Search-indexed employer listing names 2027 graduates and Singapore; direct access was blocked, so confirm current availability and requirements with the employer.",
+  "cohort": [
+    "2027"
+  ],
+  "tags": [
+    "Software",
+    "C++",
+    "Python"
+  ],
+  "workplace": "Not specified",
+  "status": "listed",
+  "sourceName": "Employer listing · search-indexed",
+  "sourceType": "indexed",
+  "sourceUrl": "https://www.hudsonrivertrading.com/hrt-job/software-engineer-c-or-python-2027-grads/",
+  "applyUrl": "https://www.hudsonrivertrading.com/hrt-job/software-engineer-c-or-python-2027-grads/",
+  "checkedAt": "2026-11-23T12:04:30.000Z",
+  "firstSeen": "2026-11-23T12:04:30.000Z",
+  "description": "Search-indexed full-time graduate software engineering listing. Employer page was inaccessible during direct review; check the original posting for requirements and availability.",
+  "requirements": [],
+  "detailStatus": "unavailable",
+  "workRights": "Not confirmed. Check employer posting."
+}
 ]
