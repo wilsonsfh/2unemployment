@@ -54,5 +54,22 @@
     "adapter": "greenhouse",
     "board": "drweng",
     "url": "https://boards-api.greenhouse.io/v1/boards/drweng/jobs"
+  },
+  {
+    "id": "sierra",
+    "name": "Sierra",
+    "adapter": "ashby",
+    "board": "sierra",
+    "url": "https://api.ashbyhq.com/posting-api/job-board/sierra?includeCompensation=true"
+  },
+  {
+    "id": "shopee",
+    "name": "Shopee",
+    "adapter": "shopee",
+    "url": "https://ats.workatsea.com/ats/api/v1/user/job/list/?limit=100&offset=0&search_content=2027%20Graduate",
+    "idAliases": {
+      "J00356912": "shopee-4444841322",
+      "J02208003": "shopee-4485477268"
+    }
   }
 ]

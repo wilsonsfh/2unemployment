@@ -6,7 +6,7 @@ Scope v1: Singapore full-time software engineering. The main list requires expli
 
 Public employer API → Singapore location gate → full-time/title gate → graduate or review queue → canonical URL deduplication → merge previous snapshot → attach researched salary benchmarks → static JSON → React → Cloudflare Workers Static Assets.
 
-`data/sources.json` configures eight Greenhouse/Lever/Ashby boards. `scripts/ingest.mjs` fetches them sequentially with timeouts and no browser, proxy or LLM. Every source runs once per daily refresh; currently eight requests/day. Downloading all board descriptions costs more bytes than filtering remotely, but these APIs are small enough for a scheduled CI process and provide explicit source provenance. Check each source’s current terms and limits before extending it; honor 403/429 failures without circumvention. The script does not retry blocked requests.
+`data/sources.json` configures ten public Greenhouse/Lever/Ashby/Shopee boards. `scripts/ingest.mjs` fetches them sequentially with timeouts and no browser, proxy or LLM. Every source runs once per daily refresh; currently ten board requests/day, one Shopee metadata request and six configured employer-page requests/day; incomplete Shopee rows can add detail requests. Downloading all board descriptions costs more bytes than filtering remotely, but these APIs are small enough for a scheduled CI process and provide explicit source provenance. Check each source’s current terms and limits before extending it; honor 403/429 failures without circumvention. The script does not retry blocked requests.
 
 `data/curated.json` is a manual discovery queue with public provenance. These records are labelled search-indexed, not employer-verified. They never get a new checked date merely because the build ran. Records older than seven days display “Recheck”. Curated records are not automatically closed on URL failure or changed search rankings.
 
@@ -45,7 +45,7 @@ The separate internship watcher is `.github/workflows/telegram-alerts.yml`; see 
 
 ## Cost
 
-Static Assets-only Worker: no Worker execution, database or runtime paid API. Cloudflare’s current pricing lists static asset requests as free and unlimited. Source refresh is eight employer requests per daily run plus build/deploy. GitHub-hosted runner cost depends on repository visibility and account allowance; do not promise private CI is free. The hourly watcher uses a small number of GitHub API requests and one Telegram request on a meaningful change. A custom domain is optional and may cost money.
+Static Assets-only Worker: no Worker execution, database or runtime paid API. Cloudflare’s current pricing lists static asset requests as free and unlimited. Source refresh uses the configured employer boards and original-page enrichment plus build/deploy. GitHub-hosted runner cost depends on repository visibility and account allowance; do not promise private CI is free. The hourly watcher uses a small number of GitHub API requests and one Telegram request on a meaningful change. A custom domain is optional and may cost money.
 
 Current pricing reference: https://developers.cloudflare.com/workers/platform/pricing/ ; static hosting: https://developers.cloudflare.com/workers/static-assets/ . Recheck quotas before adding dynamic routes or scheduled Worker fetches.
 
@@ -60,3 +60,17 @@ Current pricing reference: https://developers.cloudflare.com/workers/platform/pr
 - https://jjintern.com/feed — local internship discovery reference, not scraped in v1.
 - https://justpostedjobs.co/api-access — future optional API provider, not enabled in v1.
 - https://www.levels.fyi/ and https://www.hdbstats.com/ — original interface inspired by comparison-table density and local-data clarity, respectively. No UI code copied.
+
+## Primary-source enrichment (23 November 2026)
+
+| Stage | Model | Input → output | Runs in parallel with | On failure |
+|---|---|---|---|---|
+| Employer board discovery | None; deterministic Node | Ten public employer boards → normalised candidates with full descriptions and extracted requirements | Independent of configured page fetches; current runner executes sequentially | Retain the failed source’s previous records/check dates; all-board failure aborts |
+| Original employer-page enrichment | None; HTML/embedded-JSON parser | Configured Apple and ByteDance employer URLs → current title, Singapore location, requirements and full role description | Runs after discovery in this implementation | Retain prior content, flag unavailable, never reset the successful check date |
+| Merge and salary enrichment | None | Canonical primary links, new/previous records and salary references → snapshot | Depends on both fetch stages | No invented fields; preserve explicit unavailable states |
+
+`data/employer-pages.json` holds original employer URLs resolved from discovered leads. Apple public hydration JSON and ByteDance’s role-specific HTML sections are parsed without executing page JavaScript. Known pages are revisited on every scheduled refresh, so richer content is not a one-time manual paste. API feeds already supply original employer descriptions and do not need a redundant second page request. Full descriptions are retained up to 18,000 characters instead of the former 1,600-character company-introduction cutoff; requirements are surfaced separately.
+
+Ashby advertised SGD annual salary ranges remain labelled employer-published salary. They do not inherit or overwrite a company-level total-compensation estimate. Non-SGD or unsupported pay intervals are not silently converted. Apple’s configured early-career role uses the employer’s Standard corporate classification; no weekly-hours value is invented.
+
+H2 Games still lacks a verified direct employer posting URL. Shopee now uses the anonymous public careers endpoints observed while browsing its employer portal: `/ats/api/v1/user/job/list/`, metadata `/user/meta/slice/`, and `/user/job/` for missing details. Location IDs and the Entry Level ID are resolved from employer metadata, not guessed. The current graduate query is scoped to 2027; non-software, internship and non-Singapore roles are excluded. The adapter rejects a truncated response instead of falsely closing unseen jobs. Two former LinkedIn leads have explicit requisition-to-record aliases so their saved-role IDs remain stable. H2 retains a visible incomplete-details label rather than appearing complete. No anti-bot controls are bypassed.

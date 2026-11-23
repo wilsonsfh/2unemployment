@@ -26,3 +26,5 @@ No private application history is published. No paid API or database required. S
 Read [pipeline design and limitations](docs/pipeline.md) and [Telegram watcher setup](docs/telegram-alerts.md). Job snapshots refresh in the repository daily; the deployed site is published by the refresh workflow using Cloudflare CI secrets. The separate Telegram workflow checks the internship repository hourly using its bot token and chat ID. Missing secrets cause the guarded steps to skip.
 
 The project-scoped Levels.fyi configuration is in `.codex/`; no global skill or MCP configuration is modified. Optional REST lookup: `LEVELS_API_KEY` in the shell environment, then `node scripts/levels-benchmark.mjs`. Never put API keys in Vite variables or frontend code.
+
+Employer enrichment now pulls full requirements from original ATS data plus configured Apple and ByteDance pages. Shopee’s original careers service supplies Singapore graduate roles and fills missing details. Advertised salary ranges are labelled separately from estimated total compensation. Remaining H2 Games employer-detail verification is visible in the feed.

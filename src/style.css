@@ -8,3 +8,5 @@
 .mobile-table-hint{display:none}@media(max-width:700px){.mobile-table-hint{display:block;font-size:9px;color:#7f916f;margin:12px 0 0}.job-table .role-title{font-size:12px}.job-table .role-meta{font-size:9px}.job-table .source-tag,.job-table .source-date,.job-table .salary-cell small{font-size:9px}}
 
 .brand-logo{display:block;object-fit:contain;width:142px;height:63px}.footer-brand img{display:block;object-fit:contain}@media(max-width:700px){.brand-logo{width:116px;height:52px}}
+
+.requirements-count{font-size:8px;color:#6a8558;margin-top:6px}.needs-details{font-size:8px;color:#aa8850;margin-top:6px}.estimate.advertised{background:#e4efdd;color:#406a32}.requirements-list{font-size:11px;line-height:1.9;color:#6e805f;padding-left:18px}.requirements-list li{margin-bottom:7px}.full-description{white-space:pre-line}
