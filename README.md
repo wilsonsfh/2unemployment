@@ -1,16 +1,16 @@
 # 2unemployment
 
-Session context: [handover](handover.md) · [verified progress](progress.md) · [task queue](todo.md) · [proposed scaling stack](docs/scaling.md).
-
 ![2unemployment logo](public/brand/logo.svg)
 
-Singapore full-time new-grad software engineering board. React + TypeScript + Vite, deployed with Cloudflare Workers Static Assets.
+Singapore full-time new-grad software engineering roles with traceable employer sources and salary context. [Live site](https://2unemployment.wilsonsoon.workers.dev/) · [Verified state](progress.md) · [Handover](handover.md) · [Queue](todo.md).
 
-Live skeleton: https://2unemployment.wilsonsoon.workers.dev/ . Source: https://github.com/wilsonsfh/2unemployment . Initial snapshot: 10 graduate roles, two review candidates, five healthy employer sources. Daily repository refresh is scheduled through GitHub Actions. Cloudflare and Telegram repository secrets are configured; inspect Actions for the latest execution status.
+The working tree implements **Astro + React + Cloudflare D1**: complete public job HTML, a paginated Worker API, and one connected search/filter/saved/comparison workspace. The previous static SPA remains live until release; see [progress](progress.md) for deployment evidence. The current retained snapshot has 30 graduate roles and 14 review candidates. [Architecture decision](docs/scaling.md).
+
+Node >=22.23.4:
 
 ```sh
 npm ci
-npm run ingest
+npm run catalog:local
 npm run dev
 ```
 
@@ -18,15 +18,11 @@ npm run dev
 npm test
 npm run build
 npm run check
-npm run deploy
+npm run preview
 ```
 
-Features: search, graduation-year and provenance filters, browser-local saved roles, three-role comparison, annual/monthly salary benchmarks with sources, explicit graduate vs review queues, source health and closure history.
+`npm run ingest` refreshes employer data into `public/data/jobs.json`; `npm run catalog:local` imports it into local D1. `npm run deploy` builds/checks, publishes the remote catalog transactionally, then deploys. It requires Cloudflare access with Workers deployment and D1 Edit permissions. The daily GitHub refresh follows the same publication order; its stored token's new D1 permission still needs verification.
 
-No private application history is published. No paid API or database required. Source snapshots are in `public/data/jobs.json`; curated leads and salary references are in `data/`. The UI does not infer sponsorship or label an indexed search result employer-verified.
+Read [pipeline/API details](docs/pipeline.md), [Telegram watcher](docs/telegram-alerts.md), and [motion research](docs/motion-research.md). The internship watcher remains independent. No paid jobs API, account service, or model calls run in the app. Browser-local saves retain their existing keys; private application history is not published. Employer-advertised pay and company-level estimated compensation remain distinct. H2 Games' original details remain visibly incomplete.
 
-Read [pipeline design and limitations](docs/pipeline.md) and [Telegram watcher setup](docs/telegram-alerts.md). Job snapshots refresh in the repository daily; the deployed site is published by the refresh workflow using Cloudflare CI secrets. The separate Telegram workflow checks the internship repository hourly using its bot token and chat ID. Missing secrets cause the guarded steps to skip.
-
-The project-scoped Levels.fyi configuration is in `.codex/`; no global skill or MCP configuration is modified. Optional REST lookup: `LEVELS_API_KEY` in the shell environment, then `node scripts/levels-benchmark.mjs`. Never put API keys in Vite variables or frontend code.
-
-Employer enrichment now pulls full requirements from original ATS data plus configured Apple and ByteDance pages. Shopee’s original careers service supplies Singapore graduate roles and fills missing details. Advertised salary ranges are labelled separately from estimated total compensation. Remaining H2 Games employer-detail verification is visible in the feed.
+Source snapshots remain recovery artifacts in `public/data/jobs.json`. Curated discoveries and salary references live in `data/`. Project-scoped Levels.fyi configuration is in `.codex/`; no global configuration is changed. Optional REST benchmark: `LEVELS_API_KEY` in the shell environment, then `node scripts/levels-benchmark.mjs`. Never put API keys in frontend variables or source.

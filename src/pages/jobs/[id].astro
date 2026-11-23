@@ -1,0 +1,52 @@
+---
+import {env} from 'cloudflare:workers';
+import Page from '../../layouts/Page.astro';
+import {CatalogQueryError,getJob} from '../../lib/catalog.mjs';
+let job;
+try {job=await getJob(env.DB,Astro.params.id||'')}
+catch(error) {
+ if(!(error instanceof CatalogQueryError)){console.error('public role unavailable',error);Astro.response.status=503}
+}
+if(!job&&Astro.response.status!==503)Astro.response.status=404;
+Astro.response.headers.set('Cache-Control',job?'public, max-age=0, s-maxage=60, must-revalidate':'no-store');
+const title=job?`${job.title} at ${job.company} — 2unemployment`:'Role unavailable — 2unemployment';
+const description=job?`${job.company} · ${job.location}. ${job.eligibilityNote}`:undefined;
+const employer=job&&(job.sourceType==='employer-api'||job.sourceType==='employer-page');
+const recheck=job&&(job.detailStatus==='unavailable'||!!job.missingChecks||Date.now()-Date.parse(job.checkedAt)>7*86400000);
+const checked=(value:string)=>new Date(value).toLocaleString('en-SG',{dateStyle:'medium',timeStyle:'short',timeZone:'Asia/Singapore'})+' SGT';
+const money=(value:number)=>new Intl.NumberFormat('en-SG',{style:'currency',currency:'SGD',maximumFractionDigits:0}).format(value);
+const canonical=new URL(job?`/jobs/${encodeURIComponent(job.id)}`:Astro.url.pathname,Astro.site).href;
+// Discovery time is not an employer publication date. Omit JobPosting until the
+// employer supplies its required fields; salary benchmarks are context only.
+const schema=job?{'@context':'https://schema.org','@type':'WebPage',name:title,url:canonical,description}:null;
+---
+<Page title={title} description={description} canonical={canonical} noindex={!job||job.status==='closed'}>
+ <header class="topbar"><a class="wordmark" href="/"><img class="brand-logo" src="/brand/logo.svg" alt="2unemployment" width="142" height="63" /></a><a href="/">← Find a role</a></header>
+ <main class="public-job">
+  {job?<article>
+   <div class="eyebrow">{job.company} · {job.location} · Full-time</div>
+   <h1>{job.title}</h1>
+   {job.status==='closed'&&<p class="fit-badge review">This listing is closed. This page is kept for reference.</p>}
+   <div class="detail-tags">{job.tags.map((tag:string)=><span>{tag}</span>)}</div>
+   <h2>Graduate eligibility</h2><p>{job.eligibilityNote}</p>
+   <p>{job.cohort.length?`${job.cohort.join(' / ')} intake`:'Intake not specified'} · Work arrangement: {job.workplace}</p>
+   <h2>Employer requirements</h2>
+   {job.requirements?.length?<ul>{job.requirements.map((requirement:string)=><li>{requirement}</li>)}</ul>:<p>{job.detailStatus==='verified'?'See the full employer description below for requirements.':'Employer requirements are incomplete. Check the original source before applying.'}</p>}
+   <h2>About the role</h2><p class="full-description">{job.description||'See the original employer posting for the full description.'}</p>
+   <h2>Work rights</h2><p>{job.workRights}</p>
+   <section class="detail-salary" aria-label="Salary context">
+    <span>PAY CONTEXT · ANNUAL SGD</span>
+    <h2>{job.salary?`${money(job.salary.annual)}${job.salary.annualMax?`–${money(job.salary.annualMax)}`:''} · ${job.salary.kind==='advertised'?'Advertised salary':'Estimated total compensation'}`:'Not disclosed'}</h2>
+    <p>{job.salary?.note||'No reliable entry-level salary attached. Check the posting or ask the recruiter.'}</p>
+    {job.salary&&<p><a href={job.salary.source} rel="noopener noreferrer">{job.salary.sourceName} · {job.salary.level} · Singapore ↗</a><small>Salary source checked {checked(job.salary.checkedAt)}</small></p>}
+   </section>
+   <h2>Source and availability</h2>
+   <p>{employer?(job.missingChecks?'Previously present in the employer source; absent at a later successful check.':'Employer source checked at the time below; availability can change.'):'Search-indexed discovery; employer availability has not been freshly verified.'}</p>
+   <p>Source checked {checked(job.checkedAt)}. First discovered {checked(job.firstSeen)}.</p>
+   {recheck&&<p>This record needs rechecking against its original employer source.</p>}
+   <p><a href={job.sourceUrl} rel="noopener noreferrer">View discovery source ↗</a></p>
+   <div class="detail-actions"><a class="primary" href={job.applyUrl} rel="noopener noreferrer">{job.status==='closed'?'View archived source':employer?'View employer posting ↗':'View source listing ↗'}</a><a class="secondary" href="/">Back to the job board</a></div>
+  </article>:<><h1>{Astro.response.status===503?'The catalog is temporarily unavailable.':'Role not found.'}</h1><p><a href="/">Return to the job board →</a></p></>}
+ </main>
+ {schema&&<script type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g,'\\u003c')} />}
+</Page>

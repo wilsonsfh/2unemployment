@@ -2,6 +2,28 @@
 
 Last recorded: 2026-11-23. This file records observations, not promises of future execution.
 
+## Migration implementation — 23 November 2026
+
+**Working tree only; not committed/pushed or deployed.** The previous public static SPA remains live. Architecture comparison and bounded rollout plan are complete in [docs/scaling.md](docs/scaling.md); Apple-style motion research is complete in [docs/motion-research.md](docs/motion-research.md). No motion dependency/skill was installed.
+
+Implemented Astro 7 + Cloudflare adapter, D1 catalog/schema/import, paginated summary/detail/meta APIs, complete `/jobs/<id>` HTML, SSR results, and one React workspace with URL state, browser-local saves and comparison. Existing IDs/firstSeen, source checks, advertised/estimated pay distinctions and ingestion/Telegram behavior are preserved. No new ingestion or review promotion occurred.
+
+Verified:
+
+- **35 tests pass**, including real SQLite catalog queries/import lifecycle, stale snapshot rejection, FTS, summary bounds, URL/history/chunk behavior, ETags, ingestion and Telegram behavior.
+- Astro/TypeScript build and Wrangler deployment dry run pass. TypeScript 6 is used because the current Astro checker does not support TypeScript 7.
+- Real local D1 import succeeds; an actual Wrangler SQL-file import with a late failure rolls back the earlier update. Database-owned transactions are used, without nested BEGIN/COMMIT.
+- Production workerd preview returns 25 then 5 graduate rows in initial HTML, and full Apple requirements without JavaScript. Unknown job/site routes return 404; invalid API parameters return 400; unchanged JSON revalidates 304. Summaries omit descriptions/requirements.
+- Production-preview browser checks passed: filtering, back navigation, saved persistence after reload, 54 saved IDs fetched in chunks (including review/closed queues), comparison across pages, full descriptions, keyboard search, mobile menu, and JavaScript-disabled listing/detail/pagination. Browser console reported 0 errors/0 warnings. Screenshot: `output/playwright/migration-desktop.png` (ignored local artifact).
+- New remote D1 database `2unemployment-catalog` provisioned in APAC and seeded with the retained 44 records. Remote import: 120 statements, 182 rows read, 435 rows written, 446464 bytes (~0.45 MB), served from SIN. Remote query plan used `jobs_queue_recommended`; a 25-ID list read 25 rows. This is current-data evidence, not a 10000-job performance benchmark.
+- The daily refresh workflow and local deploy command now migrate/import D1 before Worker deployment. **Stored GitHub token D1 Edit permission, Actions execution and migrated live rendering remain unverified.**
+
+Dynamic HTML/JSON use a 60-second shared cache allowance with revalidation; errors are uncached. ETag handling still reads D1 before hashing and does not implement global purging. Search intentionally uses indexed ANDed word prefixes rather than arbitrary substring matching. API offset caps at 10000. D1 file imports can briefly interrupt reads. History retains at most 20 previous payloads/job for 90 days. The snapshot+migrations remain recovery artifacts because FTS virtual tables limit full SQL export.
+
+### Release work remaining
+
+Review/commit/push, validate the CI token's additional D1 scope, run the updated refresh workflow, and verify the real site/API counts before claiming release. The old static live deployment has not been retired. Personal wiki workflow explanations still describe the old publication path and need updating with release evidence.
+
 ## Latest verified snapshot
 
 | Item | Observed value |
@@ -32,7 +54,7 @@ Counts and sizes change on refresh. The older “20 records, 46.5 KB / 8.4 KB co
 - Snapshot requests bypass browser caching; UI shows an update time in SGT.
 - Personal wiki has the workflow flow diagram, every YAML line's explanation, runtime evidence and enrichment update.
 
-## Verification evidence
+## Previous live deployment evidence (before migration)
 
 - **17 tests passed**, including enrichment, original-page parsing, advertised salary preservation, scope gates, deduplication, lifecycle and Telegram state behavior.
 - Production build and Wrangler dry run passed.
@@ -51,7 +73,7 @@ Counts and sizes change on refresh. The older “20 records, 46.5 KB / 8.4 KB co
 - Original text can be available without a separately extracted requirements list. The full employer description remains readable.
 - Some employers do not publish salary, visa or work-arrangement details. Those remain unknown rather than inferred.
 - The 14 review candidates are not automatically suitable for new graduates. Read the source requirements before promotion.
-- No D1/Supabase/Firestore database, paginated API, Astro migration, individual public job pages, account system or cross-device application tracker is implemented.
+- Supabase/Firestore, accounts and cross-device application tracking remain deferred. D1, Astro routes and pagination are implemented locally as described above; release remains pending.
 
 ## Milestones
 

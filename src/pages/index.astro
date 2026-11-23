@@ -1,0 +1,36 @@
+---
+import {env} from 'cloudflare:workers';
+import Page from '../layouts/Page.astro';
+import App from '../main';
+import {CatalogQueryError,getCatalogMeta,listJobs} from '../lib/catalog.mjs';
+import type {CatalogMeta,JobPage} from '../lib/catalog.mjs';
+import {jobsSearch,parseWorkspaceState} from '../lib/workspace.mjs';
+let meta:CatalogMeta|null=null,initialPage:JobPage|undefined;
+try {
+ for(let attempt=0;attempt<2;attempt++) {
+  [meta,initialPage]=await Promise.all([getCatalogMeta(env.DB),listJobs(env.DB,new URLSearchParams(jobsSearch(parseWorkspaceState(Astro.url.search))))]);
+  if(!meta)throw Error('Catalog has not been published');
+  if(meta.version===initialPage.version)break;
+  if(attempt===1)throw Error('Catalog changed during rendering');
+ }
+ Astro.response.headers.set('Cache-Control','public, max-age=0, s-maxage=60, must-revalidate');
+} catch(error) {
+ console.error('job board unavailable',error);
+ meta=null;initialPage=undefined;
+ Astro.response.status=error instanceof CatalogQueryError?400:503;
+ Astro.response.headers.set('Cache-Control','no-store');
+}
+const pageLink=(offset:number)=>{
+ const url=new URL(Astro.url);url.searchParams.set('page',String(Math.floor(offset/(initialPage?.limit||25))+1));return url.pathname+url.search;
+};
+---
+<Page title="2unemployment — Singapore's next engineers" canonical={Astro.site?.href} noindex={!!Astro.url.search}>
+ {meta&&initialPage?<>
+  <App meta={meta} initialPage={initialPage} initialSearch={Astro.url.search} client:load />
+  <noscript><nav class="public-job" aria-label="Result pages">
+   <p>Open any role to read its full employer description. Interactive filters, saving and comparison need JavaScript.</p>
+   {initialPage.offset>0&&<a href={pageLink(Math.max(0,initialPage.offset-initialPage.limit))}>← Previous roles</a>}
+   {' '}{initialPage.hasMore&&initialPage.offset+initialPage.limit<=10000&&<a href={pageLink(initialPage.offset+initialPage.limit)}>Next roles →</a>}
+  </nav></noscript>
+ </>:<main class="public-job"><h1>{Astro.response.status===400?'Check the search address.':'The catalog is temporarily unavailable.'}</h1><p><a href="/">Return to the job board →</a></p></main>}
+</Page>

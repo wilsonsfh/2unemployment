@@ -10,21 +10,19 @@ Updated: 2026-11-23. Read [handover.md](handover.md) and [progress.md](progress.
 - [ ] Observe an actual scheduled daily refresh and check the resulting deployed snapshot.
 - [ ] Observe the first real internship Telegram notification. Preserve the silent baseline/deduplication behavior; record delivery evidence without exposing credentials.
 
-## Scaling architecture — proposed next implementation track
+## Scaling architecture — implementation complete, release pending
 
-The supplied recommendation is captured in [docs/scaling.md](docs/scaling.md). This documentation pass does not implement it.
+Decision and migration plan: [docs/scaling.md](docs/scaling.md). Evidence: [progress.md](progress.md).
 
-- [ ] **Later-session analysis: MPA versus SPA and framework choice.** Evaluate the current React/Vite SPA, an Astro-led MPA with React interactive sections, and Next.js. Include the supplied Astro community discussion as opinion to assess; compare rendering/SEO, navigation, shared state, payload/hydration, data freshness, caching, costs and migration effort. Produce a decision matrix and system-design sketch before implementation. Detailed brief: [docs/scaling.md](docs/scaling.md#queued-discussion-mpa-versus-the-current-spa). Do not run this analysis in the handover session.
-- [ ] Write a bounded migration plan: D1 catalog, paginated Worker API, Astro-rendered public job pages, existing React search workspace.
-- [ ] Define a minimal relational schema for jobs, companies, sources/provenance and salary records; decide the history-retention policy.
-- [ ] Preserve existing stable IDs, original links, first-seen/check times, salary basis and source-failure/closure rules through migration.
-- [ ] Define query filters and pagination before choosing indexes. Measure rows examined, not just rows returned; avoid full-table scans for every list request.
-- [ ] Move ingestion toward incremental upserts/history rather than committing an ever-growing full catalog snapshot. Keep bulky retained raw HTML/images outside the relational database.
-- [ ] Add a bounded paginated Worker API with suitable caching and update invalidation; keep private application data out of the public API.
-- [ ] Add actual server-rendered `/jobs/<id>` pages using Astro's Cloudflare adapter. Initial HTML must contain useful job content, canonical metadata and truthful supported structured data.
-- [ ] Retain the closely connected search, filters, results, saving and comparison controls together in React. Do not wrap the entire app in a client-only island and call the SEO work finished.
-- [ ] Validate initial HTML without JavaScript, routing, pagination, source links, accessibility, indexed-query cost and deployment before retiring the corresponding SPA path.
-- [ ] Revisit Supabase if accounts, cross-device applications or substantial PostgreSQL features become near-term requirements. Do not introduce auth/tracking as an unrequested migration side effect.
+- [x] Compare current SPA, Astro + React, and Next.js; produce decision matrix and route/state/data-flow sketch before implementation.
+- [x] Write bounded migration plan with stable IDs, source/lifecycle semantics, query limits, history retention and recovery.
+- [x] Add D1 schema/import and bounded summary/detail/meta Worker APIs; preserve private-data boundary.
+- [x] Add actual server-rendered `/jobs/<id>` HTML with canonical metadata, original requirements/links and truthful structured data.
+- [x] Retain search, filters, results, local saving and comparison in one React workspace; add URL state and pagination.
+- [x] Verify production preview with/without JavaScript, routes, source links, pagination, saved-ID chunks, keyboard/mobile interaction, SQL rollback and indexed query plans. Provision/seed isolated remote catalog.
+- [ ] **Release gate:** review/commit/push the working tree, ensure `CLOUDFLARE_API_TOKEN` has D1 Edit, execute the updated refresh workflow and verify Actions plus live HTML/API/counts. Only then retire the previous static deployment. Local OAuth and a dry run do not prove CI credentials or live behavior. Confirm rollback procedure and update wiki workflow explanations.
+- [ ] Measure representative query/read costs at larger catalog sizes before claiming free-tier scale. API offset currently caps at 10000; design cursor pagination if browsing beyond 10025 matches becomes necessary. FTS is word-prefix search; test actual query needs before extending it.
+- [ ] Revisit Supabase if accounts, cross-device applications or substantial PostgreSQL features become near-term requirements. Do not introduce auth/tracking as a migration side effect.
 
 ## Separate categories
 
@@ -32,13 +30,10 @@ The supplied recommendation is captured in [docs/scaling.md](docs/scaling.md). T
 - [ ] **Singapore software internships** — [issue #3](https://github.com/wilsonsfh/2unemployment/issues/3). Reuse provenance/lifecycle handling with separate internship dates, cohort and employment gates. Keep the existing internship-repository alert watcher independent.
 - [ ] Evaluate an optional paid jobs API only if a demonstrated coverage gap justifies the cost. Free employer sources remain the default.
 
-## Animation skills / open-source research — queue only
+## Animation skills / open-source research — complete
 
-- [ ] Find “Apple animation skills,” reusable Apple-style motion guidance and open-source examples/libraries. Determine web versus Apple-native relevance before recommending anything; start from this React/Astro site's needs.
-- [ ] Check licenses, maintenance, accessibility/reduced-motion behavior, bundle/runtime cost and whether a reusable agent skill exists.
-- [ ] Recommend a small set with source links and one bounded example. Install any selected project skill under this project's `.codex/skills/`, not globally.
-- [ ] Implement motion only in a later requested task. **No animation research, installation or implementation was done in this handover pass.**
+- [x] Research Apple-style motion guidance and distinguish native Apple APIs from React/Astro web motion.
+- [x] Compare licensing, maintenance, reduced-motion behavior and runtime/bundle costs; investigate reusable agent skills.
+- [x] Recommend a small set of sources and one bounded example in [docs/motion-research.md](docs/motion-research.md). CSS first; no dependency or skill selected for installation. If one is later selected, install under `.codex/skills/`.
 
-## Next-session starting point
-
-Read the three context files, inspect the current branch/status and latest Actions runs, then choose one bounded item from this queue according to the user's next request. The D1/Astro proposal is a design direction to carry forward, not evidence that the migration is already complete.
+The working tree contains the first D1/Astro implementation; the existing live site is unchanged until the release gate passes.

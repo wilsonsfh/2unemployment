@@ -4,30 +4,40 @@
   "description": "Singapore full-time new-grad software engineering jobs",
   "main": "index.js",
   "scripts": {
-    "dev": "vite --host 127.0.0.1",
-    "build": "tsc --noEmit && vite build",
+    "dev": "wrangler types && astro dev --host 127.0.0.1",
+    "build": "wrangler types && astro check && astro build",
     "check": "wrangler deploy --dry-run",
     "test": "node --test tests/*.test.mjs alerts/*.test.mjs",
     "ingest": "node scripts/ingest.mjs",
-    "deploy": "npm run build && wrangler deploy"
+    "deploy": "npm run build && npm run check && npm run catalog:publish && wrangler deploy",
+    "preview": "astro preview --host 127.0.0.1",
+    "catalog:export": "node scripts/catalog-import.mjs",
+    "catalog:local": "wrangler d1 migrations apply 2unemployment-catalog --local --config wrangler.jsonc && npm run catalog:export && wrangler d1 execute 2unemployment-catalog --local --config wrangler.jsonc --file .wrangler/catalog-import.sql --yes",
+    "catalog:publish": "wrangler d1 migrations apply 2unemployment-catalog --remote --config wrangler.jsonc && npm run catalog:export && wrangler d1 execute 2unemployment-catalog --remote --config wrangler.jsonc --file .wrangler/catalog-import.sql --yes"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@astrojs/cloudflare": "^14.4.9",
+    "@astrojs/react": "^7.1.9",
+    "astro": "^7.4.13",
     "cheerio": "^1.2.0",
     "lucide-react": "^1.77.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.12",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "@vitejs/plugin-react": "^6.3.0",
-    "typescript": "^7.0.2",
+    "typescript": "^6.0.3",
     "vite": "^8.3.8",
     "wrangler": "^4.166.0"
   },
   "private": true,
-  "type": "module"
+  "type": "module",
+  "engines": {
+    "node": ">=22.23.4"
+  }
 }

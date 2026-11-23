@@ -1,1 +1,1 @@
-{"compilerOptions":{"target":"ES2022","lib":["ES2022","DOM","DOM.Iterable"],"module":"ESNext","moduleResolution":"Bundler","jsx":"react-jsx","strict":true,"resolveJsonModule":true,"esModuleInterop":true,"skipLibCheck":true,"noEmit":true,"types":["vite/client"]},"include":["src","vite.config.ts"]}
+{"extends":"astro/tsconfigs/strict","compilerOptions":{"jsx":"react-jsx","jsxImportSource":"react","types":["astro/client"]},"include":[".astro/types.d.ts","src/**/*","worker-configuration.d.ts"],"exclude":["dist"]}

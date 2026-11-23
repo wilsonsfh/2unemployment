@@ -1,0 +1,11 @@
+import type {JobSummary,JobsPage} from '../types';
+export type WorkspaceState = {view:'jobs'|'saved'|'salaries'|'sources'; query:string; queue:'graduate'|'review'|'closed'; cohort:string; salaryOnly:boolean; employerOnly:boolean; sort:'recommended'|'company'|'newest'|'salary'; unit:'year'|'month'; page:number};
+export const PAGE_SIZE: number;
+export function parseWorkspaceState(search?:string):WorkspaceState;
+export function workspaceSearch(state:WorkspaceState):string;
+export function updateWorkspaceState(state:WorkspaceState, patch:Partial<WorkspaceState>):WorkspaceState;
+export function jobsSearch(state:WorkspaceState):string;
+export function savedIdChunks(ids:string[]):string[][];
+export function compareJobs(sort:string):(a:JobSummary,b:JobSummary)=>number;
+export function workspaceHistoryMethod(patch:Partial<WorkspaceState>):'replaceState'|'pushState';
+export function pageSnapshot(pages:JobsPage[]):{version?:string|null;generatedAt?:string|null};

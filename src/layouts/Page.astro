@@ -1,0 +1,25 @@
+---
+import '../style.css';
+interface Props {title:string; description?:string; canonical?:string; noindex?:boolean}
+const {title,description='Singapore full-time new-grad software engineering roles. Check eligibility, salary context and original employer sources.',canonical=new URL(Astro.url.pathname,Astro.site).href,noindex=false}=Astro.props;
+---
+<!doctype html>
+<html lang="en-SG">
+ <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#174c3c" />
+  <meta name="description" content={description} />
+  <title>{title}</title>
+  <link rel="canonical" href={canonical} />
+  <link rel="icon" href="/brand/logo.svg" type="image/svg+xml" />
+  {noindex&&<meta name="robots" content="noindex, follow" />}
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={new URL('/brand/logo-original.jpeg',Astro.site).href} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonical} />
+  <meta name="twitter:card" content="summary_large_image" />
+ </head>
+ <body><slot /></body>
+</html>

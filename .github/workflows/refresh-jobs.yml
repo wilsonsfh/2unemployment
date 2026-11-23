@@ -31,12 +31,16 @@ jobs:
             git commit -m 'Refresh Singapore graduate job snapshot'
             git push
           fi
-      - name: Deploy refreshed snapshot when Cloudflare is configured
+      - name: Publish catalog and deploy when Cloudflare is configured
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           if [ -n "$CLOUDFLARE_API_TOKEN" ] && [ -n "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            npx wrangler d1 migrations apply 2unemployment-catalog --remote
+            npm run catalog:export
+            npx wrangler d1 execute 2unemployment-catalog --remote --file .wrangler/catalog-import.sql --yes
+            npm run check
             npx wrangler deploy
           else
             echo 'Snapshot updated; deployment skipped because Cloudflare CI secrets are not configured.'

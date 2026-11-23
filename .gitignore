@@ -1,5 +1,7 @@
 node_modules/
 dist/
+.astro/
+worker-configuration.d.ts
 .wrangler/
 .dev.vars*
 .env*
