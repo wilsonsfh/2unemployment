@@ -2,6 +2,11 @@
 
 Updated: 2026-11-23. Read [handover.md](handover.md) and [progress.md](progress.md) first. Keep this queue aligned with GitHub issues; do not start every track at once.
 
+## Current priority: identity and private application tracking
+
+- [ ] Choose sign-in flow and architecture, then implement real accounts with private, cross-device application saving/tracking. The owner has explicitly requested this; the earlier deferral no longer applies. Keep account/application data out of public catalog APIs and recovery snapshots.
+- [ ] Support the owner’s product direction: surface high-paying early-career tech roles and evidence-backed agent-workflow requirements, using Sierra as a concrete example. Preserve graduate/review gates and advertised-pay provenance.
+
 ## Data quality and operations
 
 - [ ] **Resolve H2 Games' original posting** — [issue #4](https://github.com/wilsonsfh/2unemployment/issues/4). Find an accessible employer-controlled posting/application URL, fill actual requirements and work arrangement, preserve the existing ID. If unavailable, retain the incomplete label.
@@ -12,7 +17,7 @@ Updated: 2026-11-23. Read [handover.md](handover.md) and [progress.md](progress.
 
 ## Reusable project and open-source adoption
 
-- [x] Publish the full end-to-end setup guide in the website, with discoverable board navigation and linked supporting Markdown guides. Local checks passed; release evidence is tracked in progress/handover.
+- [x] Publish the full end-to-end setup guide in the website, with discoverable board navigation and linked supporting Markdown guides. Deployed source `5719508`, Worker `76a9e428-27a9-4f5d-9f2d-0d6778eb79cc`; live verification passed.
 - [x] Add a public GitHub correction/data-use request template and a linked removal-process explanation. Intake is public and requires GitHub; private intake and general source suppression remain future work.
 
 - [x] Add the project-local [evidence-based role matching skill](.codex/skills/evidence-based-role-matching/SKILL.md) and a knowledge-base concept on cosine similarity, exact identity, eligibility and evidence. Independent case evaluation retained ambiguity rather than falsely merging similar jobs.
