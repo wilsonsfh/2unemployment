@@ -1,0 +1,445 @@
+{
+  "generatedAt": "2026-11-23T02:52:04.490Z",
+  "jobs": [
+    {
+      "id": "h2-fullstack-2027",
+      "company": "H2 Games",
+      "title": "Full-Stack Engineer (2026/2027 Graduate)",
+      "location": "Singapore",
+      "category": "swe",
+      "employment": "full-time",
+      "eligibility": "explicit",
+      "eligibilityNote": "Title explicitly targets 2026/2027 graduates. Public index; confirm availability with employer.",
+      "cohort": [
+        "2026",
+        "2027"
+      ],
+      "tags": [
+        "Full-stack",
+        "AI"
+      ],
+      "workplace": "On-site",
+      "status": "listed",
+      "sourceName": "Public listing · search-indexed",
+      "sourceType": "indexed",
+      "sourceUrl": "https://whoishiring.sg/en/company/h2-games",
+      "applyUrl": "https://whoishiring.sg/en/company/h2-games",
+      "checkedAt": "2026-11-23T03:00:00.000Z",
+      "firstSeen": "2026-11-23T03:00:00.000Z",
+      "description": "Title explicitly targets 2026/2027 graduates. Public index; confirm availability with employer.",
+      "workRights": "Not confirmed. Check the employer posting."
+    },
+    {
+      "id": "apple-online-store-early",
+      "company": "Apple",
+      "title": "Software Engineer, Apple Online Store (Early Careers)",
+      "location": "Singapore",
+      "category": "swe",
+      "employment": "full-time",
+      "eligibility": "explicit",
+      "eligibilityNote": "Entry-level posting asks for less than 3 years of experience; Java and Python. Public index, not a fresh employer check.",
+      "cohort": [],
+      "tags": [
+        "Java",
+        "Python"
+      ],
+      "workplace": "Not specified",
+      "status": "listed",
+      "sourceName": "Public listing · search-indexed",
+      "sourceType": "indexed",
+      "sourceUrl": "https://alion.io/job/apple-software-engineer-apple-online-store-early-careers",
+      "applyUrl": "https://alion.io/job/apple-software-engineer-apple-online-store-early-careers",
+      "checkedAt": "2026-11-23T03:00:00.000Z",
+      "firstSeen": "2026-11-23T03:00:00.000Z",
+      "description": "Apple Online Store / IS&T. Bachelor’s degree in Computer Science or equivalent. The indexed listing specifies less than three years of work experience. Verify the current posting before applying.",
+      "workRights": "Not confirmed. Check the employer posting."
+    },
+    {
+      "id": "bytedance-7668651000437180677",
+      "company": "ByteDance",
+      "title": "Software Engineer Graduate, Global Payments",
+      "location": "Singapore",
+      "category": "swe",
+      "employment": "full-time",
+      "eligibility": "explicit",
+      "eligibilityNote": "2027 graduate intake; rolling applications. Maximum two applications across ByteDance affiliates.",
+      "cohort": [
+        "2027"
+      ],
+      "tags": [
+        "Backend",
+        "Payments"
+      ],
+      "workplace": "Not specified",
+      "status": "listed",
+      "sourceName": "Employer page · search-indexed",
+      "sourceType": "indexed",
+      "sourceUrl": "https://joinbytedance.com/search/7668651000437180677",
+      "applyUrl": "https://joinbytedance.com/search/7668651000437180677",
+      "checkedAt": "2026-11-23T03:00:00.000Z",
+      "firstSeen": "2026-11-23T03:00:00.000Z",
+      "description": "Build backend services across payments, refunds, settlement, merchant services, and billing. Programming in Go, Java, C++, Python, or similar. Graduation and availability dates required in resume.",
+      "workRights": "Not confirmed. Check the employer posting.",
+      "salary": {
+        "annual": 116917,
+        "level": "1-2",
+        "source": "https://www.levels.fyi/companies/bytedance/salaries/software-engineer/locations/singapore",
+        "note": "Levels.fyi Singapore entry-level 1-2 total compensation. Company-level benchmark; team, offer and stock vesting can differ.",
+        "currency": "SGD",
+        "basis": "total",
+        "kind": "estimate",
+        "sourceName": "Levels.fyi",
+        "checkedAt": "2026-11-23T03:00:00.000Z"
+      }
+    },
+    {
+      "id": "bytedance-7668221440984811829",
+      "company": "ByteDance",
+      "title": "Front-end Software Engineer Graduate, BytePlus",
+      "location": "Singapore",
+      "category": "swe",
+      "employment": "full-time",
+      "eligibility": "explicit",
+      "eligibilityNote": "2027 start; graduating or recently graduated. Maximum two applications across ByteDance affiliates.",
+      "cohort": [
+        "2027"
+      ],
+      "tags": [
+        "Frontend",
+        "TypeScript",
+        "AI"
+      ],
+      "workplace": "Not specified",
+      "status": "listed",
+      "sourceName": "Employer page · search-indexed",
+      "sourceType": "indexed",
+      "sourceUrl": "https://joinbytedance.com/search/7668221440984811829",
+      "applyUrl": "https://joinbytedance.com/search/7668221440984811829",
+      "checkedAt": "2026-11-23T03:00:00.000Z",
+      "firstSeen": "2026-11-23T03:00:00.000Z",
+      "description": "Build the BytePlus website, AI platform, and growth platform. JavaScript/TypeScript, HTML, CSS, Python; React, Vue, or Angular familiarity.",
+      "workRights": "Not confirmed. Check the employer posting.",
+      "salary": {
+        "annual": 116917,
+        "level": "1-2",
+        "source": "https://www.levels.fyi/companies/bytedance/salaries/software-engineer/locations/singapore",
+        "note": "Levels.fyi Singapore entry-level 1-2 total compensation. Company-level benchmark; team, offer and stock vesting can differ.",
+        "currency": "SGD",
+        "basis": "total",
+        "kind": "estimate",
+        "sourceName": "Levels.fyi",
+        "checkedAt": "2026-11-23T03:00:00.000Z"
+      }
+    },
+    {
+      "id": "bytedance-7668253977166940469",
+      "company": "ByteDance",
+      "title": "Backend Software Engineer Graduate, Foundational Technology",
+      "location": "Singapore",
+      "category": "swe",
+      "employment": "full-time",
+      "eligibility": "explicit",
+      "eligibilityNote": "2027 start; completing or recently completed a relevant bachelor’s degree.",
+      "cohort": [
+        "2027"
+      ],
+      "tags": [
+        "Backend",
+        "Infrastructure"
+      ],
+      "workplace": "Not specified",
+      "status": "listed",
+      "sourceName": "Employer page · search-indexed",
+      "sourceType": "indexed",
+      "sourceUrl": "https://joinbytedance.com/search/7668253977166940469",
+      "applyUrl": "https://joinbytedance.com/search/7668253977166940469",
+      "checkedAt": "2026-11-23T03:00:00.000Z",
+      "firstSeen": "2026-11-23T03:00:00.000Z",
+      "description": "Cloud-native infrastructure, large Kubernetes clusters, observability, and resource optimisation. Graduation and availability dates required.",
+      "workRights": "Not confirmed. Check the employer posting.",
+      "salary": {
+        "annual": 116917,
+        "level": "1-2",
+        "source": "https://www.levels.fyi/companies/bytedance/salaries/software-engineer/locations/singapore",
+        "note": "Levels.fyi Singapore entry-level 1-2 total compensation. Company-level benchmark; team, offer and stock vesting can differ.",
+        "currency": "SGD",
+        "basis": "total",
+        "kind": "estimate",
+        "sourceName": "Levels.fyi",
+        "checkedAt": "2026-11-23T03:00:00.000Z"
+      }
+    },
+    {
+      "id": "shopee-4444841322",
+      "company": "Shopee",
+      "title": "Backend Engineer, ShopeePay (2027 Graduate)",
+      "location": "Singapore",
+      "category": "swe",
+      "employment": "full-time",
+      "eligibility": "explicit",
+      "eligibilityNote": "2027 graduate title confirmed by public job index. Check right-to-work and current availability.",
+      "cohort": [
+        "2027"
+      ],
+      "tags": [
+        "Backend",
+        "Fintech"
+      ],
+      "workplace": "Not specified",
+      "status": "listed",
+      "sourceName": "Public listing · search-indexed",
+      "sourceType": "indexed",
+      "sourceUrl": "https://www.linkedin.com/jobs/view/backend-engineer-shopeepay-2027-graduate-at-shopee-4444841322",
+      "applyUrl": "https://www.linkedin.com/jobs/view/backend-engineer-shopeepay-2027-graduate-at-shopee-4444841322",
+      "checkedAt": "2026-11-23T03:00:00.000Z",
+      "firstSeen": "2026-11-23T03:00:00.000Z",
+      "description": "2027 graduate title confirmed by public job index. Check right-to-work and current availability.",
+      "workRights": "Not confirmed. Check the employer posting.",
+      "salary": {
+        "annual": 96714,
+        "level": "Software Engineer",
+        "source": "https://www.levels.fyi/companies/shopee/salaries/software-engineer/locations/singapore",
+        "note": "Levels.fyi Singapore entry-level Software Engineer total compensation. Company-level benchmark, not an advertised salary.",
+        "currency": "SGD",
+        "basis": "total",
+        "kind": "estimate",
+        "sourceName": "Levels.fyi",
+        "checkedAt": "2026-11-23T03:00:00.000Z"
+      }
+    },
+    {
+      "id": "shopee-4485477268",
+      "company": "Shopee",
+      "title": "Site Reliability Engineer, Data Infrastructure (2027 Graduate)",
+      "location": "Singapore",
+      "category": "swe",
+      "employment": "full-time",
+      "eligibility": "explicit",
+      "eligibilityNote": "2027 graduate title confirmed by public job index. Check right-to-work and current availability.",
+      "cohort": [
+        "2027"
+      ],
+      "tags": [
+        "Infrastructure",
+        "SRE"
+      ],
+      "workplace": "Not specified",
+      "status": "listed",
+      "sourceName": "Public listing · search-indexed",
+      "sourceType": "indexed",
+      "sourceUrl": "https://www.linkedin.com/jobs/view/site-reliability-engineer-data-infrastructure-2027-graduate-at-shopee-4485477268",
+      "applyUrl": "https://www.linkedin.com/jobs/view/site-reliability-engineer-data-infrastructure-2027-graduate-at-shopee-4485477268",
+      "checkedAt": "2026-11-23T03:00:00.000Z",
+      "firstSeen": "2026-11-23T03:00:00.000Z",
+      "description": "2027 graduate title confirmed by public job index. Check right-to-work and current availability.",
+      "workRights": "Not confirmed. Check the employer posting.",
+      "salary": {
+        "annual": 96714,
+        "level": "Software Engineer",
+        "source": "https://www.levels.fyi/companies/shopee/salaries/software-engineer/locations/singapore",
+        "note": "Levels.fyi Singapore entry-level Software Engineer total compensation. Company-level benchmark, not an advertised salary.",
+        "currency": "SGD",
+        "basis": "total",
+        "kind": "estimate",
+        "sourceName": "Levels.fyi",
+        "checkedAt": "2026-11-23T03:00:00.000Z"
+      }
+    },
+    {
+      "id": "stripe-8160776",
+      "company": "Stripe",
+      "title": "Software Engineer, New Grad",
+      "location": "Singapore",
+      "category": "swe",
+      "employment": "full-time",
+      "eligibility": "explicit",
+      "eligibilityNote": "Graduate or early-career wording in the employer title. Check the full requirements.",
+      "cohort": [],
+      "tags": [
+        "Software"
+      ],
+      "workplace": "Not specified",
+      "status": "listed",
+      "sourceName": "Stripe careers",
+      "sourceType": "employer-api",
+      "sourceUrl": "https://stripe.com/jobs/search?gh_jid=8160776",
+      "applyUrl": "https://stripe.com/jobs/search?gh_jid=8160776",
+      "checkedAt": "2026-11-23T02:52:04.490Z",
+      "firstSeen": "2026-11-23T02:52:04.490Z",
+      "managedBy": "stripe",
+      "description": "Who we are About Stripe Stripe is a technology company focused on improving the conditions for economic growth and prosperity. We build programmable financial infrastructure, rethinking from first principles how financial services should work, to make it easier and cheaper for any business to start and scale. More than 10 million businesses build on Stripe, spanning the economic frontier—from solo founders to established enterprises—united by a practical focus on growth. The most ambitious companies in the world use Stripe as core infrastructure to grow faster. They process trillions of dollars a year on Stripe, equivalent to around 1.6% of global GDP. While economic growth makes everyone better off, open markets also enable greater variety. When any business can easily serve a global customer base, the quality and diversity of products in the world increase, and craft and creativity are unleashed into the smallest niches. Our own growth is wholly contingent on the success of the businesses building on Stripe. We therefore invest back into our technology at an unusual rate. We make upgrades to our products every single day to deliver compounding gains to our customers. We maintain some of the most reliable APIs on the internet. We build entirely new pieces of financial infrastructure to enable new ideas. And our significant advances in risk and fraud infrastructure over many years are making the internet economy safer and more accessible.&nbsp; Though people at Stripe don’t tend to take themselves seriously, Stripe is a fairly serious place: our customers are depending on u",
+      "workRights": "Not confirmed. Check the employer posting.",
+      "salary": {
+        "annual": 147874,
+        "level": "L1",
+        "source": "https://www.levels.fyi/companies/stripe/salaries/software-engineer/levels/l1/locations/singapore",
+        "note": "Levels.fyi Singapore L1 average annual total compensation from the public page. A level benchmark, not the salary advertised for this vacancy.",
+        "currency": "SGD",
+        "basis": "total",
+        "kind": "estimate",
+        "sourceName": "Levels.fyi",
+        "checkedAt": "2026-11-23T03:00:00.000Z"
+      }
+    },
+    {
+      "id": "towerresearchcapital-5733830",
+      "company": "Tower Research Capital",
+      "title": "Quantitative Developer",
+      "location": "Singapore",
+      "category": "swe",
+      "employment": "full-time",
+      "eligibility": "review",
+      "eligibilityNote": "Full-time software role; graduate eligibility needs manual review.",
+      "cohort": [],
+      "tags": [
+        "Software"
+      ],
+      "workplace": "Not specified",
+      "status": "listed",
+      "sourceName": "Tower Research Capital careers",
+      "sourceType": "employer-api",
+      "sourceUrl": "https://www.tower-research.com/open-positions/?gh_jid=5733830",
+      "applyUrl": "https://www.tower-research.com/open-positions/?gh_jid=5733830",
+      "checkedAt": "2026-11-23T02:52:04.490Z",
+      "firstSeen": "2026-11-23T02:52:04.490Z",
+      "managedBy": "towerresearchcapital",
+      "description": "Tower Research Capital is a leading quantitative trading firm founded in 1998. Tower has built its business on a high-performance platform and independent trading teams. We have a 25+ year track record of innovation and a reputation for discovering unique market opportunities. Tower is home to some of the world’s best systematic trading and engineering talent. We empower portfolio managers to build their teams and strategies independently while providing the economies of scale that come from a large, global organization.&nbsp; Engineers thrive at Tower while developing electronic trading infrastructure at a world class level. Our engineers solve challenging problems in the realms of low-latency programming, FPGA technology, hardware acceleration and machine learning. Our ongoing investment in top engineering talent and technology ensures our platform remains unmatched in terms of functionality, scalability and performance. At Tower, every employee plays a role in our success. Our Business Support teams are essential to building and maintaining the platform that powers everything we do — combining market access, data, compute, and research infrastructure with risk management, compliance, and a full suite of business services. Our Business Support teams enable our trading and engineering teams to perform at their best. At Tower, employees will find a stimulating, results-oriented environment where highly intelligent and motivated colleagues inspire each other to reach their greatest potential. Responsibilities Iterating quickly with on-site quantitative researchers on the res",
+      "workRights": "Not confirmed. Check the employer posting."
+    },
+    {
+      "id": "towerresearchcapital-6346539",
+      "company": "Tower Research Capital",
+      "title": "Software Engineer, C++",
+      "location": "Singapore, Hong Kong, Shanghai",
+      "category": "swe",
+      "employment": "full-time",
+      "eligibility": "review",
+      "eligibilityNote": "Full-time software role; graduate eligibility needs manual review.",
+      "cohort": [],
+      "tags": [
+        "C++"
+      ],
+      "workplace": "Not specified",
+      "status": "listed",
+      "sourceName": "Tower Research Capital careers",
+      "sourceType": "employer-api",
+      "sourceUrl": "https://www.tower-research.com/open-positions/?gh_jid=6346539",
+      "applyUrl": "https://www.tower-research.com/open-positions/?gh_jid=6346539",
+      "checkedAt": "2026-11-23T02:52:04.490Z",
+      "firstSeen": "2026-11-23T02:52:04.490Z",
+      "managedBy": "towerresearchcapital",
+      "description": "Tower Research Capital is a leading quantitative trading firm founded in 1998. Tower has built its business on a high-performance platform and independent trading teams. We have a 25+ year track record of innovation and a reputation&nbsp; for discovering unique market opportunities. Tower is home to some of the world’s best systematic trading and engineering talent. We empower portfolio managers to build their teams and strategies independently while providing the economies of scale that come from a large, global organization.&nbsp; Engineers thrive at Tower while developing electronic trading infrastructure at a world class level. Our engineers solve challenging problems in the realms of low-latency programming, FPGA technology, hardware acceleration and machine learning. Our ongoing investment in top engineering talent and technology ensures our platform remains unmatched in terms of functionality, scalability and performance. At Tower, every employee plays a role in our success. Our Business Support teams are essential to building and maintaining the platform that powers everything we do — combining market access, data, compute, and research infrastructure with risk management, compliance, and a full suite of business services. Our Business Support teams enable our trading and engineering teams to perform at their best. At Tower, employees will find a stimulating, results-oriented environment where highly intelligent and motivated colleagues inspire each other to reach their greatest potential. The Core Engineering Markets team is responsible for providing Tower’s tradin",
+      "workRights": "Not confirmed. Check the employer posting."
+    },
+    {
+      "id": "towerresearchcapital-8245433",
+      "company": "Tower Research Capital",
+      "title": "Software Engineer, C++ - Graduate Opportunity",
+      "location": "Hong Kong, Singapore",
+      "category": "swe",
+      "employment": "full-time",
+      "eligibility": "explicit",
+      "eligibilityNote": "Graduate or early-career wording in the employer title. Check the full requirements.",
+      "cohort": [],
+      "tags": [
+        "C++"
+      ],
+      "workplace": "Not specified",
+      "status": "listed",
+      "sourceName": "Tower Research Capital careers",
+      "sourceType": "employer-api",
+      "sourceUrl": "https://www.tower-research.com/open-positions/?gh_jid=8245433",
+      "applyUrl": "https://www.tower-research.com/open-positions/?gh_jid=8245433",
+      "checkedAt": "2026-11-23T02:52:04.490Z",
+      "firstSeen": "2026-11-23T02:52:04.490Z",
+      "managedBy": "towerresearchcapital",
+      "description": "Tower Research Capital is a leading quantitative trading firm founded in 1998. Tower has built its business on a high-performance platform and independent trading teams. We have a 25+ year track record of innovation and a reputation&nbsp; for discovering unique market opportunities. Tower is home to some of the world’s best systematic trading and engineering talent. We empower portfolio managers to build their teams and strategies independently while providing the economies of scale that come from a large, global organization.&nbsp; Engineers thrive at Tower while developing electronic trading infrastructure at a world class level. Our engineers solve challenging problems in the realms of low-latency programming, FPGA technology, hardware acceleration and machine learning. Our ongoing investment in top engineering talent and technology ensures our platform remains unmatched in terms of functionality, scalability and performance. At Tower, every employee plays a role in our success. Our Business Support teams are essential to building and maintaining the platform that powers everything we do — combining market access, data, compute, and research infrastructure with risk management, compliance, and a full suite of business services. Our Business Support teams enable our trading and engineering teams to perform at their best. At Tower, employees will find a stimulating, results-oriented environment where highly intelligent and motivated colleagues inspire each other to reach their greatest potential. Responsibilities Designing and implementing a high-frequency trading platform",
+      "workRights": "Not confirmed. Check the employer posting."
+    },
+    {
+      "id": "palantir-2458ba08-de79-4e8f-b553-060f9568727e",
+      "company": "Palantir Technologies",
+      "title": "Software Engineer, New Grad",
+      "location": "Singapore, Singapore",
+      "category": "swe",
+      "employment": "full-time",
+      "eligibility": "explicit",
+      "eligibilityNote": "Graduate or early-career wording in the employer title. Check the full requirements.",
+      "cohort": [],
+      "tags": [
+        "Software"
+      ],
+      "workplace": "hybrid",
+      "status": "listed",
+      "sourceName": "Palantir Technologies careers",
+      "sourceType": "employer-api",
+      "sourceUrl": "https://jobs.lever.co/palantir/2458ba08-de79-4e8f-b553-060f9568727e",
+      "applyUrl": "https://jobs.lever.co/palantir/2458ba08-de79-4e8f-b553-060f9568727e",
+      "checkedAt": "2026-11-23T02:52:04.490Z",
+      "firstSeen": "2026-11-23T02:52:04.490Z",
+      "managedBy": "palantir",
+      "description": "A World-Changing Company Palantir builds the world’s leading software for data-driven decisions and operations. By bringing the right data to the people who need it, our platforms empower our partners to develop lifesaving drugs, forecast supply chain disruptions, locate missing children, and more. The Role Software Engineers at Palantir build software at scale to transform how organizations around the world use data. In this role, you’ll have an opportunity to grow more quickly than you ever envisioned as you contribute high-quality code directly to Palantir Gotham, Palantir Apollo, or Palantir Foundry: products that are deployed at some of the most important institutions across the public and private sectors. You'll create features used by research scientists, aerospace engineers, intelligence analysts, and economic forecasters in countries around the world. Palantir's Product Development organization is made up of small teams of Software Engineers, each focusing on a specific aspect of a product. For example, you might join a team that builds a Foundry front-end application, or a component of the Gotham release infrastructure. We encourage communication and collaboration among teams to share context, skills, and experience, so you'll also have the opportunity to learn about other business areas. Core Responsibilities As a Software Engineer, you are involved throughout the product lifecycle - from idea generation, design, and prototyping, to execution and shipping, all while also being paired with a mentor dedicated to your growth and success. You'll collaborate closely w",
+      "workRights": "Not confirmed. Check the employer posting."
+    }
+  ],
+  "sources": [
+    {
+      "id": "stripe",
+      "name": "Stripe",
+      "kind": "Employer API",
+      "status": "healthy",
+      "url": "https://boards-api.greenhouse.io/v1/boards/stripe/jobs",
+      "checkedAt": "2026-11-23T02:52:04.490Z",
+      "count": 1,
+      "note": "Singapore software roles. Graduate and review queues are separate."
+    },
+    {
+      "id": "towerresearchcapital",
+      "name": "Tower Research Capital",
+      "kind": "Employer API",
+      "status": "healthy",
+      "url": "https://boards-api.greenhouse.io/v1/boards/towerresearchcapital/jobs",
+      "checkedAt": "2026-11-23T02:52:04.490Z",
+      "count": 3,
+      "note": "Singapore software roles. Graduate and review queues are separate."
+    },
+    {
+      "id": "palantir",
+      "name": "Palantir Technologies",
+      "kind": "Employer API",
+      "status": "healthy",
+      "url": "https://api.lever.co/v0/postings/palantir?mode=json",
+      "checkedAt": "2026-11-23T02:52:04.490Z",
+      "count": 1,
+      "note": "Singapore software roles. Graduate and review queues are separate."
+    },
+    {
+      "id": "databricks",
+      "name": "Databricks",
+      "kind": "Employer API",
+      "status": "healthy",
+      "url": "https://boards-api.greenhouse.io/v1/boards/databricks/jobs",
+      "checkedAt": "2026-11-23T02:52:04.490Z",
+      "count": 0,
+      "note": "Singapore software roles. Graduate and review queues are separate."
+    },
+    {
+      "id": "mongodb",
+      "name": "MongoDB",
+      "kind": "Employer API",
+      "status": "healthy",
+      "url": "https://boards-api.greenhouse.io/v1/boards/mongodb/jobs",
+      "checkedAt": "2026-11-23T02:52:04.490Z",
+      "count": 0,
+      "note": "Singapore software roles. Graduate and review queues are separate."
+    },
+    {
+      "id": "curated",
+      "name": "Curated discoveries",
+      "kind": "Manual / search index",
+      "status": "manual",
+      "url": "https://github.com/SimplifyJobs/New-Grad-Positions",
+      "note": "Manually researched leads, each with its own source and check date. Not automatically revalidated."
+    }
+  ]
+}

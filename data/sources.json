@@ -1,0 +1,7 @@
+[
+  {"id":"stripe","name":"Stripe","adapter":"greenhouse","board":"stripe","url":"https://boards-api.greenhouse.io/v1/boards/stripe/jobs"},
+  {"id":"towerresearchcapital","name":"Tower Research Capital","adapter":"greenhouse","board":"towerresearchcapital","url":"https://boards-api.greenhouse.io/v1/boards/towerresearchcapital/jobs"},
+  {"id":"palantir","name":"Palantir Technologies","adapter":"lever","board":"palantir","url":"https://api.lever.co/v0/postings/palantir?mode=json"},
+  {"id":"databricks","name":"Databricks","adapter":"greenhouse","board":"databricks","url":"https://boards-api.greenhouse.io/v1/boards/databricks/jobs"},
+  {"id":"mongodb","name":"MongoDB","adapter":"greenhouse","board":"mongodb","url":"https://boards-api.greenhouse.io/v1/boards/mongodb/jobs"}
+]

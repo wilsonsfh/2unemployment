@@ -1,0 +1,43 @@
+name: Refresh Singapore graduate jobs
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 23 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: refresh-jobs
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run ingest
+      - run: npm test
+      - run: npm run build
+      - name: Persist snapshot for source-failure recovery
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add public/data/jobs.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Refresh Singapore graduate job snapshot'
+            git push
+          fi
+      - name: Deploy refreshed snapshot when Cloudflare is configured
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -n "$CLOUDFLARE_API_TOKEN" ] && [ -n "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            npx wrangler deploy
+          else
+            echo 'Snapshot updated; deployment skipped because Cloudflare CI secrets are not configured.'
+          fi

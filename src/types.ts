@@ -1,0 +1,4 @@
+export type Salary = {annual:number; currency:'SGD'; basis:'total'; kind:'estimate'; source:string; sourceName:string; level:string; note:string; checkedAt:string};
+export type Job = {id:string; company:string; title:string; location:string; category:'swe'|'solutions'|'internship'; employment:'full-time'|'internship'; eligibility:'explicit'|'review'; eligibilityNote:string; cohort:string[]; tags:string[]; workplace:string; status:'listed'|'closed'; sourceName:string; sourceType:'employer-api'|'indexed'|'community'; sourceUrl:string; applyUrl:string; checkedAt:string; firstSeen:string; managedBy?:string; missingChecks?:number; description:string; workRights:string; salary?:Salary};
+export type Source = {id:string; name:string; kind:string; status:string; url:string; checkedAt?:string; count?:number; note:string};
+export type Feed = {generatedAt:string; jobs:Job[]; sources:Source[]};

@@ -1,0 +1,191 @@
+[
+  {
+    "id": "h2-fullstack-2027",
+    "company": "H2 Games",
+    "title": "Full-Stack Engineer (2026/2027 Graduate)",
+    "location": "Singapore",
+    "category": "swe",
+    "employment": "full-time",
+    "eligibility": "explicit",
+    "eligibilityNote": "Title explicitly targets 2026/2027 graduates. Public index; confirm availability with employer.",
+    "cohort": [
+      "2026",
+      "2027"
+    ],
+    "tags": [
+      "Full-stack",
+      "AI"
+    ],
+    "workplace": "On-site",
+    "status": "listed",
+    "sourceName": "Public listing \u00b7 search-indexed",
+    "sourceType": "indexed",
+    "sourceUrl": "https://whoishiring.sg/en/company/h2-games",
+    "applyUrl": "https://whoishiring.sg/en/company/h2-games",
+    "checkedAt": "2026-11-23T03:00:00.000Z",
+    "firstSeen": "2026-11-23T03:00:00.000Z",
+    "description": "Title explicitly targets 2026/2027 graduates. Public index; confirm availability with employer.",
+    "workRights": "Not confirmed. Check the employer posting."
+  },
+  {
+    "id": "apple-online-store-early",
+    "company": "Apple",
+    "title": "Software Engineer, Apple Online Store (Early Careers)",
+    "location": "Singapore",
+    "category": "swe",
+    "employment": "full-time",
+    "eligibility": "explicit",
+    "eligibilityNote": "Entry-level posting asks for less than 3 years of experience; Java and Python. Public index, not a fresh employer check.",
+    "cohort": [],
+    "tags": [
+      "Java",
+      "Python"
+    ],
+    "workplace": "Not specified",
+    "status": "listed",
+    "sourceName": "Public listing \u00b7 search-indexed",
+    "sourceType": "indexed",
+    "sourceUrl": "https://alion.io/job/apple-software-engineer-apple-online-store-early-careers",
+    "applyUrl": "https://alion.io/job/apple-software-engineer-apple-online-store-early-careers",
+    "checkedAt": "2026-11-23T03:00:00.000Z",
+    "firstSeen": "2026-11-23T03:00:00.000Z",
+    "description": "Apple Online Store / IS&T. Bachelor\u2019s degree in Computer Science or equivalent. The indexed listing specifies less than three years of work experience. Verify the current posting before applying.",
+    "workRights": "Not confirmed. Check the employer posting."
+  },
+  {
+    "id": "bytedance-7668651000437180677",
+    "company": "ByteDance",
+    "title": "Software Engineer Graduate, Global Payments",
+    "location": "Singapore",
+    "category": "swe",
+    "employment": "full-time",
+    "eligibility": "explicit",
+    "eligibilityNote": "2027 graduate intake; rolling applications. Maximum two applications across ByteDance affiliates.",
+    "cohort": [
+      "2027"
+    ],
+    "tags": [
+      "Backend",
+      "Payments"
+    ],
+    "workplace": "Not specified",
+    "status": "listed",
+    "sourceName": "Employer page \u00b7 search-indexed",
+    "sourceType": "indexed",
+    "sourceUrl": "https://joinbytedance.com/search/7668651000437180677",
+    "applyUrl": "https://joinbytedance.com/search/7668651000437180677",
+    "checkedAt": "2026-11-23T03:00:00.000Z",
+    "firstSeen": "2026-11-23T03:00:00.000Z",
+    "description": "Build backend services across payments, refunds, settlement, merchant services, and billing. Programming in Go, Java, C++, Python, or similar. Graduation and availability dates required in resume.",
+    "workRights": "Not confirmed. Check the employer posting."
+  },
+  {
+    "id": "bytedance-7668221440984811829",
+    "company": "ByteDance",
+    "title": "Front-end Software Engineer Graduate, BytePlus",
+    "location": "Singapore",
+    "category": "swe",
+    "employment": "full-time",
+    "eligibility": "explicit",
+    "eligibilityNote": "2027 start; graduating or recently graduated. Maximum two applications across ByteDance affiliates.",
+    "cohort": [
+      "2027"
+    ],
+    "tags": [
+      "Frontend",
+      "TypeScript",
+      "AI"
+    ],
+    "workplace": "Not specified",
+    "status": "listed",
+    "sourceName": "Employer page \u00b7 search-indexed",
+    "sourceType": "indexed",
+    "sourceUrl": "https://joinbytedance.com/search/7668221440984811829",
+    "applyUrl": "https://joinbytedance.com/search/7668221440984811829",
+    "checkedAt": "2026-11-23T03:00:00.000Z",
+    "firstSeen": "2026-11-23T03:00:00.000Z",
+    "description": "Build the BytePlus website, AI platform, and growth platform. JavaScript/TypeScript, HTML, CSS, Python; React, Vue, or Angular familiarity.",
+    "workRights": "Not confirmed. Check the employer posting."
+  },
+  {
+    "id": "bytedance-7668253977166940469",
+    "company": "ByteDance",
+    "title": "Backend Software Engineer Graduate, Foundational Technology",
+    "location": "Singapore",
+    "category": "swe",
+    "employment": "full-time",
+    "eligibility": "explicit",
+    "eligibilityNote": "2027 start; completing or recently completed a relevant bachelor\u2019s degree.",
+    "cohort": [
+      "2027"
+    ],
+    "tags": [
+      "Backend",
+      "Infrastructure"
+    ],
+    "workplace": "Not specified",
+    "status": "listed",
+    "sourceName": "Employer page \u00b7 search-indexed",
+    "sourceType": "indexed",
+    "sourceUrl": "https://joinbytedance.com/search/7668253977166940469",
+    "applyUrl": "https://joinbytedance.com/search/7668253977166940469",
+    "checkedAt": "2026-11-23T03:00:00.000Z",
+    "firstSeen": "2026-11-23T03:00:00.000Z",
+    "description": "Cloud-native infrastructure, large Kubernetes clusters, observability, and resource optimisation. Graduation and availability dates required.",
+    "workRights": "Not confirmed. Check the employer posting."
+  },
+  {
+    "id": "shopee-4444841322",
+    "company": "Shopee",
+    "title": "Backend Engineer, ShopeePay (2027 Graduate)",
+    "location": "Singapore",
+    "category": "swe",
+    "employment": "full-time",
+    "eligibility": "explicit",
+    "eligibilityNote": "2027 graduate title confirmed by public job index. Check right-to-work and current availability.",
+    "cohort": [
+      "2027"
+    ],
+    "tags": [
+      "Backend",
+      "Fintech"
+    ],
+    "workplace": "Not specified",
+    "status": "listed",
+    "sourceName": "Public listing \u00b7 search-indexed",
+    "sourceType": "indexed",
+    "sourceUrl": "https://www.linkedin.com/jobs/view/backend-engineer-shopeepay-2027-graduate-at-shopee-4444841322",
+    "applyUrl": "https://www.linkedin.com/jobs/view/backend-engineer-shopeepay-2027-graduate-at-shopee-4444841322",
+    "checkedAt": "2026-11-23T03:00:00.000Z",
+    "firstSeen": "2026-11-23T03:00:00.000Z",
+    "description": "2027 graduate title confirmed by public job index. Check right-to-work and current availability.",
+    "workRights": "Not confirmed. Check the employer posting."
+  },
+  {
+    "id": "shopee-4485477268",
+    "company": "Shopee",
+    "title": "Site Reliability Engineer, Data Infrastructure (2027 Graduate)",
+    "location": "Singapore",
+    "category": "swe",
+    "employment": "full-time",
+    "eligibility": "explicit",
+    "eligibilityNote": "2027 graduate title confirmed by public job index. Check right-to-work and current availability.",
+    "cohort": [
+      "2027"
+    ],
+    "tags": [
+      "Infrastructure",
+      "SRE"
+    ],
+    "workplace": "Not specified",
+    "status": "listed",
+    "sourceName": "Public listing \u00b7 search-indexed",
+    "sourceType": "indexed",
+    "sourceUrl": "https://www.linkedin.com/jobs/view/site-reliability-engineer-data-infrastructure-2027-graduate-at-shopee-4485477268",
+    "applyUrl": "https://www.linkedin.com/jobs/view/site-reliability-engineer-data-infrastructure-2027-graduate-at-shopee-4485477268",
+    "checkedAt": "2026-11-23T03:00:00.000Z",
+    "firstSeen": "2026-11-23T03:00:00.000Z",
+    "description": "2027 graduate title confirmed by public job index. Check right-to-work and current availability.",
+    "workRights": "Not confirmed. Check the employer posting."
+  }
+]
