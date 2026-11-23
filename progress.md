@@ -1,3 +1,5 @@
+2026-11-23 release: Deployed source b2dcfa2 as Worker 1b160565-faaa-4c6a-bd56-1d90a978e5bd. Clean checkout: 68 tests, build and Wrangler dry run passed. Live deployment verifier matched catalog revision 868ff7d2a1ab67e079bfa04ae56111a61d81865912ad2a703b8c21c524fe04fc and 15 assets; home returned 200. No catalog import. Search Console direct routing remains unverified and excluded; .html still redirects. Authenticated tracker prompt and persistence remain browser-unverified.
+
 Earlier 2026-11-23 handoff: work paused before motion implementation, then resumed at the owner’s request. Current motion changes and checks are recorded below. Previous local UI/guide/logo work passed npm test and npm run build; guide button and logo loading were checked in browser. Local Astro site was already running at http://127.0.0.1:4321.
 
 2026-11-23: Local checks: navigation labels inspected in browser, 25 listed logo images loaded without errors, first guide button opened the walkthrough. Existing npm tests and build passed. Logos and guide changes are not deployed.

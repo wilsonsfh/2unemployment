@@ -1,3 +1,5 @@
+2026-11-23 release: UI and guide changes are deployed (source b2dcfa2, Worker 1b160565-faaa-4c6a-bd56-1d90a978e5bd). Verify the real return prompt and authenticated Yes/No persistence; resolve the excluded Search Console routing experiment before considering it fixed. OAuth GUI remains paused.
+
 2026-11-23 follow-up: Emil-inspired CSS motion and research notes are implemented locally; build and Wrangler dry run passed. Visual/reduced-motion browser review remains. Google Search Console direct-response routing remains unresolved and undeployed; see handover.md. H2 exact LinkedIn job lead 4467358859 remains inaccessible (429), so preserve incomplete catalog status.
 
 2026-11-23: Review local guide and company icon mappings, then publish local changes when ready. New companies without a mapped icon show initials.
