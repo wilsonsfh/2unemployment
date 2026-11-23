@@ -2,12 +2,16 @@
 
 Updated: 2026-11-23. Read [handover.md](handover.md) and [progress.md](progress.md) first. Keep this queue aligned with GitHub issues; do not start every track at once.
 
-## Current priority: identity and private application tracking
+## Current priority: manual OAuth completion — paused by owner
 
-- [x] Implement identity/tracker with Google, GitHub and Resend OTP support, owner-scoped private APIs, external job URLs, statuses/date/notes and explicit bookmark import. Owner chose the existing single D1 database. 66 tests/build/dry run and synthetic-session browser checks passed. Deployed source `014b27d`, Worker `4e8b58c5-2781-41e2-adfd-7cfbe4c8fc1a`; live privacy and catalog checks passed.
-- [ ] Activate real sign-in providers: securely configure Resend key/verified sender and Google/GitHub OAuth credentials, then verify actual delivery, callback sign-in, sign-out and cross-device account use. GitHub app 4045966 and encrypted Worker credentials are configured; authorization-start checks passed. Google project unemployment-515607 exists; finish branding/contact/client and verify real login for both providers. Owner has no sender domain, so general Resend OTP remains disabled. Never paste credentials in chat.
-- [ ] Restore background Chrome extension control before continuing provider forms. Owner explicitly asked to stop foreground takeover. Browser host is unavailable; Google support/contact email use is approved, so resume from that branding step once connected. Do not ask the owner to leave Chrome idle again.
-- [x] Add discovery shortcuts for agent-title graduate roles and highest-known pay; verified Sierra new-grad S$200k–240k advertised range appears. Keep other Sierra roles in review and distinguish the multi-agent audience from actual role requirements. Continue targeted employer coverage.
+- [x] Deploy one-D1 identity/application tracker: external jobs, statuses/date/notes, explicit bookmark import and private owner-scoped APIs. 66 tests/build/dry run pass. Current source `6c6aa43`, Worker `edd0b9ad-86bb-4d15-a005-46163c4ad346`.
+- [x] Register both OAuth clients and save their ID/secret pairs as encrypted Worker secrets. Live provider metadata enables Google and GitHub. Publish the privacy notice at `/guides/privacy` (HTTP 200 checked).
+- [ ] **Owner will finish manually:** add homepage/privacy URLs in Google Branding, save, then publish through Google Audience (or add self as test user). Google is still Testing. Exact links and values are in handover.md.
+- [ ] Verify real Google/GitHub consent, callback, signed-in session, sign-out and saving/editing a tracker record. Authorization-start/basic-scope checks passed; full live login is unverified.
+- [ ] Enable Resend OTP only after obtaining and verifying a sender domain. Owner currently owns no domain; email remains disabled. No sender/key/purchase/send was performed.
+- [x] Add agent-title graduate and highest-known-pay shortcuts; preserve Sierra graduate S$200k–240k advertised range and keep its other roles in review.
+
+**Do not resume browser automation until requested.** The owner paused it and wants a fresh context/manual completion. Do not ask for credentials in chat.
 
 ## Data quality and operations
 
