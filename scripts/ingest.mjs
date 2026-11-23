@@ -13,7 +13,7 @@ for(const source of sources){
     const url=source.adapter==='greenhouse'?source.url+'?content=true':source.url;
     const response=await fetch(url,{headers:{'User-Agent':'2unemployment/0.1 (+Singapore graduate job index)'},signal:AbortSignal.timeout(25000)});
     if(!response.ok)throw new Error(`HTTP ${response.status}`);
-    const payload=await response.json();const raw=source.adapter==='greenhouse'?payload.jobs:payload;
+    const payload=await response.json();const raw=source.adapter==='lever'?payload:payload.jobs;
     if(!Array.isArray(raw)||raw.some(x=>!x.id||!(source.adapter==='lever'?x.text:x.title))) throw new Error('Unexpected employer feed schema');
     const jobs=raw.map(j=>normalize(j,source,now)).filter(Boolean);
     results.push({source,jobs});

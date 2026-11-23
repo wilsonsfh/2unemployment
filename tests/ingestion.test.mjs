@@ -30,3 +30,13 @@ test('normalization preserves honest provenance and missing eligibility',()=>{
  assert.equal(normalize({...raw,title:'Software Engineer'},source,'now').eligibility,'review');
  assert.equal(normalize({...raw,location:{name:'London'}},source,'now'),null);
 });
+test('Ashby requires a listed full-time Singapore role and preserves employer URLs',()=>{
+ const source={id:'airwallex',name:'Airwallex',adapter:'ashby'};
+ const raw={id:'abc',title:'Software Engineer',location:'SG - Singapore',secondaryLocations:[],employmentType:'FullTime',isListed:true,jobUrl:'https://jobs.ashbyhq.com/airwallex/abc',descriptionPlain:'Build payment APIs.',workplaceType:'OnSite'};
+ const job=normalize(raw,source,'now');
+ assert.equal(job.eligibility,'review');assert.equal(job.sourceType,'employer-api');assert.equal(job.applyUrl,raw.jobUrl);assert.equal(job.workplace,'OnSite');
+ assert.equal(normalize({...raw,isListed:false},source,'now'),null);
+ assert.equal(normalize({...raw,employmentType:'Intern'},source,'now'),null);
+ assert.equal(normalize({...raw,location:'Hong Kong'},source,'now'),null);
+ assert.equal(normalize({...raw,title:'Software Engineer Graduate'},source,'now').eligibility,'explicit');
+});

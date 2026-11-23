@@ -18,19 +18,21 @@ export function classify(title, location, description='') {
 }
 export function normalize(raw, source, now) {
   const lever=source.adapter==='lever';
+  const ashby=source.adapter==='ashby';
   const title=lever?raw.text:raw.title;
-  const location=lever?raw.categories?.location:raw.location?.name;
-  const description=strip(lever?raw.descriptionPlain||raw.description||'':raw.content||'');
+  const location=lever?raw.categories?.location:ashby?[raw.location,...(raw.secondaryLocations||[]).map(x=>x.location)].filter(Boolean).join(', '):raw.location?.name;
+  const description=strip(lever||ashby?raw.descriptionPlain||raw.descriptionHtml||raw.description||'':raw.content||'');
   if (!title || !location) return null;
+  if (ashby && (!raw.isListed || raw.employmentType!=='FullTime')) return null;
   if (lever && raw.categories?.commitment && !/full[ -]?time|regular/i.test(raw.categories.commitment)) return null;
   const eligibility=classify(title,location,description);
   if (!eligibility) return null;
-  const url=lever?raw.hostedUrl:raw.absolute_url;
+  const url=lever?raw.hostedUrl:ashby?raw.jobUrl:raw.absolute_url;
   if (!url || !/^https:\/\//.test(url)) return null;
   return {id:`${source.id}-${raw.id}`,company:source.name,title,location,category:'swe',employment:'full-time',eligibility,
     eligibilityNote:eligibility==='explicit'?'Graduate or early-career wording in the employer title. Check the full requirements.':'Full-time software role; graduate eligibility needs manual review.',
     cohort:[...new Set(title.match(/202[6-9]/g)||[])],tags:[/c\+\+/i.test(title)?'C++':/backend|back-end/i.test(title)?'Backend':/full.stack/i.test(title)?'Full-stack':'Software'],
-    workplace:lever?raw.workplaceType||'Not specified':'Not specified',status:'listed',sourceName:source.name+' careers',sourceType:'employer-api',sourceUrl:canonical(url),applyUrl:canonical(url),
+    workplace:lever||ashby?raw.workplaceType||'Not specified':'Not specified',status:'listed',sourceName:source.name+' careers',sourceType:'employer-api',sourceUrl:canonical(url),applyUrl:canonical(url),
     checkedAt:now,firstSeen:now,managedBy:source.id,description:description.slice(0,1600),workRights:'Not confirmed. Check the employer posting.'};
 }
 export function deduplicate(jobs) {

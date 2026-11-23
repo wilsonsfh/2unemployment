@@ -1,8 +1,10 @@
 # 2unemployment
 
+![2unemployment logo](public/brand/logo.svg)
+
 Singapore full-time new-grad software engineering board. React + TypeScript + Vite, deployed with Cloudflare Workers Static Assets.
 
-Live skeleton: https://2unemployment.wilsonsoon.workers.dev/ . Source: https://github.com/wilsonsfh/2unemployment . Initial snapshot: 10 graduate roles, two review candidates, five healthy employer sources. Daily repository refresh is scheduled through GitHub Actions. Automatic deployment and Telegram delivery await their repository secrets.
+Live skeleton: https://2unemployment.wilsonsoon.workers.dev/ . Source: https://github.com/wilsonsfh/2unemployment . Initial snapshot: 10 graduate roles, two review candidates, five healthy employer sources. Daily repository refresh is scheduled through GitHub Actions. Cloudflare and Telegram repository secrets are configured; inspect Actions for the latest execution status.
 
 ```sh
 npm ci
@@ -21,6 +23,6 @@ Features: search, graduation-year and provenance filters, browser-local saved ro
 
 No private application history is published. No paid API or database required. Source snapshots are in `public/data/jobs.json`; curated leads and salary references are in `data/`. The UI does not infer sponsorship or label an indexed search result employer-verified.
 
-Read [pipeline design and limitations](docs/pipeline.md) and [Telegram watcher setup](docs/telegram-alerts.md). Job snapshots refresh in the repository daily; the deployed site updates automatically only after Cloudflare CI secrets are configured. Telegram runs hourly once its bot token and chat ID secrets are configured; until then its workflow skips delivery.
+Read [pipeline design and limitations](docs/pipeline.md) and [Telegram watcher setup](docs/telegram-alerts.md). Job snapshots refresh in the repository daily; the deployed site is published by the refresh workflow using Cloudflare CI secrets. The separate Telegram workflow checks the internship repository hourly using its bot token and chat ID. Missing secrets cause the guarded steps to skip.
 
 The project-scoped Levels.fyi configuration is in `.codex/`; no global skill or MCP configuration is modified. Optional REST lookup: `LEVELS_API_KEY` in the shell environment, then `node scripts/levels-benchmark.mjs`. Never put API keys in Vite variables or frontend code.

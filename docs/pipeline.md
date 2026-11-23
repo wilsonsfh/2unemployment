@@ -6,7 +6,7 @@ Scope v1: Singapore full-time software engineering. The main list requires expli
 
 Public employer API → Singapore location gate → full-time/title gate → graduate or review queue → canonical URL deduplication → merge previous snapshot → attach researched salary benchmarks → static JSON → React → Cloudflare Workers Static Assets.
 
-`data/sources.json` configures five Greenhouse/Lever boards. `scripts/ingest.mjs` fetches them sequentially with timeouts and no browser, proxy or LLM. Every source runs once per daily refresh; currently five requests/day. Downloading all board descriptions costs more bytes than filtering remotely, but these APIs are small enough for a scheduled CI process and provide explicit source provenance. Check each source’s current terms and limits before extending it; honor 403/429 failures without circumvention. The script does not retry blocked requests.
+`data/sources.json` configures eight Greenhouse/Lever/Ashby boards. `scripts/ingest.mjs` fetches them sequentially with timeouts and no browser, proxy or LLM. Every source runs once per daily refresh; currently eight requests/day. Downloading all board descriptions costs more bytes than filtering remotely, but these APIs are small enough for a scheduled CI process and provide explicit source provenance. Check each source’s current terms and limits before extending it; honor 403/429 failures without circumvention. The script does not retry blocked requests.
 
 `data/curated.json` is a manual discovery queue with public provenance. These records are labelled search-indexed, not employer-verified. They never get a new checked date merely because the build ran. Records older than seven days display “Recheck”. Curated records are not automatically closed on URL failure or changed search rankings.
 
@@ -17,7 +17,7 @@ Successful employer feeds refresh their own records. Two successive successful a
 - Wording is conservative and rule-based. Eligibility in a description without a title signal requires review. A structured employer requirement extractor and human review can promote a record later.
 - A successful but unexpectedly empty or incomplete employer feed can cause false closure. Two successful absences reduce this risk; production scale additionally needs a drop-rate guard. There is no claim of full market coverage.
 - Structured ATS data is stronger than an HTTP 200 page: many closed roles still return 200. Do not replace feed reconciliation with HEAD checks.
-- Apple, H2 Games, ByteDance, Shopee and several companies from the user’s examples need dedicated permitted adapters or continued manual review. Workday/Ashby/SmartRecruiters are not implemented.
+- Apple, H2 Games, ByteDance, Shopee and several companies from the user’s examples need dedicated permitted adapters or continued manual review. Ashby is implemented for Airwallex. Workday and SmartRecruiters are not implemented.
 - Jobs are deduplicated by canonical application URL while preserving job identifiers such as `gh_jid`. Different URLs for the same vacancy across providers require an employer requisition ID or manual reconciliation; do not merge different teams by title alone.
 - A generic “graduate programme” may not be software engineering; review the actual track before importing it.
 - `category` and `employment` are stored per record. Future solutions-engineering and internship adapters should reuse provenance/normalisation/state merging but have separate role and eligibility gates.
@@ -39,13 +39,13 @@ MCP project configuration is written, but this running session does not dynamica
 
 Local: `npm ci`, `npm run ingest`, `npm test`, `npm run build`, `npm run check`, `npm run deploy`. `npm run dev` serves the local preview.
 
-`.github/workflows/refresh-jobs.yml` runs at 23:23 UTC (07:23 Singapore) each day or manually. It persists the snapshot to the repo, then deploys when Cloudflare CI secrets exist. Needs Actions write permission to the default branch; branch protection may require a different persistence strategy. Secrets: `CLOUDFLARE_API_TOKEN` scoped to the target account’s Workers deployment, and `CLOUDFLARE_ACCOUNT_ID`. Wrangler local OAuth is not automatically available in GitHub Actions. Until a hosting repo and CI secrets are configured, the live site is the manually deployed snapshot and does not refresh itself.
+`.github/workflows/refresh-jobs.yml` runs at 23:23 UTC (07:23 Singapore) each day or manually. It persists the snapshot to the repo, then deploys when Cloudflare CI secrets exist. Needs Actions write permission to the default branch; branch protection may require a different persistence strategy. Secrets: `CLOUDFLARE_API_TOKEN` scoped to the target account’s Workers deployment, and `CLOUDFLARE_ACCOUNT_ID`. Wrangler local OAuth is not automatically available in GitHub Actions. The hosting repo is https://github.com/wilsonsfh/2unemployment; the Cloudflare and Telegram secret names are configured as of 23 November 2026. Inspect Actions run results to verify execution; configured secrets alone do not prove that credentials work.
 
 The separate internship watcher is `.github/workflows/telegram-alerts.yml`; see `telegram-alerts.md`. It is not coupled to the graduate board’s refresh and does not import internship jobs into the full-time list.
 
 ## Cost
 
-Static Assets-only Worker: no Worker execution, database or runtime paid API. Cloudflare’s current pricing lists static asset requests as free and unlimited. Source refresh is five employer requests per daily run plus build/deploy. GitHub-hosted runner cost depends on repository visibility and account allowance; do not promise private CI is free. The hourly watcher uses a small number of GitHub API requests and one Telegram request on a meaningful change. A custom domain is optional and may cost money.
+Static Assets-only Worker: no Worker execution, database or runtime paid API. Cloudflare’s current pricing lists static asset requests as free and unlimited. Source refresh is eight employer requests per daily run plus build/deploy. GitHub-hosted runner cost depends on repository visibility and account allowance; do not promise private CI is free. The hourly watcher uses a small number of GitHub API requests and one Telegram request on a meaningful change. A custom domain is optional and may cost money.
 
 Current pricing reference: https://developers.cloudflare.com/workers/platform/pricing/ ; static hosting: https://developers.cloudflare.com/workers/static-assets/ . Recheck quotas before adding dynamic routes or scheduled Worker fetches.
 

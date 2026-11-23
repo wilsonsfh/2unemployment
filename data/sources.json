@@ -1,7 +1,58 @@
 [
-  {"id":"stripe","name":"Stripe","adapter":"greenhouse","board":"stripe","url":"https://boards-api.greenhouse.io/v1/boards/stripe/jobs"},
-  {"id":"towerresearchcapital","name":"Tower Research Capital","adapter":"greenhouse","board":"towerresearchcapital","url":"https://boards-api.greenhouse.io/v1/boards/towerresearchcapital/jobs"},
-  {"id":"palantir","name":"Palantir Technologies","adapter":"lever","board":"palantir","url":"https://api.lever.co/v0/postings/palantir?mode=json"},
-  {"id":"databricks","name":"Databricks","adapter":"greenhouse","board":"databricks","url":"https://boards-api.greenhouse.io/v1/boards/databricks/jobs"},
-  {"id":"mongodb","name":"MongoDB","adapter":"greenhouse","board":"mongodb","url":"https://boards-api.greenhouse.io/v1/boards/mongodb/jobs"}
+  {
+    "id": "stripe",
+    "name": "Stripe",
+    "adapter": "greenhouse",
+    "board": "stripe",
+    "url": "https://boards-api.greenhouse.io/v1/boards/stripe/jobs"
+  },
+  {
+    "id": "towerresearchcapital",
+    "name": "Tower Research Capital",
+    "adapter": "greenhouse",
+    "board": "towerresearchcapital",
+    "url": "https://boards-api.greenhouse.io/v1/boards/towerresearchcapital/jobs"
+  },
+  {
+    "id": "palantir",
+    "name": "Palantir Technologies",
+    "adapter": "lever",
+    "board": "palantir",
+    "url": "https://api.lever.co/v0/postings/palantir?mode=json"
+  },
+  {
+    "id": "databricks",
+    "name": "Databricks",
+    "adapter": "greenhouse",
+    "board": "databricks",
+    "url": "https://boards-api.greenhouse.io/v1/boards/databricks/jobs"
+  },
+  {
+    "id": "mongodb",
+    "name": "MongoDB",
+    "adapter": "greenhouse",
+    "board": "mongodb",
+    "url": "https://boards-api.greenhouse.io/v1/boards/mongodb/jobs"
+  },
+  {
+    "id": "airwallex",
+    "name": "Airwallex",
+    "adapter": "ashby",
+    "board": "airwallex",
+    "url": "https://api.ashbyhq.com/posting-api/job-board/airwallex"
+  },
+  {
+    "id": "jumptrading",
+    "name": "Jump Trading",
+    "adapter": "greenhouse",
+    "board": "jumptrading",
+    "url": "https://boards-api.greenhouse.io/v1/boards/jumptrading/jobs"
+  },
+  {
+    "id": "drweng",
+    "name": "DRW",
+    "adapter": "greenhouse",
+    "board": "drweng",
+    "url": "https://boards-api.greenhouse.io/v1/boards/drweng/jobs"
+  }
 ]
