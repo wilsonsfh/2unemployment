@@ -135,6 +135,8 @@ Existing record: `h2-fullstack-2027`, “Full-Stack Engineer (2026/2027 Graduate
 
 **Decision:** retain the indexed/incomplete label and original successful check date; do not mark employer-verified, fabricate an original job URL, or infer closure/sponsorship/pay/work arrangement. The former On-site field was not confirmed by the employer evidence obtained in this audit. It is now `Not specified` in `data/curated.json` and `public/data/jobs.json`; no new successful check date was assigned. Follow-up requires an accessible employer-controlled posting or an exact employer requisition/application link with role text. A renewed search-index timestamp or similar description is insufficient.
 
+**Follow-up search (2026-11-23).** Search surfaced an exact-title LinkedIn Jobs result, [Full-Stack Engineer (2026/2027 Graduate), job 4467358859](https://sg.linkedin.com/jobs/view/full-stack-engineer-2026-2027-graduate-at-h2-games-4467358859). Its indexed result reproduces the same responsibilities and lists a 2026/2027 CS-related degree, entry-level/full-time, and “No longer accepting applications.” The direct page returned HTTP 429 during this check; no access workaround was attempted. This is a useful exact-requisition lead, but the indexed copy cannot establish the current employer-controlled posting or application URL, and the closed status is not a successful employer check. Keep the record incomplete and do not change its source, work arrangement, or checked-at time.
+
 ## Evidence and verification
 
 Ignored local evidence is under `output/eligibility-review/`:

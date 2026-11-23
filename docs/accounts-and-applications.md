@@ -1,6 +1,6 @@
 # Accounts and private application tracking
 
-The application tracker is for your own job search: save a role from the board or add any job URL, move it through saved, applied, interviewing, offer, rejected or withdrawn, and keep an application date and private notes. Adding a URL does not fetch that website or publish a listing to the public catalog. A saved record retains the company, title and link even if the public job later closes.
+The application tracker is for your own job search: save a role from the board or add any job URL, mark it **Applied** or **Not applied**. Adding a URL does not fetch that website or publish a listing to the public catalog. A saved record retains the company, title and link even if the public job later closes.
 
 ## Sign in and save a role
 
@@ -12,15 +12,15 @@ Edit the status, application date and notes, then choose **Save changes**. Remov
 
 ## Existing browser bookmarks
 
-The original bookmark button and Saved roles view remain browser-local. After signing in, **Import browser bookmarks** copies those roles into the account you are currently using. Import is explicit so bookmarks from a shared browser are not silently added to another person's account. Existing application statuses and notes survive repeated imports. The original browser bookmarks are retained; unknown job IDs are skipped.
+The original bookmark button and Saved roles view remain browser-local. After signing in, **Import browser bookmarks** copies those roles into the account you are currently using. Import is explicit so bookmarks from a shared browser are not silently added to another person's account. Existing answers survive repeated imports. The original browser bookmarks are retained; unknown job IDs are skipped.
 
 ## What is private
 
 Application records belong to the authenticated user's ID. Every list, edit and delete query includes that server-derived owner ID; the API does not accept a client-selected owner. Signed-out requests receive 401, and another person's record returns 404. Private routes and auth responses use `Cache-Control: private, no-store`. User details are fetched after the public board renders, rather than embedded into its shared cached HTML.
 
-The account database stores the identity information returned by the chosen provider, sessions, provider account records, hashed email verification values and rate-limit counters. The tracker stores company/title/link snapshots, stage, application date and notes. Google/GitHub handle their own sign-in; Resend receives the destination email address and verification-code message. Authentication tokens use HttpOnly session cookies. They are not stored in localStorage. The code does not publish application records or notes in catalog APIs or recovery snapshots.
+The account database stores the identity information returned by the chosen provider, sessions, provider account records, hashed email verification values and rate-limit counters. The tracker stores company/title/link snapshots and an applied/not-applied status. Legacy application dates and notes remain in existing records but are no longer shown or edited in the simplified UI. Google/GitHub handle their own sign-in; Resend receives the destination email address and verification-code message. Authentication tokens use HttpOnly session cookies. They are not stored in localStorage. The code does not publish application records or notes in catalog APIs or recovery snapshots.
 
-The site operator and hosting providers administer the database; “private” means access is restricted to your account through this application, not end-to-end encryption against the operator. Do not put passwords, government identifiers or confidential documents in notes. The tracker has no CV upload or employer messaging feature.
+The site operator and hosting providers administer the database; “private” means access is restricted to your account through this application, not end-to-end encryption against the operator. Do not submit passwords, government identifiers or confidential documents to the tracker. The tracker has no CV upload or employer messaging feature.
 
 ## One database, separate access paths
 
@@ -73,7 +73,7 @@ npm run check
 
 For release, apply the existing remote migrations before deploying the Worker. The normal `npm run deploy` and daily refresh already do this. When publishing only application code after these migrations are applied, the existing unchanged public snapshot need not be re-imported. Runtime secrets persist independently of GitHub's deployment credentials.
 
-Verify sign-in with each configured provider, sign-out, signed-out 401, owner isolation, private no-store responses, adding/editing/removing an external job, board-to-tracker saving, bookmark import, cross-device access and continued public catalog operation. Local/mock email and OAuth redirect tests are not proof of actual third-party login or email delivery. Record the real credential/deployment/delivery state in [progress.md](../progress.md).
+Verify sign-in with each configured provider, sign-out, signed-out 401, owner isolation, private no-store responses, adding/removing an external job, Yes/No answers and the return-from-job-link prompt, board-to-tracker saving, bookmark import, cross-device access and continued public catalog operation. Local/mock email and OAuth redirect tests are not proof of actual third-party login or email delivery. Record the real credential/deployment/delivery state in [progress.md](../progress.md).
 
 ## Discovery direction
 

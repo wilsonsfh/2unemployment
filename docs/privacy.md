@@ -6,7 +6,7 @@ Updated 23 November 2026. 2unemployment is an independent job-discovery and priv
 
 Browsing public listings does not require an account. When you choose Google or GitHub sign-in, the authentication service stores your provider identifier, name, email address, email-verification status and profile image where supplied. It also stores the provider account and authentication tokens needed for sign-in, together with session expiry, IP address, user-agent information and rate-limit records.
 
-When you use the tracker, we store the jobs you save or enter, their company/title/link, your chosen application stage, application date and notes. Existing browser bookmarks are copied into your account only when you choose to import them. We do not collect CV uploads or submit applications to employers on your behalf. Pasted job URLs are stored without fetching their contents.
+When you use the tracker, we store the jobs you save or enter, their company/title/link, your whether you have applied. Older records may retain application dates and notes from the previous tracker. Existing browser bookmarks are copied into your account only when you choose to import them. We do not collect CV uploads or submit applications to employers on your behalf. Pasted job URLs are stored without fetching their contents.
 
 ## How we use the data
 
@@ -22,7 +22,7 @@ The operator and hosting providers administer the database. Records are access-c
 
 ## Cookies and browser storage
 
-Sign-in uses an HttpOnly session cookie, secured over HTTPS. Sessions have a seven-day lifetime and can be renewed during use. Signing out revokes the session. Authentication tokens are not stored in localStorage. Browser-local job bookmarks remain on that browser until you remove them or clear its storage; importing them does not remove the originals.
+Sign-in uses an HttpOnly session cookie, secured over HTTPS. Sessions have a seven-day lifetime and can be renewed during use. Signing out revokes the session. Authentication tokens are not stored in localStorage. The most recently opened job link is remembered in sessionStorage to ask whether you applied when you return. Signed-out answers stay in that tab’s sessionStorage and end when the tab session ends; signed-in answers save to your account. Browser-local job bookmarks remain on that browser until you remove them or clear its storage; importing them does not remove the originals.
 
 No advertising or cross-site tracking cookie is added by this application. Hosting and identity providers may use their own cookies on their services.
 
@@ -34,8 +34,8 @@ For account-access, export or deletion requests, [contact the maintainer](https:
 
 You can also revoke this application's access in your Google or GitHub account settings. Revoking provider access does not itself delete records already stored in the tracker; request account deletion separately if needed.
 
-## Keep sensitive information out of notes
+## Keep sensitive information out of the tracker
 
-Do not store passwords, government identifiers, financial details, medical information or confidential documents in application notes. The service is intended for ordinary job-search organization. Changes to this notice will be published here with an updated date.
+Do not submit passwords, government identifiers, financial details, medical information or confidential documents. The service is intended for ordinary job-search organization. Changes to this notice will be published here with an updated date.
 
 Read [accounts and application tracking](accounts-and-applications.md) for the implemented sign-in, privacy boundaries and operational limits.

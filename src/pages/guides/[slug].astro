@@ -18,11 +18,30 @@ const setup=Astro.params.slug==='build-your-own-board';
  <a class="guide-skip" href="#guide-content">Skip to guide</a>
  <header class="topbar guide-topbar">
   <a class="wordmark" href="/" aria-label="2unemployment job board"><img class="brand-logo" src="/brand/logo.svg" alt="2unemployment" width="142" height="63"/></a>
-  <nav aria-label="Guide navigation"><a href="/">Find a role</a><a href="/guides/build-your-own-board" aria-current={setup?'page':undefined}>Build your own</a><a href="/guides/licensing-and-data-use" aria-current={Astro.params.slug==='licensing-and-data-use'?'page':undefined}>Data use</a></nav>
+  <nav aria-label="Main navigation"><a href="/">Find your jobs</a><a class="build-tab" href="/guides/build-your-own-board" aria-current={setup?'page':undefined}>Build your own niche jobs ↗</a><a href="/guides/licensing-and-data-use" aria-current={Astro.params.slug==='licensing-and-data-use'?'page':undefined}>Data use</a></nav>
  </header>
  <main class="guide-page">
+  {setup&&<section class="build-intro" aria-labelledby="build-title">
+   <div class="eyebrow">BUILD YOUR OWN NICHE JOBS</div>
+   <h1 id="build-title">Track your niche industry.</h1>
+   <p class="build-lede">Build your own job tracker in a few steps.</p>
+   <p>No technical background? You can start here. Follow the guide at your own pace and use a coding assistant to help with the technical steps.</p>
+   <a class="build-start" href="#full-guide" id="open-guide">Explore the full guide <span aria-hidden="true">↘</span></a>
+   <div class="build-steps" aria-label="How to build your board">
+    <div><span>01 / START</span><h2>Run the board</h2><p>Make your own copy and see how the existing job board works.</p></div>
+    <div><span>02 / ADAPT</span><h2>Choose your niche</h2><p>Choose the kinds of jobs, companies and communities you want to help.</p></div>
+    <div><span>03 / SHARE</span><h2>Make it yours</h2><p>Follow the guide to make your changes and share your board online.</p></div>
+   </div>
+   <p class="build-note">The full guide explains each step, including the technical changes. You can work through it with a coding assistant. Review the <a href="/guides/licensing-and-data-use">data use guide</a> before reusing job content.</p>
+   <div class="build-previews">
+    <figure><img src="/guide-images/board.webp" alt="The current Singapore job board with search and filters" loading="lazy"/><figcaption><strong>01 / The starting point</strong><span>Explore the current board before adapting its role filters.</span></figcaption></figure>
+    <figure><img src="/guide-images/sources.webp" alt="The current board’s source and curation information" loading="lazy"/><figcaption><strong>02 / The sources</strong><span>Follow where listings come from and decide which sources fit your audience.</span></figcaption></figure>
+   </div>
+  </section>}
+  {setup&&<div class="full-guide-heading" id="full-guide"><div><div class="eyebrow">READY TO BUILD?</div><h2>Follow the full guide.</h2><p>A step-by-step walkthrough, from your first copy to sharing your board online.</p></div></div>}
+  <details open={!setup} class="guide-details"><summary>Start the full guide <span aria-hidden="true">↗</span></summary>
   <div class="guide-crumb"><a href="/">Job board</a><span aria-hidden="true">/</span><span>Project guides</span></div>
-  <div class="guide-layout">
+  <div class="guide-layout" id={setup?"full-guide-content":undefined}>
    <aside class="guide-index">
     <details open>
      <summary>On this page</summary>
@@ -36,11 +55,16 @@ const setup=Astro.params.slug==='build-your-own-board';
     <div class="guide-end"><a href="/">← Back to the job board</a><a href="/guides/licensing-and-data-use#corrections-permissions-and-removal-requests">Report a correction →</a></div>
    </article>
   </div>
+  </details>
  </main>
  <script is:inline src="/guide-index.js" defer></script>
+ {setup&&<script is:inline>document.getElementById('open-guide')?.addEventListener('click',event=>{const guide=document.querySelector('.guide-details');if(guide){event.preventDefault();guide.open=true;history.replaceState(null,'','#full-guide');guide.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});}});</script>}
+
 </Page>
 
 <style>
+ .build-intro{max-width:1200px;margin:0 auto;padding:85px 0 64px}.build-intro h1{font-size:clamp(44px,6vw,78px);max-width:850px;line-height:1.03;letter-spacing:-3px}.build-lede{font-size:clamp(19px,2vw,26px);color:var(--green);margin:25px 0 12px}.build-intro>p:not(.build-lede):not(.build-note){max-width:620px;color:#697968;line-height:1.8;font-size:15px}.build-start,.full-guide-heading button{display:inline-flex;align-items:center;gap:28px;background:var(--green);color:white;border-radius:5px;padding:15px 19px;font-size:13px;font-weight:600;margin-top:28px}.build-start:hover,.full-guide-heading button:hover{color:white;background:#28654d}.build-steps{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:72px}.build-steps>div{padding:26px 30px 28px 0}.build-steps>div+div{border-left:1px solid var(--line);padding-left:30px}.build-steps span,.build-previews strong{font-size:10px;letter-spacing:1.2px;color:#708365}.build-steps h2{font-size:20px;letter-spacing:-.4px;margin:18px 0 10px}.build-steps p,.build-note{font-size:13px;line-height:1.8;color:#6e7d6b}.build-note{margin:20px 0 42px}.build-note a{text-decoration:underline;text-underline-offset:3px}.build-previews{display:grid;grid-template-columns:1fr 1fr;gap:24px}.build-previews figure{margin:0}.build-previews img{display:block;width:100%;border:1px solid var(--line);border-radius:5px}.build-previews figcaption{display:flex;flex-direction:column;gap:8px;margin-top:15px;color:#6e7d6b;font-size:12px;line-height:1.6}.full-guide-heading{display:flex;align-items:end;justify-content:space-between;gap:30px;border-top:1px solid var(--line);padding:45px 0 28px}.full-guide-heading h2{font-size:30px;letter-spacing:-.8px}.full-guide-heading p{color:#6e7d6b;margin-top:12px;line-height:1.7}.full-guide-heading button{margin:0;white-space:nowrap}.guide-details>summary{display:inline-flex;cursor:pointer;align-items:center;gap:28px;background:var(--green);color:white;border-radius:5px;padding:15px 19px;font-size:13px;font-weight:600;margin-bottom:28px}.guide-details>summary:hover{background:#28654d}.guide-details:not(:has(#full-guide-content))>summary{display:none}
+ @media(max-width:700px){.build-intro{padding:55px 0 40px}.build-intro h1{letter-spacing:-1.7px}.build-steps{grid-template-columns:1fr;margin-top:48px}.build-steps>div,.build-steps>div+div{padding:22px 0;border-left:0}.build-steps>div+div{border-top:1px solid var(--line)}.build-previews{grid-template-columns:1fr;gap:30px}.full-guide-heading{align-items:start;flex-direction:column}.guide-topbar nav{overflow:visible;flex-wrap:wrap;gap:12px 18px}.guide-topbar nav a{white-space:nowrap;flex-shrink:0}}
  .guide-skip{position:absolute;left:20px;top:-100px;padding:12px;background:white;z-index:10}.guide-skip:focus{top:12px}
  .guide-topbar{gap:60px}.guide-topbar nav{gap:28px;align-items:center;font-size:13px}.guide-topbar a[aria-current=page]{color:var(--green);font-weight:650}
  .guide-page{max-width:1320px;margin:auto;padding:0 40px 80px}.guide-crumb{display:flex;gap:12px;padding:28px 0 36px;font-size:12px;color:#677667}

@@ -1,3 +1,11 @@
+2026-11-23 follow-up: Emil-inspired CSS motion and research notes are implemented locally; build and Wrangler dry run passed. Visual/reduced-motion browser review remains. Google Search Console direct-response routing remains unresolved and undeployed; see handover.md. H2 exact LinkedIn job lead 4467358859 remains inaccessible (429), so preserve incomplete catalog status.
+
+2026-11-23: Review local guide and company icon mappings, then publish local changes when ready. New companies without a mapped icon show initials.
+
+2026-11-23: Review the local three-destination navigation and publish it when ready. Google Search Console site ownership verification was confirmed by the user; OAuth branding review remains separate.
+
+2026-11-23: Verify Google Search Console accepts the deployed verification file; if the redirect fails, investigate a direct-response route. Review and deploy the subsequent local build-guide redesign when ready; preserve existing uncommitted work.
+
 # Task queue
 
 Updated: 2026-11-23. Read [handover.md](handover.md) and [progress.md](progress.md) first. Keep this queue aligned with GitHub issues; do not start every track at once.
@@ -6,7 +14,8 @@ Updated: 2026-11-23. Read [handover.md](handover.md) and [progress.md](progress.
 
 - [x] Deploy one-D1 identity/application tracker: external jobs, statuses/date/notes, explicit bookmark import and private owner-scoped APIs. 66 tests/build/dry run pass. Current source `6c6aa43`, Worker `edd0b9ad-86bb-4d15-a005-46163c4ad346`.
 - [x] Register both OAuth clients and save their ID/secret pairs as encrypted Worker secrets. Live provider metadata enables Google and GitHub. Publish the privacy notice at `/guides/privacy` (HTTP 200 checked).
-- [ ] **Owner will finish manually:** add homepage/privacy URLs in Google Branding, save, then publish through Google Audience (or add self as test user). Google is still Testing. Exact links and values are in handover.md.
+- [x] Save Google Branding homepage/privacy and publish through Audience. Observed In production; real Google and GitHub sign-in passed.
+- [ ] Applied / Not applied simplification is local and uncommitted; earlier tests/build/dry run passed, and the guide now matches the simplified UI. Prompt browser verification and deployment remain pending. Do not resume the paused OAuth GUI workflow without a specific request.
 - [ ] Verify real Google/GitHub consent, callback, signed-in session, sign-out and saving/editing a tracker record. Authorization-start/basic-scope checks passed; full live login is unverified.
 - [ ] Enable Resend OTP only after obtaining and verifying a sender domain. Owner currently owns no domain; email remains disabled. No sender/key/purchase/send was performed.
 - [x] Add agent-title graduate and highest-known-pay shortcuts; preserve Sierra graduate S$200k–240k advertised range and keep its other roles in review.
@@ -54,14 +63,17 @@ Decision and migration plan: [docs/scaling.md](docs/scaling.md). Evidence: [prog
 
 ## Separate categories
 
-- [ ] **Entry-level solutions engineering** — [issue #2](https://github.com/wilsonsfh/2unemployment/issues/2). Separate eligibility rules for associate/junior solutions engineers and early-career solutions architects; do not mix experienced architects into graduate SWE.
+- [ ] **Entry-level solutions engineering** — [issue #2](https://github.com/wilsonsfh/2unemployment/issues/2). Separate eligibility rules for associate/junior solutions engineers and early-career solutions architects; do not mix experienced architects into graduate SWE. Existing `Job` typing includes `solutions`, but the ingestion normalizer is SWE-only; source and category UI are not implemented. Read-only scoping is recorded in handover.md.
 - [ ] **Singapore software internships** — [issue #3](https://github.com/wilsonsfh/2unemployment/issues/3). Reuse provenance/lifecycle handling with separate internship dates, cohort and employment gates. Keep the existing internship-repository alert watcher independent.
 - [ ] Evaluate an optional paid jobs API only if a demonstrated coverage gap justifies the cost. Free employer sources remain the default.
 
 ## Animation skills / open-source research — complete
+
+- [x] Implement restrained Emil-inspired CSS entrances for meaningful UI state changes; remove repeated row-entry motion. Reduced-motion behavior uses the existing global override. Local build/dry run passed; visual browser check remains pending.
 
 - [x] Research Apple-style motion guidance and distinguish native Apple APIs from React/Astro web motion.
 - [x] Compare licensing, maintenance, reduced-motion behavior and runtime/bundle costs; investigate reusable agent skills.
 - [x] Recommend a small set of sources and one bounded example in [docs/motion-research.md](docs/motion-research.md). CSS first; no dependency or skill selected for installation. If one is later selected, install under `.codex/skills/`.
 
 Astro + D1 is live. The canonical handover/progress/queue are updated automatically after substantial work; the next session should begin there.
+- [x] Local browser visual review of motion and Applied? prompt: board/detail/prompt screenshots captured; prompt inspected with reduced motion. Appearance only; Yes/No persistence and authenticated return flow remain pending. Details in `handover.md`.

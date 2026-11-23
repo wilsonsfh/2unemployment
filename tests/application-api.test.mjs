@@ -25,7 +25,7 @@ test('private HTTP API rejects signed-out requests, scopes records by real sessi
  const anonymous=await request();assert.equal(anonymous.status,401);assert.match(anonymous.headers.get('Cache-Control'),/no-store/);
  const saved=await request('POST',{jobId:'catalog-job'},alice);assert.equal(saved.status,201);assert.match(saved.headers.get('Cache-Control'),/private.*no-store/);
  const application=await saved.json();
- assert.equal((await request('PATCH',{notes:'private interview plans',status:'interviewing'},alice,application.id)).status,200);
+ assert.equal((await request('PATCH',{notes:'private interview plans',status:'applied'},alice,application.id)).status,200);
  assert.equal((await (await request('GET',undefined,bob)).json()).total,0);
  assert.equal((await request('PATCH',{notes:'stolen'},bob,application.id)).status,404);
  assert.equal((await request('DELETE',undefined,bob,application.id)).status,404);
@@ -49,4 +49,16 @@ test('catalog refresh and public metadata do not publish or overwrite identities
  const publicData=JSON.stringify({meta:await getCatalogMeta(db),page:await listJobs(db)});
  assert.ok(!publicData.includes('alice@example.com'));assert.ok(!publicData.includes('user_id'));
  assert.equal(sqlite.prepare('SELECT COUNT(*) AS n FROM user').get().n,1);
+});
+
+test('yes and no answers persist without treating opening or resaving a link as applying',async t=>{
+ const {login,request}=setup(t),cookie=await login('alice@example.com');
+ const application=await (await request('POST',{jobId:'catalog-job'},cookie)).json();
+ assert.equal(application.status,'saved');
+ for(const status of ['applied','saved']) {
+  assert.equal((await request('PATCH',{status},cookie,application.id)).status,200);
+  assert.equal((await (await request('POST',{jobId:'catalog-job'},cookie)).json()).status,status);
+  assert.equal((await (await request('GET',undefined,cookie)).json()).applications[0].status,status);
+ }
+ assert.equal((await request('PATCH',{status:'interviewing'},cookie,application.id)).status,400);
 });

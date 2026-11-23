@@ -1,12 +1,12 @@
-export const applicationStatuses=['saved','applied','interviewing','offer','rejected','withdrawn'];
+export const applicationStatuses=['saved','applied'];
 export class ApplicationInputError extends Error {}
-const columns='id, job_id AS jobId, company, title, apply_url AS applyUrl, status, notes, applied_on AS appliedOn, created_at AS createdAt, updated_at AS updatedAt';
+const columns="id, job_id AS jobId, company, title, apply_url AS applyUrl, CASE WHEN status='saved' THEN 'saved' ELSE 'applied' END AS status, notes, applied_on AS appliedOn, created_at AS createdAt, updated_at AS updatedAt";
 
 export async function listApplications(db,userId,params=new URLSearchParams()) {
  const status=params.get('status')||'all',offset=Number(params.get('offset')||0),limit=50;
  if(!['all',...applicationStatuses].includes(status)||!Number.isSafeInteger(offset)||offset<0||offset>10000)throw new ApplicationInputError('Invalid application filter or page');
- const where=status==='all'?'user_id=?':'user_id=? AND status=?';
- const values=status==='all'?[userId]:[userId,status];
+ const where=status==='all'?'user_id=?':status==='saved'?"user_id=? AND status='saved'":"user_id=? AND status!='saved'";
+ const values=[userId];
  const [rows,count]=await db.batch([
   db.prepare(`SELECT ${columns} FROM applications WHERE ${where} ORDER BY updated_at DESC,id LIMIT ? OFFSET ?`).bind(...values,limit,offset),
   db.prepare(`SELECT COUNT(*) AS total FROM applications WHERE ${where}`).bind(...values)

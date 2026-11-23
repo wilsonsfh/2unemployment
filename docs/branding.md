@@ -38,3 +38,7 @@ Implementation: [daily workflow](../.github/workflows/refresh-jobs.yml), [Astro 
 ## Guide publication checks
 
 The same build also renders `docs/*.md` into `dist/client/guides/`. The deployment verifier compares every built guide HTML file byte-for-byte with its live `/guides/<slug>/` URL, alongside the two logo assets and catalog checks above. Run `npm run build` first when verifying manually. A mismatch fails verification but does not automatically roll back.
+
+## Company icons
+
+The job board displays locally stored website favicons for known company names, with initials for unknown companies or failed images. The PNGs in `public/company-icons/` were retrieved through Google's favicon service using these employer domains: stripe.com, apple.com, bytedance.com, shopee.sg, airwallex.com, drw.com, jumptrading.com, palantir.com, tower-research.com, sierra.ai and h2games.com. These marks identify employers; they are not the project's branding or evidence of employer endorsement. Review the domain-to-company mapping and reuse terms when updating them. Browsers load the copies from this site, not Google.

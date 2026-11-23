@@ -1,6 +1,26 @@
+Earlier 2026-11-23 handoff: work paused before motion implementation, then resumed at the owner’s request. Current motion changes and checks are recorded below. Previous local UI/guide/logo work passed npm test and npm run build; guide button and logo loading were checked in browser. Local Astro site was already running at http://127.0.0.1:4321.
+
+2026-11-23: Local checks: navigation labels inspected in browser, 25 listed logo images loaded without errors, first guide button opened the walkthrough. Existing npm tests and build passed. Logos and guide changes are not deployed.
+
+2026-11-23: Three-destination navigation checked locally on desktop and mobile; the mobile sidebar opens and retains board tools. npm test and npm run build passed. The navigation changes remain undeployed.
+
+2026-11-23: Deployed local Worker version 3cfe364f-4de5-48c7-8b53-c298e16efa78 after tests/build/dry run passed and remote migrations reported none. Google verification URL redirects (307) to extensionless URL with correct content and HTTP 200; Search Console result pending. Subsequent build-guide redesign remains local.
+
 # Progress and verification
+Latest local follow-up (2026-11-23): Emil-inspired CSS motion and its research/icon notes are in the working tree. `npm run build` and `npm run check` passed; no tests, commit, push, or deploy were performed. Reduced-motion behavior is inherited from the existing global CSS override; no browser visual review has been done.
+
+Google Search Console verification is still unresolved: production returns 307 for the `.html` URL and 200 with the expected token at the extensionless target. A local direct Astro text endpoint and path-specific `run_worker_first` rule were added. Build/dry-run pass, but Wrangler preview still served the static asset; Worker-first runtime behavior needs resolving before deployment.
+
+The local tracker guide was corrected to describe the Yes/No flow; no tracker code or production data changed in this follow-up.
+
+Solutions-engineering issue #2 was scoped read-only: the `Job` type has a `solutions` category, but the current discovery normalizer is software-engineering-only and there is no separate source/UI flow. Existing taxonomy notes are in `docs/build-your-own-technical.md`. No implementation or data change made; next step requires a permitted source and explicit category-specific eligibility handling.
+
+H2 Games exact-title LinkedIn result 4467358859 was found in the search index, but direct retrieval returned HTTP 429 and the indexed result says applications are no longer accepted. This does not satisfy employer-source verification; no job data was changed.
+
 
 Last recorded: 2026-11-23. This file records observations, not promises of future execution.
+
+Latest session: Google homepage/privacy Branding values saved; Audience visibly **In production**. Real Google sign-in → sign-out → GitHub sign-in passed. A private Sierra board record was created with explicitly synthetic Interviewing/date/notes; save and full reload retained all values. No email OTP enabled. Owner then requested Applied / Not applied only, with a Yes/No prompt after opening job links. Local uncommitted implementation and documentation exist; **68/68 tests, build and Wrangler dry run passed**. No migration, commit, push or deployment of this simplification occurred. Browser preview at 4323 returned catalog unavailable because its local D1 was not seeded, so the new click prompt remains browser-unverified. Owner stopped automation and requested manual dashboard GUI instructions. The unrelated about.txt request was immediately withdrawn; no file was copied. Earlier implementation descriptions below are historical where superseded by these local changes.
 
 ## Conservative release and reusable project follow-up — 23 November 2026
 

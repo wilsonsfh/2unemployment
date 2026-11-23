@@ -26,14 +26,14 @@ test('applications and notes belong only to their authenticated owner',async t=>
 });
 test('saving twice retains tracking progress and users can save the same role independently',async t=>{
  const db=database(t),first=await saveApplication(db,'alice',job);
- await updateApplication(db,'alice',first.id,{status:'interviewing',notes:'Technical round'});
+ await updateApplication(db,'alice',first.id,{status:'applied',notes:'Technical round'});
  const again=await saveApplication(db,'alice',job),other=await saveApplication(db,'bob',job);
- assert.equal(again.id,first.id);assert.equal(again.status,'interviewing');assert.equal(again.notes,'Technical round');assert.notEqual(other.id,first.id);
- assert.equal((await listApplications(db,'alice',new URLSearchParams('status=applied'))).total,0);
+ assert.equal(again.id,first.id);assert.equal(again.status,'applied');assert.equal(again.notes,'Technical round');assert.notEqual(other.id,first.id);
+ assert.equal((await listApplications(db,'alice',new URLSearchParams('status=applied'))).total,1);
 });
 test('application mutations reject invalid status, dates, oversized notes and owner reassignment',async t=>{
  const db=database(t),saved=await saveApplication(db,'alice',job);
- for(const input of [{status:'hired'},{appliedOn:'2026-02-31'},{notes:'x'.repeat(10001)},{user_id:'bob'},{notes:1},[],null,{}])await assert.rejects(updateApplication(db,'alice',saved.id,input));
+ for(const input of [{status:'hired'},{status:'interviewing'},{appliedOn:'2026-02-31'},{notes:'x'.repeat(10001)},{user_id:'bob'},{notes:1},[],null,{}])await assert.rejects(updateApplication(db,'alice',saved.id,input));
  for(const query of ['status=bad','offset=-1','offset=1.5','offset=10001'])await assert.rejects(listApplications(db,'alice',new URLSearchParams(query)));
  assert.equal((await listApplications(db,'alice')).applications[0].status,'saved');
  db.sqlite.prepare('DELETE FROM user WHERE id=?').run('alice');
@@ -47,4 +47,14 @@ test('external jobs stay private and URLs are stored without fetching or accepti
  assert.equal((await listApplications(db,'bob')).total,0);
  for(const applyUrl of ['javascript:alert(1)','data:text/html,bad','https://user:password@example.com','invalid'])await assert.rejects(addExternalApplication(db,'alice',{company:'Example',title:'Engineer',applyUrl}));
  await assert.rejects(addExternalApplication(db,'alice',{company:'Example',title:'Engineer',applyUrl:'https://example.com',userId:'bob'}));
+});
+
+test('legacy application stages read and filter as a single applied state',async t=>{
+ const db=database(t),saved=await saveApplication(db,'alice',job);
+ db.sqlite.prepare("UPDATE applications SET status='interviewing' WHERE id=?").run(saved.id);
+ assert.equal((await listApplications(db,'alice')).applications[0].status,'applied');
+ assert.equal((await listApplications(db,'alice',new URLSearchParams('status=applied'))).total,1);
+ assert.equal((await listApplications(db,'alice',new URLSearchParams('status=saved'))).total,0);
+ await updateApplication(db,'alice',saved.id,{status:'saved'});
+ assert.equal((await listApplications(db,'alice',new URLSearchParams('status=saved'))).total,1);
 });

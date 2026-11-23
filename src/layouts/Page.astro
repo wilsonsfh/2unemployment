@@ -1,5 +1,6 @@
 ---
 import '../style.css';
+import AppliedPrompt from '../components/AppliedPrompt';
 interface Props {title:string; description?:string; canonical?:string; noindex?:boolean}
 const {title,description='Singapore full-time new-grad software engineering roles. Check eligibility, salary context and original employer sources.',canonical=new URL(Astro.url.pathname,Astro.site).href,noindex=false}=Astro.props;
 ---
@@ -21,5 +22,5 @@ const {title,description='Singapore full-time new-grad software engineering role
   <meta property="og:url" content={canonical} />
   <meta name="twitter:card" content="summary_large_image" />
  </head>
- <body><slot /></body>
+ <body><slot /><AppliedPrompt client:load /></body>
 </html>

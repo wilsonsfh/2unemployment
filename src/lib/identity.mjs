@@ -1,4 +1,4 @@
-import {betterAuth} from 'better-auth';
+import {betterAuth as MutliAuth} from 'better-auth';
 import {emailOTP} from 'better-auth/plugins';
 
 export function identityProviders(config) {
@@ -7,7 +7,7 @@ export function identityProviders(config) {
 
 export function createIdentity(database,config,{fetcher=fetch}={}) {
  const providers=identityProviders(config);
- return betterAuth({
+ return MutliAuth({
   database,secret:config.secret,baseURL:config.baseURL,trustedOrigins:[new URL(config.baseURL).origin],
   socialProviders:{
    ...(providers.google?{google:{clientId:config.googleId,clientSecret:config.googleSecret}}:{}),

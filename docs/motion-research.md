@@ -51,4 +51,13 @@ The project currently has only `.codex/skills/levels-fyi-setup/SKILL.md`; no App
 - [Apple Human Interface Guidelines: Motion](https://developer.apple.com/design/human-interface-guidelines/motion).
 - [MDN reduced-motion media query](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion); [WCAG 2.3.3](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html).
 
-No dependencies, skills, or UI code were changed as part of this research.
+No dependencies or skills were added as part of this research.
+
+
+## Implementation in this project
+
+The reference was found through Exa web search, then checked against Emil Kowalski’s own [practical animation tips](https://emilkowal.ski/ui/7-practical-animation-tips) and [animations.dev](https://animations.dev/). The useful implementation principles here are to give movement a clear cause, keep it short, and animate opacity/transform instead of layout. The search was for guidance, not for a package to copy into the app.
+
+The board uses small CSS entrance effects for role-detail/comparison dialogs, the applied prompt, and the comparison tray. The broad table-row entrance animation was removed because React rerenders the table for ordinary state changes; replaying movement there would distract during search and filtering. These animations use opacity and transform and inherit the existing global `prefers-reduced-motion: reduce` override. No animation library or JavaScript animation state was added.
+
+Company icons are a separate implementation detail: `src/main.tsx` maps known company names to local files under `public/company-icons/`; unknown companies and failed image loads use initials. See [branding](branding.md) for icon sourcing.
