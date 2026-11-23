@@ -4,8 +4,8 @@ Updated: 2026-11-23. Read [handover.md](handover.md) and [progress.md](progress.
 
 ## Current priority: identity and private application tracking
 
-- [x] Implement identity/tracker with Google, GitHub and Resend OTP support, owner-scoped private APIs, external job URLs, statuses/date/notes and explicit bookmark import. Owner chose the existing single D1 database. Local tests/build/dry run and synthetic-session browser checks passed.
-- [ ] Activate real sign-in providers: securely configure Resend key/verified sender and Google/GitHub OAuth credentials, then verify actual delivery, callback sign-in, sign-out and cross-device account use. No provider is currently configured; credentials must not be pasted in chat.
+- [x] Implement identity/tracker with Google, GitHub and Resend OTP support, owner-scoped private APIs, external job URLs, statuses/date/notes and explicit bookmark import. Owner chose the existing single D1 database. 66 tests/build/dry run and synthetic-session browser checks passed. Deployed source `014b27d`, Worker `4e8b58c5-2781-41e2-adfd-7cfbe4c8fc1a`; live privacy and catalog checks passed.
+- [ ] Activate real sign-in providers: securely configure Resend key/verified sender and Google/GitHub OAuth credentials, then verify actual delivery, callback sign-in, sign-out and cross-device account use. No provider is currently configured; credentials must not be pasted in chat. Owner completed Resend login, then browser control timed out; awaiting “Domains ready” to continue setup. Production session secret is configured.
 - [x] Add discovery shortcuts for agent-title graduate roles and highest-known pay; verified Sierra new-grad S$200k–240k advertised range appears. Keep other Sierra roles in review and distinguish the multi-agent audience from actual role requirements. Continue targeted employer coverage.
 
 ## Data quality and operations
