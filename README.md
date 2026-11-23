@@ -1,5 +1,7 @@
 # 2unemployment
 
+Session context: [handover](handover.md) · [verified progress](progress.md) · [task queue](todo.md) · [proposed scaling stack](docs/scaling.md).
+
 ![2unemployment logo](public/brand/logo.svg)
 
 Singapore full-time new-grad software engineering board. React + TypeScript + Vite, deployed with Cloudflare Workers Static Assets.
