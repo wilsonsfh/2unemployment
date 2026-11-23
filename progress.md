@@ -1,3 +1,5 @@
+2026-11-23 board refresh: Replaced the old hero slogan with “Full-time software roles for new graduates”, removed the decorative year stamp and agent shortcut, and refined the workspace spacing, search, filters and table readability. Desktop 1280px and mobile 390px local screenshots inspected in output/playwright/redesign-*.png; 68 tests and build passed. Deployment pending.
+
 2026-11-23 local checks: Ingestion completed with 45 records and zero source failures; HRT remains indexed/incomplete and no Singapore salary was assigned. All 68 tests, build and git diff --check passed. The new shortcut and catalog changes are local and uncommitted; production D1 and Worker were not changed.
 
 2026-11-23 job search: Removed public AI agent shortcut locally and added HRT 2027 graduate software role as a search-indexed lead; employer direct fetch returned 403 and Singapore pay is unknown. Squarepoint graduate software/quant listings name Singapore in its employer feed; full-time hours and Singapore compensation need confirmation.
