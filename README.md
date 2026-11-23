@@ -6,6 +6,14 @@ Singapore full-time new-grad software engineering roles with traceable employer 
 
 The live site runs **Astro + React + Cloudflare D1**: complete public job HTML, a paginated Worker API and one connected search/filter/saved/comparison workspace. Current snapshot: 30 graduate roles and 14 review candidates. The [successful release](https://github.com/wilsonsfh/2unemployment/actions/runs/45117422965) exercised the actual GitHub token's D1 import and Worker deployment permissions. [Architecture decision](docs/scaling.md).
 
+## Build your own board
+
+Start with the [end-to-end setup guide](docs/build-your-own-board.md): GitHub and coding-agent setup, a local preview, employer APIs, evidence-based matching, deployment and automation. Each explanation is followed by code or commands and a check. It covers a tech-only board, a solutions-engineering track, and a broader board spanning technical, communications, media and social-research occupations. These are fork adaptations; the shipped board's scope remains Singapore graduate SWE.
+
+Read [licensing and data use](docs/licensing-and-data-use.md) before publishing a fork. Code licensing and permission to republish source data are separate. [learnings.md](learnings.md) records the project lessons; [the task queue](todo.md) lists remaining work. [Candidate review](docs/eligibility-review.md) and [catalog measurements](docs/catalog-benchmark.md) make the evidence behind decisions inspectable.
+
+## Run locally
+
 Node >=22.23.4:
 
 ```sh
