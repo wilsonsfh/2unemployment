@@ -14,6 +14,8 @@ Successful employer feeds refresh their own records. Two successive successful a
 
 ## Known gaps and extension seams
 
+- YC / Work at a Startup was evaluated on 24 November 2026. No documented official public jobs API was found; YC terms prohibit automated scraping/extraction. No YC adapter, scheduled fetch or catalog import is enabled. See [YC source review](yc-source-review.md). Search-index leads remain unverified; personal matching stays local.
+
 - Wording is conservative and rule-based. Eligibility in a description without a title signal requires review. A structured employer requirement extractor and human review can promote a record later.
 - A successful but unexpectedly empty or incomplete employer feed can cause false closure. Two successful absences reduce this risk; production scale additionally needs a drop-rate guard. There is no claim of full market coverage.
 - Structured ATS data is stronger than an HTTP 200 page: many closed roles still return 200. Do not replace feed reconciliation with HEAD checks.

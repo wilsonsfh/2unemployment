@@ -1,3 +1,22 @@
+## 2026-11-24 — YC documentation release
+
+- [x] Pull latest scheduled snapshot and validate isolated release with tests/build/dry run and private-data exclusion checks.
+- [ ] Commit/push/deploy the public source-review guide and verify live guide, catalog revision, assets and signed-out private routes.
+
+## 2026-11-24 — YC internships
+
+- [x] Expand private YC research with software internships and separately labelled adjacent engineering leads; retain blocked/past-intake records with explicit caveats.
+- [x] Add local Markdown, CSV and JSON inventory with exact search queries and source labels; link from original private shortlist.
+- [ ] Confirm live openings, internship work authorization, country-specific remote eligibility, dates/duration and current-student requirements before applying.
+- [ ] Directory-wide completeness remains unavailable through this search-index workflow; do not describe the inventory as every current YC opening.
+
+## 2026-11-24 — YC discovery follow-up
+
+- [x] Investigate official API/public access and source-use terms; document why automated YC ingestion stays disabled.
+- [x] Produce local private role triage from search-index evidence without expanding the Singapore catalog or publishing personal history.
+- [ ] Confirm live vacancy status, location-specific eligibility, sponsorship and cohort-specific intake with shortlisted employers before applying.
+- [ ] Revisit a YC adapter only after establishing an authorized feed or explicit permission and appropriate data-use rights.
+
 2026-11-23 live reference refresh: Commit 40d6a24 deployed as Worker 7b73d353-0bb3-4fab-9819-d67d86bde6ca. The board uses locally hosted OFL Inter as an approximation of the reference’s commercial Neue Montreal, and shows jobs in a two-column desktop / one-column mobile scrolling layout. Local desktop/mobile screenshots and compare selection checked; 68 tests, build and Wrangler dry run passed. Live verifier matched catalog cd6313fa7f7d519103cf041f25a290484083d1f7eb4f1cf80e69879cf74c233c and 15 assets; font returned HTTP 200. Search Console experiment remains uncommitted and excluded; prompt persistence and Search Console acceptance remain pending.
 
 2026-11-23 follow-up: [ ] Verify real Applied? return flow and signed-in Yes/No persistence. [ ] Resolve Google verification .html routing and confirm Search Console acceptance. [ ] Recheck HRT 2027 software lead and investigate Squarepoint graduate developer postings 6040910 and 7918610 for full-time Singapore employment, compensation and source-use permission; do not infer Singapore pay from New York pay. [ ] Continue finding Singapore or explicitly Singapore-eligible remote graduate software roles with advertised pay.

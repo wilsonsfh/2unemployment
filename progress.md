@@ -1,3 +1,15 @@
+## 2026-11-24 — Release checks passed
+
+Clean release worktree based on scheduled snapshot a93861f passed tests, Astro check/build, Wrangler deployment dry run and diff checks. Built `/guides/yc-source-review/` exists, and private YC artifacts/profile/application notes were excluded from its output. Unrelated Search Console edits remain outside release. Deployment pending at this checkpoint; final publication result will be recorded after live verification.
+
+## 2026-11-24 — Internship inventory verification
+
+Completed indexed discovery and private inventory: 70 unique role URLs, 48 software plus 22 adjacent engineering, 17 excluded internship false positives, 16 recorded queries. CSV/JSON counts and URLs match; private output remains git-ignored and original shortlist links to supplement. Source labels remain search-indexed, never employer-verified. No runtime changes; documentation/data integrity checks used instead of rerunning application tests/build. No publication, scheduled ingestion, application submission or account tracker write.
+
+## 2026-11-24 — YC research verification
+
+Saved public source review and local ignored personal shortlist. Initial unauthenticated YC jobs page returned HTTP 200 and public hydration JSON; supplied Work at a Startup companies URL returned an empty body. YC legal page explicitly prohibits scraping/data extraction; no adapter or scheduled job added. Subsequent candidate evidence came from search-indexed results, not employer verification. Verified private output is git-ignored and absent from public catalog inputs. No runtime code changes; tests/build/dry-run not rerun for this documentation-only task. No deployment, tracker mutation, external messages or applications. Pre-existing unrelated working-tree changes retained.
+
 2026-11-23 live reference refresh: Commit 40d6a24 deployed as Worker 7b73d353-0bb3-4fab-9819-d67d86bde6ca. The board uses locally hosted OFL Inter as an approximation of the reference’s commercial Neue Montreal, and shows jobs in a two-column desktop / one-column mobile scrolling layout. Local desktop/mobile screenshots and compare selection checked; 68 tests, build and Wrangler dry run passed. Live verifier matched catalog cd6313fa7f7d519103cf041f25a290484083d1f7eb4f1cf80e69879cf74c233c and 15 assets; font returned HTTP 200. Search Console experiment remains uncommitted and excluded; prompt persistence and Search Console acceptance remain pending.
 
 2026-11-23 reference design: Source ce09fc3 deployed as Worker b6bcd1a9-3b2d-43f3-9169-5d09cfb28ade; catalog cd6313fa7f7d519103cf041f25a290484083d1f7eb4f1cf80e69879cf74c233c and 15 assets verified live, including HRT as indexed/incomplete. Subsequent local layout is inspired by the supplied Unseen Studio video: self-hosted OFL Inter (a freely licensed approximation of its Neue Montreal), two-column desktop job browsing and one column on mobile, ordinary scrolling. Screenshots in output/playwright/unseen-*.png; compare selection exercised locally. Search Console routing experiment remains uncommitted and excluded.
