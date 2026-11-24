@@ -1,6 +1,6 @@
-## 2026-11-24 — Release checks passed
+## 2026-11-24 — YC release complete
 
-Clean release worktree based on scheduled snapshot a93861f passed tests, Astro check/build, Wrangler deployment dry run and diff checks. Built `/guides/yc-source-review/` exists, and private YC artifacts/profile/application notes were excluded from its output. Unrelated Search Console edits remain outside release. Deployment pending at this checkpoint; final publication result will be recorded after live verification.
+Source `d7a05c4` committed and pushed; Worker `ae0ff7a7-2b20-4fc9-9b7c-6c03cb7d5628` deployed to https://2unemployment.wilsonsoon.workers.dev from a clean worktree based on the current scheduled snapshot. Tests, build/check and diff checks passed. Live catalog revision `d038d075f940fa001074c6da2542be41a0c32983c57dd75a92283fc245992027`, sample role, 16 public assets and signed-out account/tracker/API protections passed the deployment verifier. Live YC guide returned 200, expected content and no personal details; tested local-only research paths returned 404. No D1 publication or YC job import was needed/performed. Final record-only follow-up does not alter the built public guide or runtime. Search Console edits remain outside this release.
 
 ## 2026-11-24 — Internship inventory verification
 

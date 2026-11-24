@@ -1,7 +1,7 @@
 ## 2026-11-24 — YC documentation release
 
 - [x] Pull latest scheduled snapshot and validate isolated release with tests/build/dry run and private-data exclusion checks.
-- [ ] Commit/push/deploy the public source-review guide and verify live guide, catalog revision, assets and signed-out private routes.
+- [x] Commit/push/deploy public source-review guide (`d7a05c4`, Worker `ae0ff7a7-2b20-4fc9-9b7c-6c03cb7d5628`); live guide, current catalog revision, 16 assets, signed-out private routes and private-artifact 404s verified.
 
 ## 2026-11-24 — YC internships
 

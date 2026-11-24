@@ -1,6 +1,6 @@
-## 2026-11-24 — YC documentation release prepared
+## 2026-11-24 — YC documentation released and verified
 
-Owner requested commit/push/deploy. Fast-forwarded to scheduled snapshot a93861f before release. Clean detached worktree `/private/tmp/2unemployment-yc-release-20261124` contains only five documentation/record changes, excluding the pre-existing Search Console config/route edits and all ignored private research. `npm ci`, `npm test`, `npm run build`, `npm run check`, built-guide privacy assertions and `git diff --check` passed. Commit/push/deployment verification are the next steps. This publishes a source-review guide, not personal role shortlists or new catalog entries; no D1 import is needed.
+Committed/pushed source `d7a05c4` on main after fast-forwarding to scheduled snapshot `a93861f`. Deployed from isolated clean worktree `/private/tmp/2unemployment-yc-release-20261124` as Worker `ae0ff7a7-2b20-4fc9-9b7c-6c03cb7d5628`. Tests, Astro check/build, Wrangler dry run and diff checks passed. Live verifier matched catalog `d038d075f940fa001074c6da2542be41a0c32983c57dd75a92283fc245992027` (generated 2026-11-24T06:59:15.059Z), one role, 16 public assets and signed-out private-route behavior. `/guides/yc-source-review/` returned HTTP 200 with expected content and no personal details; tested private Markdown/CSV URLs returned 404. Public source review is deployed; ignored private shortlists remain local, with no new public job records or tracker mutations. No D1 import was run. Pre-existing Search Console config/route edits remain untouched and uncommitted. Next: applicant/employer confirmation of live shortlisted vacancies and internship logistics; YC automated ingestion remains disabled.
 
 ## 2026-11-24 — YC internship discovery expansion
 
