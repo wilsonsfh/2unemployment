@@ -51,3 +51,5 @@ node --test alerts/*.test.mjs
 ```
 
 Tests use simulated source tables, callbacks, and a mocked Telegram request; they make no network calls and send no Telegram messages. They cover silent initialization, durable deduplication, formatting-only changes, modified roles with unchanged IDs, application URL changes, added/removed jobs in a single-line table, invalid source/state, and retry behavior after delivery failure. Delivery-test checks cover the exact configured destination, a single labeled request, HTTP/API/network/JSON failures with sanitized errors, untouched local state, and the manual-only workflow guards/default/mirror.
+
+New-job alerts include the role and company above each job link (up to five listings per update). The existing state format and silent-baseline behavior remain compatible.

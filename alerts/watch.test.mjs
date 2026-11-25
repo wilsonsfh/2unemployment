@@ -34,7 +34,7 @@ test('summarizes additions and removals including malformed single-line table', 
   const first = snapshot(table(), revision);
   const changed = snapshot(table('Engineer', 'new-456').replaceAll('\n', ' '), 'b'.repeat(40));
   assert.match(notification(first, changed), /1 added · 1 removed/);
-  assert.match(notification(first, changed), /New: https:\/\/didtheyghost.me\/job\/new-456/);
+  assert.match(notification(first, changed), /New: Engineer — Company\nhttps:\/\/didtheyghost.me\/job\/new-456/);
 });
 
 test('failed delivery never advances durable state', async () => {
@@ -57,4 +57,13 @@ test('source damage and corrupt state fail closed', () => {
   assert.throws(() => snapshot('<!-- JOBS_TABLE_START -->oops<!-- JOBS_TABLE_END -->', revision), /no job links/);
   assert.throws(() => validateState({}), /Invalid saved/);
   assert.deepEqual(validateState(snapshot(table(), revision)), snapshot(table(), revision));
+});
+
+
+test('new job notifications include role and company for multiline and collapsed tables', () => {
+  const previous = snapshot(table(), revision);
+  for (const source of [table('Data Engineer', 'new-456'), table('Data Engineer', 'new-456').replaceAll('\n', ' ')]) {
+    const current = snapshot(source.replace('| Company |', '| [Acme](https://example.com/acme) |'), 'b'.repeat(40));
+    assert.match(notification(previous, current), /New: Data Engineer — Acme\nhttps:\/\/didtheyghost\.me\/job\/new-456/);
+  }
 });

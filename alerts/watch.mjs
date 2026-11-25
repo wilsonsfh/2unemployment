@@ -17,7 +17,13 @@ export function snapshot(readme, revision) {
     .replace(/\s+/g, ' ').trim();
   const jobs = [...new Set(canonical.match(/https:\/\/didtheyghost\.me\/job\/[a-z0-9-]+/gi) ?? [])].sort();
   if (!jobs.length) throw new Error('Source has no job links; keeping previous state.');
-  return { version: 1, digest: createHash('sha256').update(canonical).digest('hex'), jobs, revision };
+  const titles = {};
+  const rows = /\|\s*([^|\n]+)\s*\|\s*([^|\n]+)\s*\|\s*<a\b[^>]*href=["'](https:\/\/didtheyghost\.me\/job\/[a-z0-9-]+)[^"']*["']/gi;
+  for (const [, company, role, url] of table.matchAll(rows)) {
+    const clean = value => value.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/<[^>]*>/g, '').trim();
+    titles[url] = `${clean(role)} — ${clean(company)}`;
+  }
+  return { version: 1, digest: createHash('sha256').update(canonical).digest('hex'), jobs, revision, titles };
 }
 
 export function notification(previous, current) {
@@ -29,7 +35,7 @@ export function notification(previous, current) {
     : 'Job details or application links changed';
   return [
     'Singapore internship repository updated', summary,
-    ...added.slice(0, 5).map(url => `New: ${url}`),
+    ...added.slice(0, 5).map(url => current.titles?.[url] ? `New: ${current.titles[url]}\n${url}` : `New: ${url}`),
     ...(added.length > 5 ? [`Plus ${added.length - 5} more new listings.`] : []),
     `https://github.com/${SOURCE}/compare/${previous.revision}...${current.revision}`,
     `https://github.com/${SOURCE}`,
