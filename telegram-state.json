@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "digest": "921b54cd2440fb69d01f8d9482d88ff95154fc7344a089c12397bfbe7302d0a9",
+  "digest": "19a0a0d1d75628ea6525f38c65e6b0aecadb7c55fb0a560bc8fb7f1f23c707b4",
   "jobs": [
     "https://didtheyghost.me/job/014744f2-5524-4926-a513-9c14a8d90c1d",
     "https://didtheyghost.me/job/01cc0e52-ad73-4254-8d6c-f988fb3c62a4",
@@ -530,7 +530,7 @@
     "https://didtheyghost.me/job/fdef63c1-29fa-4fe1-9aaa-92de9fa5c2db",
     "https://didtheyghost.me/job/fe8279f1-0b1a-4922-ae36-94a04546cf5f"
   ],
-  "revision": "e6857e249ac304bdc12df1f833e02f1c2cbdbbf5",
+  "revision": "f90e1060141f0eedfff7928478bc2f0ebd799c0c",
   "titles": {
     "https://didtheyghost.me/job/9824d3b2-612f-41c7-a53d-c9e9758c1304": "Software Engineer Intern — Chubb",
     "https://didtheyghost.me/job/40a30504-3c67-4635-bfd7-56cb5a25fbb8": "SWE / Infra Internship — Acheron Trading",
